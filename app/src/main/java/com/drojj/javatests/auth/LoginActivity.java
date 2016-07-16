@@ -124,16 +124,16 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
         boolean isOk = true;
 
         if (!AuthDataValidator.validateEmail(email)) {
-            showError(mEmailWrapper, "Email введен неверно.");
+            showError(mEmailWrapper, getString(R.string.email_not_validated) );
             isOk = false;
         }
 
         if (password.isEmpty()) {
-            showError(mPasswordWrapper, "Введите пароль");
+            showError(mPasswordWrapper, getString(R.string.password_not_entered));
             isOk = false;
         }
         if (isOk) {
-            showProgressDialog("Загрузка...");
+            showProgressDialog(getString(R.string.loading));
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -148,7 +148,7 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
                                 }
                             } else {
                                 String username = task.getResult().getUser().getDisplayName();
-                                Toast.makeText(LoginActivity.this, "Добро пожаловать " + username + "!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, getString(R.string.welcome_user) + username + "!", Toast.LENGTH_SHORT).show();
                             }
                             hideProgressDialog();
                         }

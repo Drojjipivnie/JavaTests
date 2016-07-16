@@ -96,18 +96,8 @@ public class TestsListFragment extends Fragment implements SwipeRefreshLayout.On
 
 
     private void showDialog(Test test) {
-
-        FragmentManager manager = getActivity().getFragmentManager();
-
-        FragmentTransaction ft = manager.beginTransaction();
-        Fragment prev = manager.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-
         TestInfoDialog dialog = TestInfoDialog.newInstance(test);
-        dialog.show(manager, "dialog");
+        dialog.show(getFragmentManager(), "dialog");
     }
 
     @Override
@@ -119,7 +109,7 @@ public class TestsListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle("Тесты");
+        getActivity().setTitle(getActivity().getString(R.string.title_tests_list));
     }
 
     @Override

@@ -38,17 +38,23 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
 
     private static final String TAG = "SignUp";
 
-    @BindView(R.id.input_name_wrapper) TextInputLayout mNameWrapper;
+    @BindView(R.id.input_name_wrapper)
+    TextInputLayout mNameWrapper;
 
-    @BindView(R.id.input_email_wrapper) TextInputLayout mEmailWrapper;
+    @BindView(R.id.input_email_wrapper)
+    TextInputLayout mEmailWrapper;
 
-    @BindView(R.id.input_password_wrapper) TextInputLayout mPasswordWrapper;
+    @BindView(R.id.input_password_wrapper)
+    TextInputLayout mPasswordWrapper;
 
-    @BindView(R.id.input_name) EditText mInputName;
+    @BindView(R.id.input_name)
+    EditText mInputName;
 
-    @BindView(R.id.input_email) EditText mInputEmail;
+    @BindView(R.id.input_email)
+    EditText mInputEmail;
 
-    @BindView(R.id.input_password) EditText mInputPassword;
+    @BindView(R.id.input_password)
+    EditText mInputPassword;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,7 +114,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
         signUp();
     }
 
-    private void signUp(){
+    private void signUp() {
         hideErrors();
 
         final String email = mInputEmail.getText().toString().trim();
@@ -117,29 +123,33 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
 
         boolean isOk = true;
 
-        if(!AuthDataValidator.validatePassword(password)){
-            showError(mPasswordWrapper,"Пароль должен состоять из букв латинского алфавита и хотя бы одной цифры;\nДлина пароля должна быть больше 6 знаков.");
+        if (!AuthDataValidator.validatePassword(password)) {
+            isOk = false;
+            if (password.isEmpty()) {
+                showError(mPasswordWrapper,  getString(R.string.password_not_entered));
+            } else {
+                showError(mPasswordWrapper, getString(R.string.password_not_validated));
+            }
+        }
+
+        if (!AuthDataValidator.validateEmail(email)) {
+            showError(mEmailWrapper, getString(R.string.email_not_validated));
             isOk = false;
         }
 
-        if(!AuthDataValidator.validateEmail(email)){
-            showError(mEmailWrapper,"Введите правильный адрес электронной почты.");
+        if (!AuthDataValidator.validateName(name)) {
+            showError(mNameWrapper, getString(R.string.name_not_validated));
             isOk = false;
         }
 
-        if(!AuthDataValidator.validateName(name)){
-            showError(mNameWrapper,"Обязательное поле. Имя должно состоять из 3 или более символов.");
-            isOk = false;
-        }
-
-        if(isOk){
-            showProgressDialog("Signing up...");
-            mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+        if (isOk) {
+            showProgressDialog(getString(R.string.loading));
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                     if (!task.isSuccessful()) {
-                        FirebaseErrorHandler handler = new FirebaseErrorHandler(SignupActivity.this,task.getException());
+                        FirebaseErrorHandler handler = new FirebaseErrorHandler(SignupActivity.this, task.getException());
                         handler.showErrorToast();
                         hideProgressDialog();
                     }
@@ -148,7 +158,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
         }
     }
 
-    private void hideErrors(){
+    private void hideErrors() {
         hideError(mNameWrapper);
         hideError(mEmailWrapper);
         hideError(mPasswordWrapper);

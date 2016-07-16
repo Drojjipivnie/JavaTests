@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -129,9 +130,9 @@ public class TestResultsFragment extends Fragment {
         }
 
         if (mQuestions.get(mQuestionCounter).isRightAnswered()) {
-            mQuestionCard.setCardBackgroundColor(Color.parseColor("#1100FF00"));
+            mQuestionCard.setCardBackgroundColor(ContextCompat.getColor(getActivity(),R.color.test_result_right_answer));
         } else {
-            mQuestionCard.setCardBackgroundColor(Color.parseColor("#11FF0000"));
+            mQuestionCard.setCardBackgroundColor(ContextCompat.getColor(getActivity(),R.color.test_result_wrong_answer));
         }
     }
 
@@ -164,6 +165,6 @@ public class TestResultsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle("Результаты");
+        getActivity().setTitle(getActivity().getString(R.string.title_test_results));
     }
 }

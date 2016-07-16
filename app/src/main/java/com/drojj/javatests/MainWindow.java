@@ -50,8 +50,6 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
 
     private static int currentNavigationItem = R.id.navigation_tests_item;
 
-    //private Snackbar mSnackbarConnection;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +58,6 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         ButterKnife.bind(this);
 
         EventBus.getDefault().register(this);
-
-        //mSnackbarConnection = Snackbar.make(findViewById(android.R.id.content),"Устанавливается соединение...",Snackbar.LENGTH_INDEFINITE);
 
         initToolbar();
         initDrawerLayout();
@@ -73,33 +69,6 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
             fragmentManager.beginTransaction().replace(R.id.fragment_container_main, fragment).addToBackStack("TestsList").commit();
         }
     }
-
-    /*private void initConnectionListener() {
-
-        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
-        ValueEventListener listenerConnection = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean connected = dataSnapshot.getValue(Boolean.class);
-                if(connected && NetworkHelper.isNetworkAvailable(MainWindow.this)){
-                    if(mSnackbarConnection.isShown()){
-                        mSnackbarConnection.dismiss();
-                    }
-                }else{
-                    if(!mSnackbarConnection.isShown()){
-                        mSnackbarConnection.show();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-
-        connectedRef.addValueEventListener(listenerConnection);
-    }*/
 
     private void initToolbar() {
         setSupportActionBar(mToolbar);
@@ -140,7 +109,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
             }
 
             mDoubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "Нажмите еще раз для выхода", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.double_back_to_exit, Toast.LENGTH_SHORT).show();
 
             new Handler().postDelayed(new Runnable() {
 
@@ -165,22 +134,22 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                     clearFragmentsBackStack();
                     currentNavigationItem = item.getItemId();
                     replaceFragment("TestsList", new TestsListFragment());
-                    mToolbar.setTitle("Тесты");
+                    mToolbar.setTitle(getString(R.string.navigation_menu_tests));
                     return true;
 
                 case R.id.navigation_questions_item:
                     clearFragmentsBackStack();
                     currentNavigationItem = item.getItemId();
                     replaceFragment("Questions", new Fragment());
-                    mToolbar.setTitle("Вопросы");
+                    mToolbar.setTitle(getString(R.string.navigation_menu_questions));
                     return true;
 
                 case R.id.navigation_about_item:
-                    Toast.makeText(MainWindow.this, "О программе", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainWindow.this, getString(R.string.navigation_menu_about), Toast.LENGTH_SHORT).show();
                     return false;
 
                 case R.id.navigation_like_item:
-                    Toast.makeText(MainWindow.this, "Оценить", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainWindow.this, getString(R.string.navigation_menu_like), Toast.LENGTH_SHORT).show();
                     return false;
                 case R.id.navigation_log_out:
                     FirebaseAuth.getInstance().signOut();

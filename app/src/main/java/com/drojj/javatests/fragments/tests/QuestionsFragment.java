@@ -141,7 +141,7 @@ public class QuestionsFragment extends Fragment {
             }
 
         } else {
-            Toast.makeText(getActivity(), "Выберите один из вариантов", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.choose_any_answer, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -169,13 +169,13 @@ public class QuestionsFragment extends Fragment {
 
     private void showFinalDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Тест завершен!");
+        builder.setTitle(R.string.test_complited);
 
         int rightAnswers = mQuestionsList.size() - mWrongAnswersNum;
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Ваш конечный результат ")
-                .append(rightAnswers).append(" правильных ответов из ")
+        stringBuilder.append(getActivity().getString(R.string.test_final_score))
+                .append(rightAnswers).append(getActivity().getString(R.string.right_answers_from))
                 .append(mQuestionsList.size())
                 .append(".");
         /*if (mWrongAnswersNum > 0) {
@@ -202,10 +202,10 @@ public class QuestionsFragment extends Fragment {
         } else {
             stringBuilder.append(" Поздравляю! Вы правильно ответили на все вопросы.");
         }*/
-        stringBuilder.append(" Хотите посмотреть ответы на тест?");
+        stringBuilder.append(getActivity().getString(R.string.want_to_see_answers));
         builder.setMessage(stringBuilder.toString());
 
-        builder.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -213,7 +213,7 @@ public class QuestionsFragment extends Fragment {
             }
         });
 
-        builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -265,15 +265,15 @@ public class QuestionsFragment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Внимание!");
-                    builder.setMessage("Вы не завершили тест, все ваши результаты не будут сохранены. Вы уверены?");
-                    builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                    builder.setTitle(R.string.warning);
+                    builder.setMessage(R.string.test_not_completed);
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             getFragmentManager().popBackStack();
                         }
                     });
-                    builder.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();

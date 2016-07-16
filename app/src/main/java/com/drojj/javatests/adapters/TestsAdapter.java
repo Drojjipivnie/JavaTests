@@ -73,7 +73,7 @@ public class TestsAdapter  extends RecyclerView.Adapter<TestsAdapter.TestHolder>
         holder.testProgress.setText(progress);
 
         if(test2.last_time_passed == 0){
-            holder.lastTime.setText("Вы еще не проходили этот тест");
+            holder.lastTime.setText(R.string.test_never_be_passed);
         }else{
             Date date = new Date(test2.last_time_passed);
 

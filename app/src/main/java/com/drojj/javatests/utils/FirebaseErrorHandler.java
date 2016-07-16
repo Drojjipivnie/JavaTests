@@ -3,6 +3,7 @@ package com.drojj.javatests.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.drojj.javatests.R;
 import com.google.firebase.FirebaseApiNotAvailableException;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseNetworkException;
@@ -43,19 +44,19 @@ public class FirebaseErrorHandler {
         switch (e.getErrorCode()) {
             case "ERROR_USER_DISABLED":
                 mErrorCode = ERROR_USER_DISABLED;
-                mMessage = "Действие учетной записи приостановлено.";
+                mMessage = mCtx.getString(R.string.error_user_disabled);
                 break;
             case "ERROR_USER_NOT_FOUND":
                 mErrorCode = ERROR_USER_NOT_FOUND;
-                mMessage = "Нет пользователя с таким email.";
+                mMessage = mCtx.getString(R.string.error_user_not_found);
                 break;
             case "ERROR_WRONG_PASSWORD":
                 mErrorCode = ERROR_WRONG_PASSWORD;
-                mMessage = "Неверный пароль.";
+                mMessage = mCtx.getString(R.string.error_wrong_password);
                 break;
             case "ERROR_EMAIL_ALREADY_IN_USE":
                 mErrorCode = ERROR_EMAIL_ALREADY_IN_USE;
-                mMessage = "Данный email уже используется.";
+                mMessage = mCtx.getString(R.string.error_email_already_in_use);
                 break;
             default:
                 mErrorCode = DEFAULT;
@@ -66,13 +67,13 @@ public class FirebaseErrorHandler {
 
     private void handleOtherException(FirebaseException e) {
         if (e instanceof FirebaseTooManyRequestsException) {
-            mMessage = "Слишком много запросов. Попробуйте чуть позже.";
+            mMessage = mCtx.getString(R.string.error_too_many_requests);
             mErrorCode = ERROR_TOO_MANY_REQUESTS;
         } else if (e instanceof FirebaseNetworkException || e.getMessage().equals("An internal error has occured. [ <<Network Error>> ]")) {
-            mMessage = "Проблемы со связью.";
+            mMessage = mCtx.getString(R.string.error_network_exception);
             mErrorCode = ERROR_NETWORK_EXCEPTION;
         } else if (e instanceof FirebaseApiNotAvailableException) {
-            mMessage = "Сейчас сервис не доступен.";
+            mMessage = mCtx.getString(R.string.error_api_not_available);
             mErrorCode = ERROR_API_NOT_AVAILABLE;
         }
     }

@@ -188,7 +188,7 @@ public class TestProgressFragment extends Fragment {
             set1.setDrawCubic(true);
             set1.setCubicIntensity(0.2f);
             set1.setDrawFilled(true);
-            set1.setFillColor(Color.parseColor("#009688"));
+            set1.setFillColor(R.color.colorPrimaryDark);
             set1.setDrawCircles(false);
             set1.setLineWidth(1.0f);
             set1.setCircleRadius(4f);

@@ -1,22 +1,66 @@
 <resources>
     <string name="app_name">Java Тесты</string>
+
     <string name="navigation_menu_tests">Тесты</string>
     <string name="navigation_menu_questions">Вопросы</string>
     <string name="navigation_menu_about">О программе</string>
     <string name="navigation_menu_like">Оценить</string>
     <string name="navigation_menu_logout">Выйти из профиля</string>
-    <string name="logo">logo</string>
+
+    <string name="logo">Лого</string>
+    <string name="cancel">Отменить</string>
+    <string name="okey">OK</string>
+    <string name="loading">Загрузка…</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="warning">Внимание!</string>
+    <string name="send">Отправить</string>
+    <string name="please_wait">Подождите пожалуйста…</string>
+
     <string name="email">Email</string>
     <string name="password">Пароль</string>
     <string name="forget_password">Забыли пароль?</string>
     <string name="enter">Войти</string>
     <string name="name">Имя</string>
     <string name="registration">Регистрация</string>
+    <string name="still_no_account">Еще нет аккаунта? Создать</string>
+    <string name="welcome_user">"Добро пожаловать "</string>
+
     <string name="test_info_total_questions">Всего вопросов</string>
     <string name="test_info_best_score">Ваш лучший результат</string>
-    <string name="cancel">Отменить</string>
     <string name="start_test">Начать тест</string>
-    <string name="still_no_account">Еще нет аккаунта? Создать</string>
-    <string name="okey">OK</string>
     <string name="test_progress_average_score">Средний балл:</string>
+
+
+    <string name="email_not_validated">Email введен неверно.</string>
+    <string name="password_not_entered">Введите пароль.</string>
+
+    <string name="password_not_validated">Пароль должен состоять из букв латинского алфавита и хотя бы одной цифры;\nДлина пароля должна быть больше 6 знаков.</string>
+    <string name="name_not_validated">Обязательное поле. Имя должно состоять из 3 или более символов.</string>
+
+    <string name="double_back_to_exit">Нажмите еще раз для выхода</string>
+
+    <string name="error_user_disabled">Действие учетной записи приостановлено.</string>
+    <string name="error_user_not_found">Нет пользователя с таким email.</string>
+    <string name="error_wrong_password">Неверный пароль.</string>
+    <string name="error_email_already_in_use">Данный email уже используется.</string>
+    <string name="error_too_many_requests">Слишком много запросов. Попробуйте чуть позже.</string>
+    <string name="error_network_exception">Проблемы со связью.</string>
+    <string name="error_api_not_available">Сейчас сервис не доступен.</string>
+
+    <string name="send_reminder_password">Успешно! Мы отправили вам сообщение.</string>
+    <string name="remember_password_title_dialog">Вспомнить пароль</string>
+
+    <string name="choose_any_answer">Выберите один из вариантов</string>
+    <string name="test_complited">Тест завершен!</string>
+    <string name="test_final_score">"Ваш конечный результат "</string>
+    <string name="right_answers_from">" правильных ответов из "</string>
+    <string name="want_to_see_answers">" Хотите посмотреть ответы на тест?"</string>
+    <string name="test_not_completed">Вы не завершили тест, все ваши результаты не будут сохранены. Вы уверены?</string>
+
+    <string name="title_test_results">Результаты</string>
+    <string name="title_tests_list">Тесты</string>
+
+    <string name="test_never_be_passed">Вы еще не проходили этот тест</string>
+
 </resources>

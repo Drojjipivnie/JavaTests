@@ -48,20 +48,20 @@ public class PasswordReminder extends android.support.v4.app.DialogFragment {
         mRootView.requestFocus();
 
         mProgressLogin = new ProgressDialog(getActivity());
-        mProgressLogin.setTitle("Загрузка");
-        mProgressLogin.setMessage("Подождите пожалуйста...");
+        mProgressLogin.setTitle(R.string.loading);
+        mProgressLogin.setMessage(getActivity().getString(R.string.please_wait));
         mProgressLogin.setCancelable(false);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Вспомнить пароль")
+        builder.setTitle(R.string.remember_password_title_dialog)
                 .setView(v)
-                .setPositiveButton("Отправить", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.send, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 })
-                .setNegativeButton("Отмена", null);
+                .setNegativeButton(R.string.cancel, null);
         final AlertDialog alertDialog = builder.create();
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -111,7 +111,7 @@ public class PasswordReminder extends android.support.v4.app.DialogFragment {
         if(email.isEmpty() || !AuthDataValidator.validateEmail(email)){
             if (mRootView != null)
                 mRootView.requestFocus();
-            showError(mEmailTextWrapper,"Email введен неверно.");
+            showError(mEmailTextWrapper,getActivity().getString(R.string.email_not_validated));
             return;
         }
 
@@ -127,7 +127,7 @@ public class PasswordReminder extends android.support.v4.app.DialogFragment {
                     FirebaseErrorHandler handler = new FirebaseErrorHandler(getActivity(),task.getException());
                     showError(mEmailTextWrapper,handler.toString());
                 }else{
-                    Toast.makeText(getActivity(),"Успешно! Мы отправили вам сообщение.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.send_reminder_password,Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                 }
                 mProgressLogin.dismiss();

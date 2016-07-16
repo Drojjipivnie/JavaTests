@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/link_signup"
+        android:layout_toStartOf="@+id/link_signup"
+        android:background="@color/silver" />
+
+    <TextView
+        android:id="@+id/link_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/still_no_account" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/link_signup"
+        android:layout_toRightOf="@+id/link_signup"
+        android:background="@color/silver" />
+
+</RelativeLayout>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "163416006346",
+    "firebase_url": "https://java-tests.firebaseio.com",
+    "project_id": "java-tests",
+    "storage_bucket": "java-tests.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163416006346:android:e43c4a3071566ee0",
+        "android_client_info": {
+          "package_name": "com.drojj.javatests"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "163416006346-jc3ncm307s2ge7dff15nkvjeh3ve7k13.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc6Cymm4fGR5wiFj0JF2lDm7ge5bWJiZ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

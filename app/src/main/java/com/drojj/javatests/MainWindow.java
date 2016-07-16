@@ -29,6 +29,7 @@ import com.drojj.javatests.fragments.tests.QuestionsFragment;
 import com.drojj.javatests.fragments.tests.TestResultsFragment;
 import com.drojj.javatests.fragments.tests.TestsListFragment;
 import com.drojj.javatests.utils.ClearingManager;
+import com.drojj.javatests.utils.FirebaseAnalyticsLogger;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -47,6 +48,8 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     @BindView(R.id.toolbar_main) Toolbar mToolbar;
 
     private boolean mDoubleBackToExitPressedOnce = false;
+
+    private final FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
     private static int currentNavigationItem = R.id.navigation_tests_item;
 
@@ -152,7 +155,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                     Toast.makeText(MainWindow.this, getString(R.string.navigation_menu_like), Toast.LENGTH_SHORT).show();
                     return false;
                 case R.id.navigation_log_out:
-                    FirebaseAuth.getInstance().signOut();
+                    FirebaseAnalyticsLogger.getInstance(this).logClickLogOut(mUser.getUid());
                     startLoginActivity();
                     return false;
                 default:
@@ -200,6 +203,8 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
 
                         Intent intent = new Intent(MainWindow.this, LoginActivity.class);
                         startActivity(intent);
+                        FirebaseAuth.getInstance().signOut();
+                        FirebaseAnalyticsLogger.getInstance(MainWindow.this).logLogOut(mUser.getUid());
                         MainWindow.this.finish();
                     }
                 });

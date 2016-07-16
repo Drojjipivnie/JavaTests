@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.drojj.javatests.R;
 import com.drojj.javatests.fragments.tests.PasswordReminder;
+import com.drojj.javatests.utils.FirebaseAnalyticsLogger;
 import com.drojj.javatests.utils.FirebaseErrorHandler;
 import com.drojj.javatests.utils.AuthDataValidator;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -88,6 +89,7 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+                    FirebaseAnalyticsLogger.getInstance(LoginActivity.this).logLogIn(user.getUid());
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     startApp();
                     finish();
@@ -146,6 +148,7 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
                                 } else {
                                     showError(mEmailWrapper, handler.toString());
                                 }
+                                FirebaseAnalyticsLogger.getInstance(LoginActivity.this).logFailLogIn(handler.toString());
                             } else {
                                 String username = task.getResult().getUser().getDisplayName();
                                 Toast.makeText(LoginActivity.this, getString(R.string.welcome_user) + username + "!", Toast.LENGTH_SHORT).show();

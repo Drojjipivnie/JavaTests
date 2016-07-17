@@ -30,6 +30,8 @@ import com.drojj.javatests.fragments.tests.TestResultsFragment;
 import com.drojj.javatests.fragments.tests.TestsListFragment;
 import com.drojj.javatests.utils.ClearingManager;
 import com.drojj.javatests.utils.FirebaseAnalyticsLogger;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -57,6 +59,17 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //TODO:delete tests devices
+        AdView view = (AdView)findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("87A500DBD7033088C057D8E40FEFEB61")
+                .addTestDevice("57908671905FF7CFF624E55C46A1017A")
+                .build();
+        view.loadAd(adRequest);
+
 
         ButterKnife.bind(this);
 
@@ -221,7 +234,6 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     @Override
     protected void onResume() {
         super.onResume();
-        //initConnectionListener();
     }
 
     @Subscribe

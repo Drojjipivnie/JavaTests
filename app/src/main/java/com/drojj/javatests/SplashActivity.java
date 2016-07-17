@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.drojj.javatests.auth.LoginActivity;
 import com.drojj.javatests.database.tests.TestDatabase;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,6 +27,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        MobileAds.initialize(getApplicationContext(),"ca-app-pub-8055006078061724~4867169492");
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 

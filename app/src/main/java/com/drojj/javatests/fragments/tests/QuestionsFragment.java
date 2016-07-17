@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drojj.javatests.database.tests.TestDatabase;
-import com.drojj.javatests.events.OpenTestResultsEvent;
+import com.drojj.javatests.events.OpenFragmentEvent;
 import com.drojj.javatests.model.Test;
 import com.drojj.javatests.model.question.Question;
 import com.drojj.javatests.R;
@@ -72,7 +72,7 @@ public class QuestionsFragment extends Fragment {
 
     private Test mTest;
 
-    public static QuestionsFragment getInstance(Test test) {
+    public static QuestionsFragment newInstance(Test test) {
         QuestionsFragment fragment = new QuestionsFragment();
 
         Bundle args = new Bundle();
@@ -217,7 +217,8 @@ public class QuestionsFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                EventBus.getDefault().post(new OpenTestResultsEvent(mQuestionsList));
+                OpenFragmentEvent<ArrayList<Question>> event = new OpenFragmentEvent<ArrayList<Question>>(OpenFragmentEvent.FragmentType.TEST_RESULTS,mQuestionsList);
+                EventBus.getDefault().post(event);
             }
         });
         builder.setCancelable(false);

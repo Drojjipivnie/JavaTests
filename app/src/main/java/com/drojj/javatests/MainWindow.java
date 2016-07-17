@@ -19,14 +19,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.drojj.javatests.events.OpenTestEvent;
-import com.drojj.javatests.events.OpenTestPRogressEvent;
-import com.drojj.javatests.events.OpenTestResultsEvent;
-import com.drojj.javatests.fragments.tests.TestProgressFragment;
-import com.drojj.javatests.model.question.Question;
+import com.drojj.javatests.events.OpenFragmentEvent;
+import com.drojj.javatests.fragments.questions.QuestionCategories;
 import com.drojj.javatests.auth.LoginActivity;
-import com.drojj.javatests.fragments.tests.QuestionsFragment;
-import com.drojj.javatests.fragments.tests.TestResultsFragment;
 import com.drojj.javatests.fragments.tests.TestsListFragment;
 import com.drojj.javatests.utils.ClearingManager;
 import com.drojj.javatests.utils.FirebaseAnalyticsLogger;
@@ -37,8 +32,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,10 +60,9 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("87A500DBD7033088C057D8E40FEFEB61")
                 .addTestDevice("57908671905FF7CFF624E55C46A1017A")
+                .addTestDevice("155F616AA9FC9AC73CB732352E163F54")
                 .build();
         view.loadAd(adRequest);
-
-
         ButterKnife.bind(this);
 
         EventBus.getDefault().register(this);
@@ -81,8 +73,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
 
         if (savedInstanceState == null) {
             TestsListFragment fragment = new TestsListFragment();
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_container_main, fragment).addToBackStack("TestsList").commit();
+            replaceFragment("test_list",fragment);
         }
     }
 
@@ -149,14 +140,14 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                 case R.id.navigation_tests_item:
                     clearFragmentsBackStack();
                     currentNavigationItem = item.getItemId();
-                    replaceFragment("TestsList", new TestsListFragment());
+                    replaceFragment("test_list", new TestsListFragment());
                     mToolbar.setTitle(getString(R.string.navigation_menu_tests));
                     return true;
 
                 case R.id.navigation_questions_item:
                     clearFragmentsBackStack();
                     currentNavigationItem = item.getItemId();
-                    replaceFragment("Questions", new Fragment());
+                    replaceFragment("question_list", QuestionCategories.newInstance());
                     mToolbar.setTitle(getString(R.string.navigation_menu_questions));
                     return true;
 
@@ -231,43 +222,8 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         startActivity(intent);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     @Subscribe
-    public void onOpenTestEvent(OpenTestEvent event){
-        Fragment fragment = QuestionsFragment.getInstance(event.test);
-        getFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_out_right, R.animator.slide_in_right)
-                .replace(R.id.fragment_container_main, fragment)
-                .addToBackStack("Test_questions")
-                .commit();
-    }
-
-    @Subscribe
-    public void onOpenTestResultsEvent(OpenTestResultsEvent event){
-        getFragmentManager().popBackStack();
-        ArrayList<Question> questions = event.questions;
-        Fragment fragment = TestResultsFragment.getInstance(questions);
-        getFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_out_right, R.animator.slide_in_right)
-                .replace(R.id.fragment_container_main, fragment)
-                .addToBackStack("Test_results")
-                .commit();
-    }
-
-    @Subscribe
-    public void onOpenTestPRogressEvent(OpenTestPRogressEvent event){
-        Fragment fragment = TestProgressFragment.newInstance(event.test);
-        getFragmentManager()
-                .beginTransaction()
-                //.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_out_right, R.animator.slide_in_right)
-                .replace(R.id.fragment_container_main, fragment)
-                .addToBackStack("Test_progress")
-                .commit();
+    public void onFragmentOpenListener(OpenFragmentEvent event){
+        replaceFragment(event.getType().getTag(),event.getFragment());
     }
 }

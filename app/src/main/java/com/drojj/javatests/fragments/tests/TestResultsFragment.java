@@ -57,7 +57,7 @@ public class TestResultsFragment extends Fragment {
 
     private Unbinder unbinder;
 
-    public static TestResultsFragment getInstance(ArrayList<Question> questions) {
+    public static TestResultsFragment newInstance(ArrayList<Question> questions) {
         TestResultsFragment fragment = new TestResultsFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList("questions", questions);

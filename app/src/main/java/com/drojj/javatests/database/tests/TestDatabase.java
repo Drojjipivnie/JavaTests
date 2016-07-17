@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.drojj.javatests.model.Category;
 import com.drojj.javatests.model.Test;
 import com.drojj.javatests.model.question.Answer;
 import com.drojj.javatests.model.question.Question;
@@ -29,6 +30,8 @@ public class TestDatabase extends SQLiteOpenHelper {
 
     private SQLiteDatabase mDataBase;
 
+    private Context mCtx;
+
     public interface DataBaseInitCallback {
         void onSuccess();
 
@@ -44,6 +47,7 @@ public class TestDatabase extends SQLiteOpenHelper {
 
     private TestDatabase(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
+        mCtx = context;
     }
 
     private static String getDatabasePath(Context context) {
@@ -184,6 +188,35 @@ public class TestDatabase extends SQLiteOpenHelper {
 
         cursor.close();
         close();
+        return items;
+    }
+
+    public ArrayList<Category> getQuestionCategories() {
+        open();
+
+        String sql = "SELECT * FROM Categories";
+        Cursor cursor = mDataBase.rawQuery(sql, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToNext();
+        } else {
+            return null;
+        }
+
+        ArrayList<Category> items = new ArrayList<>();
+        do {
+
+            String image = cursor.getString(cursor.getColumnIndex("image_string"));
+            String title = cursor.getString(cursor.getColumnIndex("title"));
+            String description = cursor.getString(cursor.getColumnIndex("description"));
+            int id = cursor.getInt(cursor.getColumnIndex("_id"));
+            Category item = new Category(id, title, description, image, mCtx);
+            items.add(item);
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        close();
+
         return items;
     }
 

@@ -11,8 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.drojj.javatests.R;
-import com.drojj.javatests.events.OpenTestEvent;
-import com.drojj.javatests.events.OpenTestPRogressEvent;
+import com.drojj.javatests.events.OpenFragmentEvent;
 import com.drojj.javatests.model.Test;
 
 import org.greenrobot.eventbus.EventBus;
@@ -77,11 +76,13 @@ public class TestInfoDialog extends DialogFragment implements View.OnClickListen
                 break;
             case R.id.dialog_start_test_button:
                 getDialog().dismiss();
-                EventBus.getDefault().post(new OpenTestEvent(mTest));
+                OpenFragmentEvent<Test> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_QUIZ,mTest);
+                EventBus.getDefault().post(event);
                 break;
             case R.id.dialog_show_progress:
                 getDialog().dismiss();
-                EventBus.getDefault().post(new OpenTestPRogressEvent(mTest));
+                OpenFragmentEvent<Test> event2 = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_PROGRESS,mTest);
+                EventBus.getDefault().post(event2);
                 break;
 
         }

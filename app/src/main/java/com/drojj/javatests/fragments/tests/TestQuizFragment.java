@@ -40,7 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class QuestionsFragment extends Fragment {
+public class TestQuizFragment extends Fragment {
 
     private QuestionsRecyclerAdapter mQuestionsAdapter;
 
@@ -72,8 +72,8 @@ public class QuestionsFragment extends Fragment {
 
     private Test mTest;
 
-    public static QuestionsFragment newInstance(Test test) {
-        QuestionsFragment fragment = new QuestionsFragment();
+    public static TestQuizFragment newInstance(Test test) {
+        TestQuizFragment fragment = new TestQuizFragment();
 
         Bundle args = new Bundle();
         args.putParcelable("test", test);

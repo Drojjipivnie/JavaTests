@@ -20,9 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drojj.javatests.events.OpenFragmentEvent;
-import com.drojj.javatests.fragments.questions.QuestionCategories;
+import com.drojj.javatests.fragments.questions.InterviewQuestionCategories;
 import com.drojj.javatests.auth.LoginActivity;
-import com.drojj.javatests.fragments.tests.TestsListFragment;
+import com.drojj.javatests.fragments.tests.TestListFragment;
 import com.drojj.javatests.utils.ClearingManager;
 import com.drojj.javatests.utils.FirebaseAnalyticsLogger;
 import com.google.android.gms.ads.AdRequest;
@@ -72,7 +72,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         initNavigationView();
 
         if (savedInstanceState == null) {
-            TestsListFragment fragment = new TestsListFragment();
+            TestListFragment fragment = new TestListFragment();
             replaceFragment("test_list",fragment);
         }
     }
@@ -140,14 +140,14 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                 case R.id.navigation_tests_item:
                     clearFragmentsBackStack();
                     currentNavigationItem = item.getItemId();
-                    replaceFragment("test_list", new TestsListFragment());
+                    replaceFragment("test_list", new TestListFragment());
                     mToolbar.setTitle(getString(R.string.navigation_menu_tests));
                     return true;
 
                 case R.id.navigation_questions_item:
                     clearFragmentsBackStack();
                     currentNavigationItem = item.getItemId();
-                    replaceFragment("question_list", QuestionCategories.newInstance());
+                    replaceFragment("question_list", InterviewQuestionCategories.newInstance());
                     mToolbar.setTitle(getString(R.string.navigation_menu_questions));
                     return true;
 
@@ -209,6 +209,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                         startActivity(intent);
                         FirebaseAuth.getInstance().signOut();
                         FirebaseAnalyticsLogger.getInstance(MainWindow.this).logLogOut(mUser.getUid());
+                        MainWindow.currentNavigationItem = R.id.navigation_tests_item;
                         MainWindow.this.finish();
                     }
                 });

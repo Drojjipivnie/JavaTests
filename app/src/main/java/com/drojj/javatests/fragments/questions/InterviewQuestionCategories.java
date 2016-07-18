@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class QuestionCategories extends Fragment {
+public class InterviewQuestionCategories extends Fragment {
 
     private TestDatabase mDatabase;
 
@@ -36,8 +36,8 @@ public class QuestionCategories extends Fragment {
 
     private QuestionCategoriesAdapter mAdapter;
 
-    public static QuestionCategories newInstance() {
-        return new QuestionCategories();
+    public static InterviewQuestionCategories newInstance() {
+        return new InterviewQuestionCategories();
     }
 
     @Override
@@ -60,15 +60,15 @@ public class QuestionCategories extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                showQuestions(mList.get(i).getId());
+                showQuestions(mList.get(i));
             }
         });
 
         return view;
     }
 
-    private void showQuestions(int categoryId){
-        OpenFragmentEvent<Integer> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.QUESTION_LIST,categoryId);
+    private void showQuestions(Category category){
+        OpenFragmentEvent<Category> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.QUESTION_LIST,category);
         EventBus.getDefault().post(event);
     }
 

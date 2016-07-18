@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.drojj.javatests.model.Category;
+import com.drojj.javatests.model.InterviewQuestion;
 import com.drojj.javatests.model.Test;
 import com.drojj.javatests.model.question.Answer;
 import com.drojj.javatests.model.question.Question;
@@ -219,6 +220,34 @@ public class TestDatabase extends SQLiteOpenHelper {
 
         return items;
     }
+
+    public ArrayList<InterviewQuestion> getInterviewQuestions(int categoryId) {
+        open();
+
+        String sql = "SELECT * FROM InterviewQuestions WHERE category_id = "+String.valueOf(categoryId);
+        Cursor cursor = mDataBase.rawQuery(sql, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToNext();
+        } else {
+            return null;
+        }
+
+        ArrayList<InterviewQuestion> items = new ArrayList<>();
+        do {
+
+            String question = cursor.getString(cursor.getColumnIndex("question"));
+            String answer = cursor.getString(cursor.getColumnIndex("answer"));
+            items.add(new InterviewQuestion(question,answer));
+        } while (cursor.moveToNext());
+
+        cursor.close();
+
+        close();
+
+        return items;
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

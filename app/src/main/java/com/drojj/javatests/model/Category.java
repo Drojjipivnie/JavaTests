@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.drojj.javatests.utils.ResourcesGetter;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable{
 
     private int mId;
 

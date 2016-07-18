@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class TestsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class TestListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.test_swipe_layout)
     SwipeRefreshLayout mRefreshLayout;

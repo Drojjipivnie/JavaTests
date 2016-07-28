@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -68,6 +69,16 @@ public class InterviewQuestionList extends Fragment {
 
         listView.setAdapter(mAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Fragment fragment = InterviewQuestionAnswer.newInstance(mList.get(i - listView.getHeaderViewsCount()));
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container_main, fragment)
+                        .addToBackStack("t")
+                        .commit();
+            }
+        });
+
         return view;
     }
 
@@ -88,7 +99,7 @@ public class InterviewQuestionList extends Fragment {
         ImageView imageView = new ImageView(getActivity());
         imageView.setImageResource(mCategory.getImageResId());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            imageView.setTransitionName("transition_image");
+            imageView.setTransitionName("kittenImage");
         }
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

@@ -1,20 +1,19 @@
 package com.drojj.javatests.fragments.questions;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.transition.TransitionInflater;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.QuestionCategoriesAdapter;
+import com.drojj.javatests.animations.DetailsTransition;
 import com.drojj.javatests.database.tests.TestDatabase;
 import com.drojj.javatests.model.Category;
 
@@ -24,18 +23,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class InterviewQuestionCategories extends Fragment {
+public class InterviewQuestionCategories extends Fragment implements QuestionCategoriesAdapter.CategoryClickListener {
 
     private TestDatabase mDatabase;
 
     @BindView(R.id.list_of_items)
-    ListView listView;
+    RecyclerView listView;
 
     private Unbinder unbinder;
 
     private ArrayList<Category> mList;
-
-    private QuestionCategoriesAdapter mAdapter;
 
     public static InterviewQuestionCategories newInstance() {
         return new InterviewQuestionCategories();
@@ -47,52 +44,19 @@ public class InterviewQuestionCategories extends Fragment {
 
         mDatabase = TestDatabase.getInstance(getActivity());
         mList = mDatabase.getQuestionCategories();
-        mAdapter = new QuestionCategoriesAdapter(getActivity(), mList);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_listview, container, false);
+        View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
 
         unbinder = ButterKnife.bind(this, view);
 
-        listView.setAdapter(mAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                showQuestions(view, i);
-            }
-        });
+        listView.setAdapter(new QuestionCategoriesAdapter(mList,this));
+        listView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
-    }
-
-    //TODO:fragment transition
-    private void showQuestions(View view, int i) {
-        ImageView img = (ImageView) view.findViewById(R.id.category_image);
-
-        InterviewQuestionList endFragment = InterviewQuestionList.newInstance(mList.get(i));
-
-        FragmentManager fragmentManager = getFragmentManager();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setSharedElementReturnTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.trans));
-            setExitTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.fade));
-
-            endFragment.setSharedElementEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.trans));
-            endFragment.setEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.fade));
-            endFragment.setAllowEnterTransitionOverlap(false);
-            endFragment.setAllowReturnTransitionOverlap(false);
-
-            fragmentManager.beginTransaction().replace(R.id.fragment_container_main, endFragment)
-                    .addToBackStack("question_list")
-                    .addSharedElement(img, "transition_image")
-                    .commit();
-        } else {
-            fragmentManager.beginTransaction().replace(R.id.fragment_container_main, endFragment)
-                    .addToBackStack("question_list")
-                    .commit();
-        }
     }
 
     @Override
@@ -105,5 +69,27 @@ public class InterviewQuestionCategories extends Fragment {
     public void onResume() {
         super.onResume();
         getActivity().setTitle(getActivity().getString(R.string.title_question_categories));
+    }
+
+    @Override
+    public void onCategoryClicked(QuestionCategoriesAdapter.CategoryViewHolder holder, int position) {
+
+        Fragment fragment = InterviewQuestionList.newInstance(mList.get(position));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fragment.setSharedElementEnterTransition(new DetailsTransition());
+            fragment.setEnterTransition(new Fade());
+            setExitTransition(new Fade());
+            fragment.setSharedElementReturnTransition(new DetailsTransition());
+
+            getActivity().getFragmentManager()
+                    .beginTransaction()
+                    .addSharedElement(holder.image, "kittenImage")
+                    .replace(R.id.fragment_container_main, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+
     }
 }

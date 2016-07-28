@@ -1,6 +1,8 @@
 package com.drojj.javatests.model;
 
-public class InterviewQuestion {
+import java.io.Serializable;
+
+public class InterviewQuestion implements Serializable {
 
     private String mQuestion;
 

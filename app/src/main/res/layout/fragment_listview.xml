@@ -9,5 +9,6 @@
         android:clipToPadding="false"
         android:divider="@null"
         android:scrollbarStyle="outsideOverlay"
-        android:drawSelectorOnTop="true" />
+        android:drawSelectorOnTop="true"
+        android:layout_marginBottom="50dp" />
 </LinearLayout>

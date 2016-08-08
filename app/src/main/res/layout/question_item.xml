@@ -36,7 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/linearLayout2"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/question_text"

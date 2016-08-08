@@ -88,6 +88,12 @@ public class InterviewQuestionCategories extends Fragment implements QuestionCat
                     .replace(R.id.fragment_container_main, fragment)
                     .addToBackStack(null)
                     .commit();
+        }else{
+            getActivity().getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_main, fragment)
+                    .addToBackStack(null)
+                    .commit();
         }
 
 

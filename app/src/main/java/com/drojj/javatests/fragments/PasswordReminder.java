@@ -1,4 +1,4 @@
-package com.drojj.javatests.fragments.tests;
+package com.drojj.javatests.fragments;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,7 @@ import com.drojj.javatests.utils.AuthDataValidator;
 import com.drojj.javatests.utils.FirebaseErrorHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 
 import butterknife.ButterKnife;
 

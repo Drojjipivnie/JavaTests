@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drojj.javatests.R;
-import com.drojj.javatests.fragments.tests.PasswordReminder;
+import com.drojj.javatests.fragments.PasswordReminder;
 import com.drojj.javatests.utils.FirebaseAnalyticsLogger;
 import com.drojj.javatests.utils.FirebaseErrorHandler;
 import com.drojj.javatests.utils.AuthDataValidator;

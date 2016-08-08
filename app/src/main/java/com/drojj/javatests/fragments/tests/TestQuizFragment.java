@@ -1,6 +1,7 @@
 package com.drojj.javatests.fragments.tests;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.drojj.javatests.database.tests.TestDatabase;
 import com.drojj.javatests.events.OpenFragmentEvent;
+import com.drojj.javatests.fragments.EndResultsDialog;
 import com.drojj.javatests.model.Test;
 import com.drojj.javatests.model.question.Question;
 import com.drojj.javatests.R;
@@ -155,8 +157,8 @@ public class TestQuizFragment extends Fragment {
         String key = reference.child("users").child(user.getUid()).child("tests_entrys").child("test" + String.valueOf(mTest.id)).push().getKey();
         Map<String, Object> childUpdates = new HashMap<>();
 
-        childUpdates.put("users/"+user.getUid()+"/tests_entrys/test"+String.valueOf(mTest.id)+"/"+key+"/time",System.currentTimeMillis());
-        childUpdates.put("users/"+user.getUid()+"/tests_entrys/test"+String.valueOf(mTest.id)+"/"+key+"/score",rightAnswers);
+        childUpdates.put("users/" + user.getUid() + "/tests_entrys/test" + String.valueOf(mTest.id) + "/" + key + "/time", System.currentTimeMillis());
+        childUpdates.put("users/" + user.getUid() + "/tests_entrys/test" + String.valueOf(mTest.id) + "/" + key + "/score", rightAnswers);
         reference.updateChildren(childUpdates);
     }
 
@@ -168,61 +170,9 @@ public class TestQuizFragment extends Fragment {
     }
 
     private void showFinalDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.test_complited);
-
         int rightAnswers = mQuestionsList.size() - mWrongAnswersNum;
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getActivity().getString(R.string.test_final_score))
-                .append(rightAnswers).append(getActivity().getString(R.string.right_answers_from))
-                .append(mQuestionsList.size())
-                .append(".");
-        /*if (mWrongAnswersNum > 0) {
-            //Todo: сделать нормальны фразы при завершении теста
-            int prevRightAnswer = getBestRightScore();
-            if (isFirstTimePassed()) {
-                stringBuilder.append(" Вы впервые прошли этот тест и");
-                float percents = ((float) rightAnswers) / ((float) mQuestionsList.size());
-
-                if (percents < 0.5f) {
-                    stringBuilder.append(" это средний результат. Попробуйте подучить немного больше материалов.");
-                } else if (percents >= 0.5f && percents < 0.75f) {
-                    stringBuilder.append(" это высокий результат. Еще немного теории и практики и вы добъётесь более высокого результата.");
-                } else {
-                    stringBuilder.append(" это отличный результат! Время отведенное на изучение материала не прошло даром.");
-                }
-            } else if (rightAnswers > prevRightAnswer) {
-                stringBuilder.append(" Похоже Вы побили свой предыдущий результат. Поздравляю!");
-            } else if (rightAnswers == prevRightAnswer) {
-                stringBuilder.append(" Столько же раз вы ответили правильно в своем лучшем результате.");
-            } else {
-                stringBuilder.append(" Это меньше чем вы ответили в своем лучшем результате.");
-            }
-        } else {
-            stringBuilder.append(" Поздравляю! Вы правильно ответили на все вопросы.");
-        }*/
-        stringBuilder.append(getActivity().getString(R.string.want_to_see_answers));
-        builder.setMessage(stringBuilder.toString());
-
-        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                getFragmentManager().popBackStack();
-            }
-        });
-
-        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                OpenFragmentEvent<ArrayList<Question>> event = new OpenFragmentEvent<ArrayList<Question>>(OpenFragmentEvent.FragmentType.TEST_RESULTS,mQuestionsList);
-                EventBus.getDefault().post(event);
-            }
-        });
-        builder.setCancelable(false);
-        builder.show();
+        EndResultsDialog dialog = EndResultsDialog.newInstance(rightAnswers, mQuestionsList.size(), getTag(), mQuestionsList);
+        dialog.show(getFragmentManager(), "dialog_end_test");
     }
 
     private void showNextQuestion(boolean showAnimation) {
@@ -265,27 +215,32 @@ public class TestQuizFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle(R.string.warning);
-                    builder.setMessage(R.string.test_not_completed);
-                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            getFragmentManager().popBackStack();
-                        }
-                    });
-                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.show();
+                    showDialog();
                     return true;
                 }
                 return false;
             }
         });
+    }
+
+    private void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.warning);
+        builder.setMessage(R.string.test_not_completed);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                getFragmentManager().popBackStack();
+            }
+        });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     @Override
@@ -294,7 +249,7 @@ public class TestQuizFragment extends Fragment {
         outState.putParcelableArrayList("questions", mQuestionsList);
         outState.putInt("testId", mTestId);
         outState.putInt("currentQuestion", mQuestionCounter);
-        outState.putParcelable("test",mTest);
+        outState.putParcelable("test", mTest);
     }
 
     @Override

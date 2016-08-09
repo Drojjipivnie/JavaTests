@@ -73,7 +73,9 @@ public class InterviewQuestionList extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Fragment fragment = InterviewQuestionAnswer.newInstance(mList.get(i - listView.getHeaderViewsCount()));
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container_main, fragment)
+                getFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.animator.slide_in_from_right_to_left, R.animator.slide_out_from_right_to_left, R.animator.slide_in_from_left_to_right, R.animator.slide_out_from_left_to_right)
+                        .replace(R.id.fragment_container_main, fragment)
                         .addToBackStack("t")
                         .commit();
             }

@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,9 +39,17 @@ import butterknife.ButterKnife;
 
 public class MainWindow extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
-    @BindView(R.id.toolbar_main) Toolbar mToolbar;
+    @BindView(R.id.toolbar_main)
+    Toolbar mToolbar;
+
+    @BindView(R.id.navigation_view_main)
+    NavigationView mNavigation;
+
+    @BindView(R.id.fragment_container_main)
+    FrameLayout mFragmentContainer;
 
     private boolean mDoubleBackToExitPressedOnce = false;
 
@@ -54,7 +63,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         setContentView(R.layout.activity_main);
 
         //TODO:delete tests devices
-        AdView view = (AdView)findViewById(R.id.adView);
+        AdView view = (AdView) findViewById(R.id.adView);
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -73,7 +82,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
 
         if (savedInstanceState == null) {
             TestListFragment fragment = new TestListFragment();
-            replaceFragment("test_list",fragment);
+            replaceFragment("test_list", fragment);
         }
     }
 
@@ -88,13 +97,12 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     }
 
     private void initNavigationView() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view_main);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(currentNavigationItem);
+        mNavigation.setNavigationItemSelectedListener(this);
+        mNavigation.setCheckedItem(currentNavigationItem);
 
-        View v = navigationView.getHeaderView(0);
-        TextView name = ButterKnife.findById(v,R.id.navigation_header_name);
-        TextView email = ButterKnife.findById(v,R.id.navigation_header_email);
+        View v = mNavigation.getHeaderView(0);
+        TextView name = ButterKnife.findById(v, R.id.navigation_header_name);
+        TextView email = ButterKnife.findById(v, R.id.navigation_header_email);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         name.setText(user.getDisplayName());
@@ -107,6 +115,11 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         Log.d("Log", String.valueOf(getFragmentManager().getBackStackEntryCount()));
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
+        } else if (getFragmentManager().getBackStackEntryCount() == 2 && currentNavigationItem == R.id.navigation_questions_item) {
+            getFragmentManager().popBackStack();
+            currentNavigationItem = R.id.navigation_tests_item;
+            mFragmentContainer.setBackgroundColor(getResources().getColor(R.color.mainBackground));
+            mNavigation.setCheckedItem(currentNavigationItem);
         } else if (getFragmentManager().getBackStackEntryCount() > 1) {
             getFragmentManager().popBackStack();
         } else if (getFragmentManager().getBackStackEntryCount() == 1) {
@@ -138,23 +151,21 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
 
             switch (item.getItemId()) {
                 case R.id.navigation_tests_item:
+                    mFragmentContainer.setBackgroundColor(getResources().getColor(R.color.mainBackground));
                     clearFragmentsBackStack();
                     currentNavigationItem = item.getItemId();
-                    replaceFragment("test_list", new TestListFragment());
                     mToolbar.setTitle(getString(R.string.navigation_menu_tests));
                     return true;
-
                 case R.id.navigation_questions_item:
                     clearFragmentsBackStack();
                     currentNavigationItem = item.getItemId();
                     replaceFragment("question_list", InterviewQuestionCategories.newInstance());
                     mToolbar.setTitle(getString(R.string.navigation_menu_questions));
+                    mFragmentContainer.setBackgroundColor(getResources().getColor(R.color.colorWhite));
                     return true;
-
                 case R.id.navigation_about_item:
                     Toast.makeText(MainWindow.this, getString(R.string.navigation_menu_about), Toast.LENGTH_SHORT).show();
                     return false;
-
                 case R.id.navigation_like_item:
                     Toast.makeText(MainWindow.this, getString(R.string.navigation_menu_like), Toast.LENGTH_SHORT).show();
                     return false;
@@ -173,7 +184,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
 
     private void clearFragmentsBackStack() {
         FragmentManager fm = getFragmentManager();
-        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+        for (int i = 0; i < fm.getBackStackEntryCount() - 1; ++i) {
             fm.popBackStack();
         }
     }
@@ -181,14 +192,14 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     private void replaceFragment(String name, Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_from_right_to_left, R.animator.slide_out_from_right_to_left, R.animator.slide_in_from_left_to_right, R.animator.slide_out_from_left_to_right)
                 .replace(R.id.fragment_container_main, fragment)
-                //.setCustomAnimations()
                 .addToBackStack(name)
                 .commit();
 
     }
 
-    private void startLoginActivity(){
+    private void startLoginActivity() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Подтверждение")
                 .setMessage("Все сохраненные данные будут удалены. Вы уверены?")
@@ -216,7 +227,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         builder.show();
     }
 
-    private void goHome(){
+    private void goHome() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -224,7 +235,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     }
 
     @Subscribe
-    public void onFragmentOpenListener(OpenFragmentEvent event){
-        replaceFragment(event.getType().getTag(),event.getFragment());
+    public void onFragmentOpenListener(OpenFragmentEvent event) {
+        replaceFragment(event.getType().getTag(), event.getFragment());
     }
 }

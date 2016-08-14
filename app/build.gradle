@@ -4,7 +4,7 @@ apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.drojj.javatests"
@@ -23,6 +23,23 @@ android {
 
 repositories {
     maven { url "https://jitpack.io" }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "Java Tests"
+        property "sonar.projectKey", "app"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.jdbc.url", "jdbc:mysql://localhost:3306/sonar"
+        property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
+        property "sonar.jdbc.username", "admin"
+        property "sonar.jdbc.password", "admin"
+        property "sonar.projectVersion", "1.0"
+        property "sonar.language", "java"
+        property "sonar.sources", "src/main/"
+        property "sonar.tests", "src/androidTest/"
+        property "sonar.scm.provider", "git"
+    }
 }
 
 dependencies {

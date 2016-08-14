@@ -11,17 +11,17 @@ import android.widget.TextView;
 import com.drojj.javatests.model.question.Answer;
 import com.drojj.javatests.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class QuestionsAnswersRecyclerAdapter extends RecyclerView.Adapter<QuestionsAnswersRecyclerAdapter.AnswerHolder> {
 
-    private ArrayList<Answer> mAnswers;
+    private List<Answer> mAnswers;
     private int mChosenAnswerPosition;
 
-    public QuestionsAnswersRecyclerAdapter(ArrayList<Answer> answers, int chosenAnswer) {
+    public QuestionsAnswersRecyclerAdapter(List<Answer> answers, int chosenAnswer) {
         this.mAnswers = answers;
         this.mChosenAnswerPosition = chosenAnswer;
     }

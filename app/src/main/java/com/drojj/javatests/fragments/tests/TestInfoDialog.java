@@ -84,7 +84,7 @@ public class TestInfoDialog extends DialogFragment implements View.OnClickListen
                 OpenFragmentEvent<Test> event2 = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_PROGRESS,mTest);
                 EventBus.getDefault().post(event2);
                 break;
-
+            default:break;
         }
     }
 

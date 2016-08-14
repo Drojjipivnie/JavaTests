@@ -11,18 +11,18 @@ import android.widget.TextView;
 import com.drojj.javatests.R;
 import com.drojj.javatests.model.Category;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class QuestionCategoriesAdapter extends RecyclerView.Adapter<QuestionCategoriesAdapter.CategoryViewHolder> {
 
-    private ArrayList<Category> mList;
+    private List<Category> mList;
 
     private CategoryClickListener mListener;
 
-    public QuestionCategoriesAdapter(ArrayList<Category> list, CategoryClickListener listener) {
+    public QuestionCategoriesAdapter(List<Category> list, CategoryClickListener listener) {
         mList = list;
         mListener = listener;
     }

@@ -66,7 +66,7 @@ public class OpenFragmentEvent<T> {
                 return InterviewQuestionCategories.newInstance();
             case QUESTION_LIST:
                 return InterviewQuestionList.newInstance((Category) mData);
+            default: return null;
         }
-        return null;
     }
 }

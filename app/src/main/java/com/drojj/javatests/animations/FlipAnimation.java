@@ -12,6 +12,10 @@ public class FlipAnimation {
     public static final int FROM_LEFT = -1;
     public static final int FROM_RIGHT = 1;
 
+    private FlipAnimation() {
+        throw new IllegalAccessError("Anim class");
+    }
+
     public static void startRecyclerChildAnimation(final View view, int direction) {
 
         float from = view.getPivotX() + (direction) * 1000f;

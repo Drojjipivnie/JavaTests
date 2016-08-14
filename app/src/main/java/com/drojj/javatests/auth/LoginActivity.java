@@ -112,6 +112,7 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
             case R.id.link_forgot_password:
                 showReminderWindow();
                 break;
+            default:break;
         }
     }
 

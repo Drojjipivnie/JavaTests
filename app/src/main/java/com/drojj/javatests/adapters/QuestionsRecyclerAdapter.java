@@ -12,6 +12,7 @@ import com.drojj.javatests.R;
 import com.drojj.javatests.animations.FlipAnimation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,10 +20,10 @@ import butterknife.ButterKnife;
 public class QuestionsRecyclerAdapter extends RecyclerView.Adapter<QuestionsRecyclerAdapter.QuestionHolder> {
 
     private int mSelectedAnswer = -1;
-    private ArrayList<Answer> mAnswers;
+    private List<Answer> mAnswers;
     private ArrayList<RadioButton> mButtons;
 
-    public QuestionsRecyclerAdapter(ArrayList<Answer> answers) {
+    public QuestionsRecyclerAdapter(List<Answer> answers) {
         this.mAnswers = answers;
         mButtons = new ArrayList<>();
     }

@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class TestDatabase extends SQLiteOpenHelper {
@@ -111,7 +112,7 @@ public class TestDatabase extends SQLiteOpenHelper {
         super.close();
     }
 
-    public ArrayList<Question> getQuestions(int testId, int questionsCount) {
+    public List<Question> getQuestions(int testId, int questionsCount) {
 
         open();
 
@@ -122,10 +123,10 @@ public class TestDatabase extends SQLiteOpenHelper {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToNext();
         } else {
-            return null;
+            return Collections.emptyList();
         }
 
-        ArrayList<Question> items = new ArrayList<>();
+        List<Question> items = new ArrayList<>();
         do {
             items.add(addQuestion(cursor));
         } while (cursor.moveToNext());
@@ -163,7 +164,7 @@ public class TestDatabase extends SQLiteOpenHelper {
         return new Question(question_text, answers, code, explanation);
     }
 
-    public ArrayList<Test> getTests() {
+    public List<Test> getTests() {
 
         open();
 
@@ -174,10 +175,10 @@ public class TestDatabase extends SQLiteOpenHelper {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToNext();
         } else {
-            return null;
+            return Collections.emptyList();
         }
 
-        ArrayList<Test> items = new ArrayList<>();
+        List<Test> items = new ArrayList<>();
         do {
             Test test = new Test();
             test.id = cursor.getInt(cursor.getColumnIndex("_id"));
@@ -192,7 +193,7 @@ public class TestDatabase extends SQLiteOpenHelper {
         return items;
     }
 
-    public ArrayList<Category> getQuestionCategories() {
+    public List<Category> getQuestionCategories() {
         open();
 
         String sql = "SELECT * FROM Categories";
@@ -201,10 +202,10 @@ public class TestDatabase extends SQLiteOpenHelper {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToNext();
         } else {
-            return null;
+            return Collections.emptyList();
         }
 
-        ArrayList<Category> items = new ArrayList<>();
+        List<Category> items = new ArrayList<>();
         do {
 
             String image = cursor.getString(cursor.getColumnIndex("image_string"));
@@ -221,7 +222,7 @@ public class TestDatabase extends SQLiteOpenHelper {
         return items;
     }
 
-    public ArrayList<InterviewQuestion> getInterviewQuestions(int categoryId) {
+    public List<InterviewQuestion> getInterviewQuestions(int categoryId) {
         open();
 
         String sql = "SELECT * FROM InterviewQuestions WHERE category_id = "+String.valueOf(categoryId);
@@ -230,10 +231,10 @@ public class TestDatabase extends SQLiteOpenHelper {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToNext();
         } else {
-            return null;
+            return Collections.emptyList();
         }
 
-        ArrayList<InterviewQuestion> items = new ArrayList<>();
+        List<InterviewQuestion> items = new ArrayList<>();
         do {
 
             String question = cursor.getString(cursor.getColumnIndex("question"));

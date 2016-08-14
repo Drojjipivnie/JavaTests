@@ -35,6 +35,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -46,7 +47,7 @@ public class TestQuizFragment extends Fragment {
 
     private QuestionsRecyclerAdapter mQuestionsAdapter;
 
-    private ArrayList<Question> mQuestionsList;
+    private List<Question> mQuestionsList;
 
     private int mTestId, mQuestionCounter = 0, mWrongAnswersNum = 0;
 
@@ -246,7 +247,7 @@ public class TestQuizFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("questions", mQuestionsList);
+        outState.putParcelableArrayList("questions", (ArrayList<Question>)mQuestionsList);
         outState.putInt("testId", mTestId);
         outState.putInt("currentQuestion", mQuestionCounter);
         outState.putParcelable("test", mTest);

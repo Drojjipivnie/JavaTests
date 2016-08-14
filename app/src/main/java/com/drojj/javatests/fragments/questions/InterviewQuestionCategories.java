@@ -18,6 +18,7 @@ import com.drojj.javatests.database.tests.TestDatabase;
 import com.drojj.javatests.model.Category;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +33,7 @@ public class InterviewQuestionCategories extends Fragment implements QuestionCat
 
     private Unbinder unbinder;
 
-    private ArrayList<Category> mList;
+    private List<Category> mList;
 
     public static InterviewQuestionCategories newInstance() {
         return new InterviewQuestionCategories();

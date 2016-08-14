@@ -48,14 +48,11 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     @BindView(R.id.navigation_view_main)
     NavigationView mNavigation;
 
-    @BindView(R.id.fragment_container_main)
-    FrameLayout mFragmentContainer;
-
     private boolean mDoubleBackToExitPressedOnce = false;
 
     private final FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    private static int currentNavigationItem = R.id.navigation_tests_item;
+    private int currentNavigationItem = R.id.navigation_tests_item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +115,6 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         } else if (getFragmentManager().getBackStackEntryCount() == 2 && currentNavigationItem == R.id.navigation_questions_item) {
             getFragmentManager().popBackStack();
             currentNavigationItem = R.id.navigation_tests_item;
-            mFragmentContainer.setBackgroundColor(getResources().getColor(R.color.mainBackground));
             mNavigation.setCheckedItem(currentNavigationItem);
         } else if (getFragmentManager().getBackStackEntryCount() > 1) {
             getFragmentManager().popBackStack();
@@ -151,17 +147,13 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
 
             switch (item.getItemId()) {
                 case R.id.navigation_tests_item:
-                    mFragmentContainer.setBackgroundColor(getResources().getColor(R.color.mainBackground));
                     clearFragmentsBackStack();
                     currentNavigationItem = item.getItemId();
-                    mToolbar.setTitle(getString(R.string.navigation_menu_tests));
                     return true;
                 case R.id.navigation_questions_item:
                     clearFragmentsBackStack();
                     currentNavigationItem = item.getItemId();
                     replaceFragment("question_list", InterviewQuestionCategories.newInstance());
-                    mToolbar.setTitle(getString(R.string.navigation_menu_questions));
-                    mFragmentContainer.setBackgroundColor(getResources().getColor(R.color.colorWhite));
                     return true;
                 case R.id.navigation_about_item:
                     Toast.makeText(MainWindow.this, getString(R.string.navigation_menu_about), Toast.LENGTH_SHORT).show();
@@ -220,7 +212,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                         startActivity(intent);
                         FirebaseAuth.getInstance().signOut();
                         FirebaseAnalyticsLogger.getInstance(MainWindow.this).logLogOut(mUser.getUid());
-                        MainWindow.currentNavigationItem = R.id.navigation_tests_item;
+                        currentNavigationItem = R.id.navigation_tests_item;
                         MainWindow.this.finish();
                     }
                 });

@@ -35,6 +35,7 @@ public class PasswordReminder extends android.support.v4.app.DialogFragment {
     private ProgressDialog mProgressLogin;
     private View mRootView;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View v = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.dialog_reminder_password, null, false);
@@ -150,8 +151,8 @@ public class PasswordReminder extends android.support.v4.app.DialogFragment {
 
     private void showError(TextInputLayout textInputLayout, String errorText) {
         if (textInputLayout != null) {
-            textInputLayout.setErrorEnabled(true);
             textInputLayout.setError(errorText);
+            textInputLayout.setErrorEnabled(true);
         }
     }
 }

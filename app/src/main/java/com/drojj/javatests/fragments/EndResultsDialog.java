@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,7 @@ import com.drojj.javatests.model.question.Question;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EndResultsDialog extends DialogFragment {
 
@@ -27,14 +29,14 @@ public class EndResultsDialog extends DialogFragment {
 
     private String mText;
 
-    public static EndResultsDialog newInstance(int rightAnswers, int answersCount, String tag, ArrayList<Question> list) {
+    public static EndResultsDialog newInstance(int rightAnswers, int answersCount, String tag, List<Question> list) {
         EndResultsDialog dialog = new EndResultsDialog();
 
         Bundle bundle = new Bundle();
         bundle.putInt(RIGHT_ANSWERS, rightAnswers);
         bundle.putInt(ANSWERS_COUNT, answersCount);
         bundle.putString(TAG, tag);
-        bundle.putParcelableArrayList("list", list);
+        bundle.putParcelableArrayList("list", (ArrayList<Question>) list);
 
         dialog.setArguments(bundle);
 
@@ -63,8 +65,6 @@ public class EndResultsDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        final String tag = getArguments().getString(TAG);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.test_complited)
@@ -82,7 +82,7 @@ public class EndResultsDialog extends DialogFragment {
                         ArrayList<Question> list = getArguments().getParcelableArrayList("list");
                         dialog.dismiss();
                         getFragmentManager().popBackStack();
-                        OpenFragmentEvent<ArrayList<Question>> event = new OpenFragmentEvent<ArrayList<Question>>(OpenFragmentEvent.FragmentType.TEST_RESULTS, list);
+                        OpenFragmentEvent<ArrayList<Question>> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_RESULTS, list);
                         EventBus.getDefault().post(event);
                     }
                 })

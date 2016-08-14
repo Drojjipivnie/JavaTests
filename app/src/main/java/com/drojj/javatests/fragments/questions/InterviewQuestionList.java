@@ -19,6 +19,7 @@ import com.drojj.javatests.model.Category;
 import com.drojj.javatests.model.InterviewQuestion;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +36,7 @@ public class InterviewQuestionList extends Fragment {
 
     private InterviewQuestionListAdapter mAdapter;
 
-    private ArrayList<InterviewQuestion> mList;
+    private List<InterviewQuestion> mList;
 
     private Category mCategory;
 

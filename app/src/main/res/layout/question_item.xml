@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/colorWhite">
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/roundshape">
+            android:background="@drawable/question_item_circle_selector">
 
             <TextView
                 android:id="@+id/question_number"
@@ -43,8 +43,7 @@
                 android:id="@+id/question_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="Ghbdtn"
+                android:gravity="start"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -54,9 +53,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/linearLayout"
+        android:layout_marginLeft="60dp"
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@+id/linearLayout2"
-        android:background="@color/lightgray"
-        android:layout_marginLeft="60dp" />
+        android:background="@color/lightgray" />
 </LinearLayout>

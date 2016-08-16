@@ -17,7 +17,6 @@ import com.drojj.javatests.animations.DetailsTransition;
 import com.drojj.javatests.database.tests.TestDatabase;
 import com.drojj.javatests.model.Category;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -92,6 +91,7 @@ public class InterviewQuestionCategories extends Fragment implements QuestionCat
         }else{
             getActivity().getFragmentManager()
                     .beginTransaction()
+                    .setCustomAnimations(R.animator.slide_in_from_right_to_left, R.animator.slide_out_from_right_to_left, R.animator.slide_in_from_left_to_right, R.animator.slide_out_from_left_to_right)
                     .replace(R.id.fragment_container_main, fragment)
                     .addToBackStack(null)
                     .commit();

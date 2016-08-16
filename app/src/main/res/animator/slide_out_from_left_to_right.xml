@@ -8,11 +8,11 @@
         android:valueType="floatType"
         android:valueTo="0.0"
         android:valueFrom="1.0"
-        android:duration="400"/>
+        android:duration="200"/>
 
     <objectAnimator
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:duration="800"
+        android:duration="400"
         android:propertyName="x"
         android:valueFrom="0"
         android:valueTo="1280"

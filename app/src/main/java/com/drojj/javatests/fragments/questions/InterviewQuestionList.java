@@ -18,7 +18,6 @@ import com.drojj.javatests.database.tests.TestDatabase;
 import com.drojj.javatests.model.Category;
 import com.drojj.javatests.model.InterviewQuestion;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -68,14 +67,19 @@ public class InterviewQuestionList extends Fragment {
 
         listView.addHeaderView(createImageHeader(), null, false);
 
-        listView.setAdapter(mAdapter);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Fragment fragment = InterviewQuestionAnswer.newInstance(mList.get(i - listView.getHeaderViewsCount()));
+
+                int realPosition = i - listView.getHeaderViewsCount();
+
+                listView.setItemChecked(i, true);
+
+                Fragment fragment = InterviewQuestionAnswer.newInstance(mList.get(realPosition));
                 getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.animator.slide_in_from_right_to_left, R.animator.slide_out_from_right_to_left, R.animator.slide_in_from_left_to_right, R.animator.slide_out_from_left_to_right)
+                        .setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_in, R.animator.fade_out)
                         .replace(R.id.fragment_container_main, fragment)
                         .addToBackStack("t")
                         .commit();
@@ -83,6 +87,12 @@ public class InterviewQuestionList extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        listView.setAdapter(mAdapter);
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,7 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +50,9 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     @BindView(R.id.navigation_view_main)
     NavigationView mNavigation;
 
+    @BindView(R.id.toolbar_progress_bar)
+    ProgressBar mProgressBar;
+
     private boolean mDoubleBackToExitPressedOnce = false;
 
     private final FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -69,6 +74,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                 .addTestDevice("155F616AA9FC9AC73CB732352E163F54")
                 .build();
         view.loadAd(adRequest);
+
         ButterKnife.bind(this);
 
         EventBus.getDefault().register(this);
@@ -80,11 +86,14 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         if (savedInstanceState == null) {
             TestListFragment fragment = new TestListFragment();
             replaceFragment("test_list", fragment);
+        }else{
+            currentNavigationItem = savedInstanceState.getInt("currentTab");
         }
     }
 
     private void initToolbar() {
         setSupportActionBar(mToolbar);
+        mProgressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
     }
 
     private void initDrawerLayout() {
@@ -174,6 +183,12 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("currentTab",currentNavigationItem);
+    }
+
     private void clearFragmentsBackStack() {
         FragmentManager fm = getFragmentManager();
         for (int i = 0; i < fm.getBackStackEntryCount() - 1; ++i) {
@@ -229,5 +244,9 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     @Subscribe
     public void onFragmentOpenListener(OpenFragmentEvent event) {
         replaceFragment(event.getType().getTag(), event.getFragment());
+    }
+
+    public ProgressBar getProgressBar() {
+        return mProgressBar;
     }
 }

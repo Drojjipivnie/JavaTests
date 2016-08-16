@@ -47,7 +47,7 @@ public class TestInfoDialog extends DialogFragment implements View.OnClickListen
         mTest = getArguments().getParcelable("test");
 
         setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Light_Dialog);
-        setCancelable(false);
+        setCancelable(true);
     }
 
     @Nullable
@@ -76,15 +76,16 @@ public class TestInfoDialog extends DialogFragment implements View.OnClickListen
                 break;
             case R.id.dialog_start_test_button:
                 getDialog().dismiss();
-                OpenFragmentEvent<Test> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_QUIZ,mTest);
+                OpenFragmentEvent<Test> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_QUIZ, mTest);
                 EventBus.getDefault().post(event);
                 break;
             case R.id.dialog_show_progress:
                 getDialog().dismiss();
-                OpenFragmentEvent<Test> event2 = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_PROGRESS,mTest);
+                OpenFragmentEvent<Test> event2 = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_PROGRESS, mTest);
                 EventBus.getDefault().post(event2);
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 

@@ -7,11 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
+import com.drojj.javatests.MainWindow;
 import com.drojj.javatests.R;
 import com.drojj.javatests.model.InterviewQuestion;
-import com.drojj.javatests.utils.elementshelper.QuestionElement;
-import com.drojj.javatests.utils.elementshelper.QuestionElements;
+import com.drojj.javatests.utils.elementshelper.QuestionElementsAsyncHandler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,14 +20,16 @@ import butterknife.Unbinder;
 
 public class InterviewQuestionAnswer extends Fragment {
 
+    //TODO:Rotate screen -> Exception
+
     private InterviewQuestion mQuestion;
 
     @BindView(R.id.question_main_view)
     LinearLayout mainView;
 
-    private Unbinder unbinder;
+    private ProgressBar mProgressBar;
 
-    private QuestionElements mHelper;
+    private Unbinder unbinder;
 
 
     public static InterviewQuestionAnswer newInstance(InterviewQuestion question) {
@@ -42,8 +45,7 @@ public class InterviewQuestionAnswer extends Fragment {
         super.onCreate(savedInstanceState);
 
         mQuestion = (InterviewQuestion) getArguments().getSerializable("question");
-
-        mHelper = new QuestionElements(mQuestion.getAnswer().split("!split!"));
+        mProgressBar = ((MainWindow) getActivity()).getProgressBar();
     }
 
     @Nullable
@@ -53,12 +55,13 @@ public class InterviewQuestionAnswer extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        for(QuestionElement element: mHelper.getElements()){
-            View v = element.getView(getActivity());
-            mainView.addView(v);
-        }
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        new QuestionElementsAsyncHandler(mainView, mProgressBar).execute(mQuestion.getAnswer());
     }
 
     @Override

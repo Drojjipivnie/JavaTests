@@ -17,6 +17,8 @@ public class QuestionElements {
         for (String string : strings) {
             if (string.startsWith("<bloc")) {           //Код
                 mElements.add(new QuestionElement(ElementType.CODE, string));
+            } else if (string.startsWith("<intimg>")) {
+                mElements.add(new QuestionElement(ElementType.PICTURE, string.substring(8)));
             } else {
                 mElements.add(new QuestionElement(ElementType.TEXT, string));
             }

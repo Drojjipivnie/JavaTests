@@ -25,23 +25,6 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
-sonarqube {
-    properties {
-        property "sonar.projectName", "Java Tests"
-        property "sonar.projectKey", "app"
-        property "sonar.host.url", "http://localhost:9000"
-        property "sonar.jdbc.url", "jdbc:mysql://localhost:3306/sonar"
-        property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
-        property "sonar.jdbc.username", "admin"
-        property "sonar.jdbc.password", "admin"
-        property "sonar.projectVersion", "1.0"
-        property "sonar.language", "java"
-        property "sonar.sources", "src/main/"
-        property "sonar.tests", "src/androidTest/"
-        property "sonar.scm.provider", "git"
-    }
-}
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -61,6 +44,9 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.5'
 
     compile 'com.jakewharton:butterknife:8.1.0'
+
+    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.5.0'
+
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
 
 }

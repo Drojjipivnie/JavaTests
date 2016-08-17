@@ -8,6 +8,9 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
 import static android.view.ViewGroup.LayoutParams.*;
 
 
@@ -28,6 +31,8 @@ public class QuestionElement {
                 return createCodeView(ctx);
             case TEXT:
                 return createTextView(ctx, new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+            case PICTURE:
+                return createImageView(ctx);
             default:
                 return null;
         }
@@ -35,7 +40,11 @@ public class QuestionElement {
 
     private TextView createTextView(Context ctx, LinearLayout.LayoutParams params) {
         TextView v = new TextView(ctx);
-        v.setText(Html.fromHtml(mData));
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            v.setText(Html.fromHtml(mData, Html.FROM_HTML_MODE_LEGACY));
+        } else {
+            v.setText(Html.fromHtml(mData));
+        }
         v.setLayoutParams(params);
         return v;
     }
@@ -45,11 +54,23 @@ public class QuestionElement {
         HorizontalScrollView codeView = new HorizontalScrollView(ctx);
 
         codeView.addView(textView);
-        codeView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT,WRAP_CONTENT));
+        codeView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
         codeView.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
         codeView.setSmoothScrollingEnabled(true);
         codeView.setHorizontalScrollBarEnabled(false);
 
         return codeView;
+    }
+
+    private SubsamplingScaleImageView createImageView(final Context context) {
+        SubsamplingScaleImageView imageView = new SubsamplingScaleImageView(context);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+        layoutParams.setMargins(0, 10, 0, 10);
+
+        imageView.setLayoutParams(layoutParams);
+        imageView.setImage(ImageSource.asset("images/" + mData));
+
+        return imageView;
     }
 }

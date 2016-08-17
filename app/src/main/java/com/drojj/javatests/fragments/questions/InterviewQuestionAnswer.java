@@ -20,8 +20,6 @@ import butterknife.Unbinder;
 
 public class InterviewQuestionAnswer extends Fragment {
 
-    //TODO:Rotate screen -> Exception
-
     private InterviewQuestion mQuestion;
 
     @BindView(R.id.question_main_view)
@@ -45,7 +43,6 @@ public class InterviewQuestionAnswer extends Fragment {
         super.onCreate(savedInstanceState);
 
         mQuestion = (InterviewQuestion) getArguments().getSerializable("question");
-        mProgressBar = ((MainWindow) getActivity()).getProgressBar();
     }
 
     @Nullable
@@ -56,6 +53,12 @@ public class InterviewQuestionAnswer extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mProgressBar = ((MainWindow) getActivity()).getProgressBar();
     }
 
     @Override

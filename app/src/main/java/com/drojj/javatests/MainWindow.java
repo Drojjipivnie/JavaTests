@@ -28,11 +28,13 @@ import com.drojj.javatests.fragments.questions.InterviewQuestionCategories;
 import com.drojj.javatests.auth.LoginActivity;
 import com.drojj.javatests.fragments.tests.TestListFragment;
 import com.drojj.javatests.utils.ClearingManager;
-import com.drojj.javatests.utils.FirebaseAnalyticsLogger;
+import com.drojj.javatests.utils.analytics.FirebaseAnalyticsLogger;
+import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.yandex.metrica.YandexMetrica;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -173,7 +175,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                     Toast.makeText(MainWindow.this, getString(R.string.navigation_menu_like), Toast.LENGTH_SHORT).show();
                     return false;
                 case R.id.navigation_log_out:
-                    FirebaseAnalyticsLogger.getInstance(this).logClickLogOut(mUser.getUid());
+                    YandexAnalyticsLogger.getInstance().logClickLogOut(mUser.getUid());
                     startLoginActivity();
                     return false;
                 default:
@@ -189,6 +191,18 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("currentTab",currentNavigationItem);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        YandexMetrica.getReporter(this,"949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onResumeSession();
+    }
+
+    @Override
+    protected void onPause() {
+        YandexMetrica.getReporter(this,"949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onPauseSession();
+        super.onPause();
     }
 
     @Override
@@ -233,7 +247,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                         Intent intent = new Intent(MainWindow.this, LoginActivity.class);
                         startActivity(intent);
                         FirebaseAuth.getInstance().signOut();
-                        FirebaseAnalyticsLogger.getInstance(MainWindow.this).logLogOut(mUser.getUid());
+                        YandexAnalyticsLogger.getInstance().logLogOut(mUser.getUid());
                         currentNavigationItem = R.id.navigation_tests_item;
                         MainWindow.this.finish();
                     }

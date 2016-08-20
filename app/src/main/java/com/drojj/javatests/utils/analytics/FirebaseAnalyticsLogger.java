@@ -1,12 +1,13 @@
-package com.drojj.javatests.utils;
+package com.drojj.javatests.utils.analytics;
 
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.Logger;
 
-public class FirebaseAnalyticsLogger {
+public class FirebaseAnalyticsLogger implements Logger{
 
     private static FirebaseAnalyticsLogger mInstance;
 

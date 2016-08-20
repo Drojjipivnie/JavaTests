@@ -1,29 +1,23 @@
 package com.drojj.javatests.auth;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.transition.Fade;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
-import android.transition.Visibility;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.drojj.javatests.R;
 import com.drojj.javatests.model.fireweb.FireUser;
 import com.drojj.javatests.model.fireweb.FireUserHelper;
 import com.drojj.javatests.utils.AuthDataValidator;
-import com.drojj.javatests.utils.FirebaseAnalyticsLogger;
+import com.drojj.javatests.utils.analytics.FirebaseAnalyticsLogger;
 import com.drojj.javatests.utils.FirebaseErrorHandler;
+import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -85,7 +79,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
 
-                    FirebaseAnalyticsLogger.getInstance(SignupActivity.this).logSignUp(user.getUid());
+                    YandexAnalyticsLogger.getInstance().logSignUp(user.getUid());
 
                     final String name = mInputName.getText().toString();
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -155,7 +149,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
                     if (!task.isSuccessful()) {
                         FirebaseErrorHandler handler = new FirebaseErrorHandler(SignupActivity.this, task.getException());
                         handler.showErrorToast();
-                        FirebaseAnalyticsLogger.getInstance(SignupActivity.this).logFailSignUp(handler.toString());
+                        YandexAnalyticsLogger.getInstance().logFailSignUp(handler.toString());
                         hideProgressDialog();
                     }
                 }

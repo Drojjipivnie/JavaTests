@@ -1,5 +1,6 @@
 package com.drojj.javatests.utils.elementshelper;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,9 +14,12 @@ public class QuestionElementsAsyncHandler extends AsyncTask<String, QuestionElem
 
     private final ProgressBar mProgressBar;
 
+    private final Context mCtx;
+
     public QuestionElementsAsyncHandler(LinearLayout mView, ProgressBar mProgressBar) {
         this.mView = mView;
         this.mProgressBar = mProgressBar;
+        mCtx = mView.getContext();
     }
 
     @Override
@@ -34,7 +38,7 @@ public class QuestionElementsAsyncHandler extends AsyncTask<String, QuestionElem
 
     @Override
     protected List<QuestionElement> doInBackground(String... strings) {
-        QuestionElements helper = new QuestionElements(strings[0].split("!split!"));
+        QuestionElements helper = new QuestionElements(mCtx, strings[0].split("!split!"));
         for (QuestionElement element : helper.getElements()) {
             publishProgress(element);
         }

@@ -11,18 +11,23 @@ import android.widget.TextView;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
+
 import static android.view.ViewGroup.LayoutParams.*;
 
 
 public class QuestionElement {
 
+    private final QuestionElements mParent;
+
     private final ElementType mType;
 
     private final String mData;
 
-    public QuestionElement(ElementType type, String string) {
+    public QuestionElement(ElementType type, String string, QuestionElements parent) {
         mData = string;
         mType = type;
+        mParent = parent;
     }
 
     public View getView(Context ctx) {
@@ -46,6 +51,7 @@ public class QuestionElement {
             v.setText(Html.fromHtml(mData));
         }
         v.setLayoutParams(params);
+        CalligraphyUtils.applyFontToTextView(v, mParent.getRegularFont());
         return v;
     }
 

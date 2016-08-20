@@ -3,6 +3,7 @@ package com.drojj.javatests;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -38,6 +39,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainWindow extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -187,6 +189,11 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("currentTab",currentNavigationItem);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     private void clearFragmentsBackStack() {

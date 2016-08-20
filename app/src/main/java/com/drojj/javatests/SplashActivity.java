@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.drojj.javatests.auth.LoginActivity;
 import com.drojj.javatests.database.tests.TestDatabase;
@@ -28,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        MobileAds.initialize(getApplicationContext(),"ca-app-pub-8055006078061724~4867169492");
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-8055006078061724~4867169492");
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
@@ -41,23 +42,17 @@ public class SplashActivity extends AppCompatActivity {
 
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if (user != null) {
-                        startApp();
+                        startActivity(MainWindow.class);
                     } else {
-                        startLogin();
+                        startActivity(LoginActivity.class);
                     }
                 }
             }
         }, SPLASH_TIME_OUT);
     }
 
-    private void startApp() {
-        Intent intent = new Intent(SplashActivity.this, MainWindow.class);
-        SplashActivity.this.startActivity(intent);
-        SplashActivity.this.finish();
-    }
-
-    private void startLogin(){
-        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+    private void startActivity(Class<?> activity) {
+        Intent intent = new Intent(SplashActivity.this, activity);
         SplashActivity.this.startActivity(intent);
         SplashActivity.this.finish();
     }
@@ -68,14 +63,15 @@ public class SplashActivity extends AppCompatActivity {
             TestDatabase.copyDataBase(this, new TestDatabase.DataBaseInitCallback() {
                 @Override
                 public void onSuccess() {
-                    Log.d("SplashLog","DataBase is installed");
+                    Log.d("SplashLog", "DataBase is installed");
                     preferences.edit().putBoolean(APP_PREFERENCES_DB_SETTING, true).apply();
                 }
 
                 @Override
                 public void onError(IOException e) {
-                    Log.d("SplashLog","Database not installed");
-                    e.printStackTrace();
+                    Log.d("SplashLog", "Database not installed");
+                    Toast.makeText(SplashActivity.this, "Error: " + e.getMessage() + ".Database not installed.", Toast.LENGTH_SHORT).show();
+                    SplashActivity.this.finish();
                 }
             });
         }

@@ -1,6 +1,7 @@
 package com.drojj.javatests.fragments.questions;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.drojj.javatests.adapters.InterviewQuestionListAdapter;
 import com.drojj.javatests.database.tests.TestDatabase;
 import com.drojj.javatests.model.Category;
 import com.drojj.javatests.model.InterviewQuestion;
+import com.drojj.javatests.utils.DisplayUtils;
 
 import java.util.List;
 
@@ -114,8 +116,9 @@ public class InterviewQuestionList extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             imageView.setTransitionName("kittenImage");
         }
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setBackgroundColor(Color.WHITE);
+        imageView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtils.getDisplayWidth(getActivity())));
         return imageView;
     }
 

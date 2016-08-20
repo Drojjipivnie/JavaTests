@@ -66,4 +66,5 @@
 
     <string name="banner_ad_unit_id">ca-app-pub-8055006078061724/6343902695</string>
     <string name="CD_category_img">category_img</string>
+    <string name="dialog_test_open_graphic">Статистика</string>
 </resources>

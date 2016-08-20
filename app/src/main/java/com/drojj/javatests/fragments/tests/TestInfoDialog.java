@@ -68,12 +68,9 @@ public class TestInfoDialog extends DialogFragment implements View.OnClickListen
         return v;
     }
 
-    @OnClick({R.id.dialog_cancel, R.id.dialog_start_test_button, R.id.dialog_show_progress})
+    @OnClick({R.id.dialog_start_test_button, R.id.dialog_show_progress})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.dialog_cancel:
-                getDialog().dismiss();
-                break;
             case R.id.dialog_start_test_button:
                 getDialog().dismiss();
                 OpenFragmentEvent<Test> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_QUIZ, mTest);

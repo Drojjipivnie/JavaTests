@@ -79,7 +79,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
 
-                    YandexAnalyticsLogger.getInstance().logSignUp(user.getUid());
+                    mLogger.logSignUp(user.getUid());
 
                     final String name = mInputName.getText().toString();
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -149,7 +149,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
                     if (!task.isSuccessful()) {
                         FirebaseErrorHandler handler = new FirebaseErrorHandler(SignupActivity.this, task.getException());
                         handler.showErrorToast();
-                        YandexAnalyticsLogger.getInstance().logFailSignUp(handler.toString());
+                        mLogger.logFailSignUp(handler.toString());
                         hideProgressDialog();
                     }
                 }

@@ -1,6 +1,5 @@
 package com.drojj.javatests.fragments.tests;
 
-import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drojj.javatests.R;
+import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Test;
 import com.drojj.javatests.model.TestEntryModel;
 import com.github.mikephil.charting.charts.LineChart;
@@ -38,10 +38,12 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TestProgressFragment extends Fragment {
+public class TestProgressFragment extends BaseFragment {
 
     private Test mTest;
+
     private ArrayList<TestEntryModel> mEntrys;
+
     private DatabaseReference mReference;
 
     private ValueEventListener mListener;
@@ -72,6 +74,8 @@ public class TestProgressFragment extends Fragment {
         mReference = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("tests_entrys").child("test" + String.valueOf(mTest.id));
 
         initListener();
+
+        mToolbarTitle = mTest.name;
     }
 
     private void initListener() {
@@ -115,7 +119,7 @@ public class TestProgressFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_test_progress, container, false);
 
-        ButterKnife.bind(this, v);
+        mUnbinder = ButterKnife.bind(this, v);
 
         initChart();
         return v;
@@ -216,14 +220,6 @@ public class TestProgressFragment extends Fragment {
             mChart.setData(data);
         }
         mChart.invalidate();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().setTitle(mTest.name);
-
-        mReference.addValueEventListener(mListener);
     }
 
     @Override

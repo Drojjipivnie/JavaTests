@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.question.Question;
 import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.CustomLinearLayoutManager;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class TestResultsFragment extends Fragment {
+public class TestResultsFragment extends BaseFragment {
 
     private ArrayList<Question> mQuestions;
     private int mQuestionCounter = 0;
@@ -55,8 +56,6 @@ public class TestResultsFragment extends Fragment {
     @BindView(R.id.result_next_question)
     ImageButton mNextAnswerButton;
 
-    private Unbinder unbinder;
-
     public static TestResultsFragment newInstance(ArrayList<Question> questions) {
         TestResultsFragment fragment = new TestResultsFragment();
         Bundle args = new Bundle();
@@ -74,13 +73,15 @@ public class TestResultsFragment extends Fragment {
             mQuestions = savedInstanceState.getParcelableArrayList("questions");
             mQuestionCounter = savedInstanceState.getInt("currentQuestion");
         }
+
+        mToolbarTitle = getActivity().getString(R.string.title_test_results);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_questions_answers, container, false);
-        unbinder = ButterKnife.bind(this,view);
+        mUnbinder = ButterKnife.bind(this,view);
 
         mRecyclerView.setLayoutManager(new CustomLinearLayoutManager(getActivity()));
 
@@ -138,15 +139,17 @@ public class TestResultsFragment extends Fragment {
 
     private void switchImageButtonVisibility() {
         if (mQuestionCounter == 0) {
-            mPrevAnswerButton.setEnabled(false);
-            mNextAnswerButton.setEnabled(true);
+            changeButtonVisibility(View.INVISIBLE,View.VISIBLE);
         } else if (mQuestionCounter > 0 && mQuestionCounter < mQuestions.size() - 1) {
-            mPrevAnswerButton.setEnabled(true);
-            mNextAnswerButton.setEnabled(true);
+            changeButtonVisibility(View.VISIBLE,View.VISIBLE);
         } else {
-            mPrevAnswerButton.setEnabled(true);
-            mNextAnswerButton.setEnabled(false);
+            changeButtonVisibility(View.VISIBLE,View.INVISIBLE);
         }
+    }
+
+    private void changeButtonVisibility(int leftButtonState, int rightButtonState){
+        mPrevAnswerButton.setVisibility(leftButtonState);
+        mNextAnswerButton.setVisibility(rightButtonState);
     }
 
     @Override
@@ -154,17 +157,5 @@ public class TestResultsFragment extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("questions", mQuestions);
         outState.putInt("currentQuestion", mQuestionCounter);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().setTitle(getActivity().getString(R.string.title_test_results));
     }
 }

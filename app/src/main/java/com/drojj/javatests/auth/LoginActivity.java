@@ -91,7 +91,7 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    YandexAnalyticsLogger.getInstance().logLogIn(user.getUid());
+                    mLogger.logLogIn(user.getUid());
                     //FirebaseAnalyticsLogger.getInstance(LoginActivity.this).logLogIn(user.getUid());
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     startApp();
@@ -152,7 +152,7 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
                                 } else {
                                     showError(mEmailWrapper, handler.toString());
                                 }
-                                YandexAnalyticsLogger.getInstance().logFailLogIn(handler.toString());
+                                mLogger.logFailLogIn(handler.toString());
                             } else {
                                 String username = task.getResult().getUser().getDisplayName();
                                 Toast.makeText(LoginActivity.this, getString(R.string.welcome_user) + username + "!", Toast.LENGTH_SHORT).show();

@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import com.drojj.javatests.MainWindow;
 import com.drojj.javatests.R;
+import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.InterviewQuestion;
 import com.drojj.javatests.utils.elementshelper.QuestionElementsAsyncHandler;
 
@@ -18,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class InterviewQuestionAnswer extends Fragment {
+public class InterviewQuestionAnswer extends BaseFragment {
 
     private InterviewQuestion mQuestion;
 
@@ -26,9 +27,6 @@ public class InterviewQuestionAnswer extends Fragment {
     LinearLayout mainView;
 
     private ProgressBar mProgressBar;
-
-    private Unbinder unbinder;
-
 
     public static InterviewQuestionAnswer newInstance(InterviewQuestion question) {
         InterviewQuestionAnswer fragment = new InterviewQuestionAnswer();
@@ -43,6 +41,8 @@ public class InterviewQuestionAnswer extends Fragment {
         super.onCreate(savedInstanceState);
 
         mQuestion = (InterviewQuestion) getArguments().getSerializable("question");
+
+        mToolbarTitle = mQuestion.getQuestion();
     }
 
     @Nullable
@@ -50,7 +50,7 @@ public class InterviewQuestionAnswer extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_interview_question, container, false);
 
-        unbinder = ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         return view;
     }
@@ -68,15 +68,8 @@ public class InterviewQuestionAnswer extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(mQuestion.getQuestion());
         mainView.requestFocus();
     }
 }

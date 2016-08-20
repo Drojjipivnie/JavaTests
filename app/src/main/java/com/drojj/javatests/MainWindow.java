@@ -29,6 +29,7 @@ import com.drojj.javatests.auth.LoginActivity;
 import com.drojj.javatests.fragments.tests.TestListFragment;
 import com.drojj.javatests.utils.ClearingManager;
 import com.drojj.javatests.utils.analytics.FirebaseAnalyticsLogger;
+import com.drojj.javatests.utils.analytics.Logger;
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -60,6 +61,8 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     private boolean mDoubleBackToExitPressedOnce = false;
 
     private final FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+    private final Logger mLogger = YandexAnalyticsLogger.getInstance();
 
     private int currentNavigationItem = R.id.navigation_tests_item;
 
@@ -175,7 +178,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                     Toast.makeText(MainWindow.this, getString(R.string.navigation_menu_like), Toast.LENGTH_SHORT).show();
                     return false;
                 case R.id.navigation_log_out:
-                    YandexAnalyticsLogger.getInstance().logClickLogOut(mUser.getUid());
+                    mLogger.logClickLogOut(mUser.getUid());
                     startLoginActivity();
                     return false;
                 default:
@@ -247,7 +250,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                         Intent intent = new Intent(MainWindow.this, LoginActivity.class);
                         startActivity(intent);
                         FirebaseAuth.getInstance().signOut();
-                        YandexAnalyticsLogger.getInstance().logLogOut(mUser.getUid());
+                        mLogger.logLogOut(mUser.getUid());
                         currentNavigationItem = R.id.navigation_tests_item;
                         MainWindow.this.finish();
                     }

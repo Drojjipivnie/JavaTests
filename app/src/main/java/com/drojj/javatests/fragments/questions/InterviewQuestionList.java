@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.InterviewQuestionListAdapter;
 import com.drojj.javatests.database.tests.TestDatabase;
+import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Category;
 import com.drojj.javatests.model.InterviewQuestion;
 import com.drojj.javatests.utils.DisplayUtils;
@@ -26,14 +27,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class InterviewQuestionList extends Fragment {
+public class InterviewQuestionList extends BaseFragment {
 
     private TestDatabase mDatabase;
 
     @BindView(R.id.list_of_items)
     ListView listView;
-
-    private Unbinder unbinder;
 
     private InterviewQuestionListAdapter mAdapter;
 
@@ -58,6 +57,8 @@ public class InterviewQuestionList extends Fragment {
         mDatabase = TestDatabase.getInstance(getActivity());
         mList = mDatabase.getInterviewQuestions(mCategory.getId());
         mAdapter = new InterviewQuestionListAdapter(getActivity(), mList);
+
+        mToolbarTitle = mCategory.getTitle();
     }
 
     @Nullable
@@ -65,7 +66,7 @@ public class InterviewQuestionList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listview, container, false);
 
-        unbinder = ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         listView.addHeaderView(createImageHeader(), null, false);
 
@@ -95,18 +96,6 @@ public class InterviewQuestionList extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().setTitle(mCategory.getTitle());
     }
 
     //TODO:fragment transition

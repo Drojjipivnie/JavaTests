@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.drojj.javatests.database.tests.TestDatabase;
 import com.drojj.javatests.events.OpenFragmentEvent;
+import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.fragments.EndResultsDialog;
 import com.drojj.javatests.model.Test;
 import com.drojj.javatests.model.question.Question;
@@ -26,6 +27,7 @@ import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.CustomLinearLayoutManager;
 import com.drojj.javatests.adapters.QuestionsRecyclerAdapter;
 import com.drojj.javatests.animations.FlipAnimation;
+import com.drojj.javatests.utils.FirebaseQuizDatabaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class TestQuizFragment extends Fragment {
+public class TestQuizFragment extends BaseFragment {
 
     private QuestionsRecyclerAdapter mQuestionsAdapter;
 
@@ -70,8 +72,6 @@ public class TestQuizFragment extends Fragment {
     NestedScrollView mScrollView;
 
     private TestDatabase mDatabase;
-
-    private Unbinder unbinder;
 
     private Test mTest;
 
@@ -102,6 +102,8 @@ public class TestQuizFragment extends Fragment {
             mTestId = savedInstanceState.getInt("testId");
             mQuestionCounter = savedInstanceState.getInt("currentQuestion");
         }
+
+        mToolbarTitle = mTest.name;
     }
 
     @Nullable
@@ -109,7 +111,7 @@ public class TestQuizFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_questions_test, container, false);
 
-        unbinder = ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         mRecyclerView.setLayoutManager(new CustomLinearLayoutManager(getActivity()));
 
@@ -138,36 +140,15 @@ public class TestQuizFragment extends Fragment {
 
                 showFinalDialog();
                 if (mTest.progress < rightAnswers) {
-                    insertNewScore(rightAnswers);
+                    FirebaseQuizDatabaseUtils.insertNewScore(mTest.id, rightAnswers);
                 }
-                updateLastTimeTestPassed(rightAnswers);
+                FirebaseQuizDatabaseUtils.updateLastTimeTestPassed(mTest.id, rightAnswers);
+
             }
 
         } else {
             Toast.makeText(getActivity(), R.string.choose_any_answer, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void updateLastTimeTestPassed(int rightAnswers) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        reference.child("users").child(user.getUid()).child("tests_last_time").child("test" + String.valueOf(mTest.id)).setValue(System.currentTimeMillis());
-
-
-        String key = reference.child("users").child(user.getUid()).child("tests_entrys").child("test" + String.valueOf(mTest.id)).push().getKey();
-        Map<String, Object> childUpdates = new HashMap<>();
-
-        childUpdates.put("users/" + user.getUid() + "/tests_entrys/test" + String.valueOf(mTest.id) + "/" + key + "/time", System.currentTimeMillis());
-        childUpdates.put("users/" + user.getUid() + "/tests_entrys/test" + String.valueOf(mTest.id) + "/" + key + "/score", rightAnswers);
-        reference.updateChildren(childUpdates);
-    }
-
-    private void insertNewScore(int score) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        reference.child("users").child(user.getUid()).child("test_progress").child("test" + String.valueOf(mTest.id)).setValue(score);
     }
 
     private void showFinalDialog() {
@@ -209,7 +190,6 @@ public class TestQuizFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(mTest.name);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -224,7 +204,7 @@ public class TestQuizFragment extends Fragment {
         });
     }
 
-    private void showDialog(){
+    private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.warning);
         builder.setMessage(R.string.test_not_completed);
@@ -247,15 +227,10 @@ public class TestQuizFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("questions", (ArrayList<Question>)mQuestionsList);
+        outState.putParcelableArrayList("questions", (ArrayList<Question>) mQuestionsList);
         outState.putInt("testId", mTestId);
         outState.putInt("currentQuestion", mQuestionCounter);
         outState.putParcelable("test", mTest);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

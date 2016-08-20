@@ -15,13 +15,14 @@ import android.view.ViewGroup;
 import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.TestsAdapter;
 import com.drojj.javatests.database.tests.TestDatabase;
+import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Test;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class TestListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class TestListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.test_swipe_layout)
     SwipeRefreshLayout mRefreshLayout;
@@ -31,8 +32,6 @@ public class TestListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private TestsAdapter mAdapter;
 
-    private Unbinder unbinder;
-
     private TestDatabase mDatabase;
 
     @Override
@@ -41,6 +40,8 @@ public class TestListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         mDatabase = TestDatabase.getInstance(getActivity());
         initAdapter();
+
+        mToolbarTitle = getActivity().getString(R.string.title_tests_list);
     }
 
     @Nullable
@@ -48,7 +49,7 @@ public class TestListFragment extends Fragment implements SwipeRefreshLayout.OnR
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_test_list, container, false);
 
-        unbinder = ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -94,22 +95,9 @@ public class TestListFragment extends Fragment implements SwipeRefreshLayout.OnR
         mAdapter.updateTestInfo(true);
     }
 
-
     private void showDialog(Test test) {
         TestInfoDialog dialog = TestInfoDialog.newInstance(test);
         dialog.show(getFragmentManager(), "dialog");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().setTitle(getActivity().getString(R.string.title_tests_list));
     }
 
     @Override

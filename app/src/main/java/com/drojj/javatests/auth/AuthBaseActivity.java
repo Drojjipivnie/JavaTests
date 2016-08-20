@@ -8,6 +8,8 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import com.drojj.javatests.MainWindow;
+import com.drojj.javatests.utils.analytics.Logger;
+import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.firebase.auth.FirebaseAuth;
 
 public abstract class AuthBaseActivity extends AppCompatActivity {
@@ -15,6 +17,7 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
     protected FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mDialog;
+    protected final Logger mLogger = YandexAnalyticsLogger.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

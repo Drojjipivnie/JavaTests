@@ -15,6 +15,7 @@ import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.QuestionCategoriesAdapter;
 import com.drojj.javatests.animations.DetailsTransition;
 import com.drojj.javatests.database.tests.TestDatabase;
+import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Category;
 
 import java.util.List;
@@ -23,14 +24,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class InterviewQuestionCategories extends Fragment implements QuestionCategoriesAdapter.CategoryClickListener {
+public class InterviewQuestionCategories extends BaseFragment implements QuestionCategoriesAdapter.CategoryClickListener {
 
     private TestDatabase mDatabase;
 
     @BindView(R.id.list_of_items)
     RecyclerView listView;
-
-    private Unbinder unbinder;
 
     private List<Category> mList;
 
@@ -44,6 +43,8 @@ public class InterviewQuestionCategories extends Fragment implements QuestionCat
 
         mDatabase = TestDatabase.getInstance(getActivity());
         mList = mDatabase.getQuestionCategories();
+
+        mToolbarTitle = getActivity().getString(R.string.title_question_categories);
     }
 
     @Nullable
@@ -51,24 +52,12 @@ public class InterviewQuestionCategories extends Fragment implements QuestionCat
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
 
-        unbinder = ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
-        listView.setAdapter(new QuestionCategoriesAdapter(mList,this));
+        listView.setAdapter(new QuestionCategoriesAdapter(mList, this));
         listView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().setTitle(getActivity().getString(R.string.title_question_categories));
     }
 
     @Override
@@ -88,7 +77,7 @@ public class InterviewQuestionCategories extends Fragment implements QuestionCat
                     .replace(R.id.fragment_container_main, fragment)
                     .addToBackStack(null)
                     .commit();
-        }else{
+        } else {
             getActivity().getFragmentManager()
                     .beginTransaction()
                     .setCustomAnimations(R.animator.slide_in_from_right_to_left, R.animator.slide_out_from_right_to_left, R.animator.slide_in_from_left_to_right, R.animator.slide_out_from_left_to_right)

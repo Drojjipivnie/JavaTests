@@ -14,8 +14,6 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
         YandexMetrica.activate(getApplicationContext(), "949c67d2-e7fd-4b6e-9904-70c75a5bb76a");
         YandexMetrica.enableActivityAutoTracking(this);
 

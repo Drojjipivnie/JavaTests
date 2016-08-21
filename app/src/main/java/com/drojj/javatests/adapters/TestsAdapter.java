@@ -112,7 +112,7 @@ public class TestsAdapter  extends RecyclerView.Adapter<TestsAdapter.TestHolder>
 
         @BindView(R.id.testitem_progressbar) ProgressBar progressBar;
 
-        @BindView(R.id.testitem_cardview) CardView cardView;
+        @BindView(R.id.testitem_cardview) View cardView;
 
         public TestHolder(View itemView) {
             super(itemView);

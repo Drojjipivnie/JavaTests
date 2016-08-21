@@ -223,6 +223,12 @@ public class TestProgressFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mReference.addValueEventListener(mListener);
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         mReference.removeEventListener(mListener);

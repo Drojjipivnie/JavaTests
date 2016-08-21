@@ -27,6 +27,8 @@ import com.drojj.javatests.events.OpenFragmentEvent;
 import com.drojj.javatests.fragments.questions.InterviewQuestionCategories;
 import com.drojj.javatests.auth.LoginActivity;
 import com.drojj.javatests.fragments.tests.TestListFragment;
+import com.drojj.javatests.info.AboutProgram;
+import com.drojj.javatests.info.FeedBack;
 import com.drojj.javatests.utils.ClearingManager;
 import com.drojj.javatests.utils.analytics.FirebaseAnalyticsLogger;
 import com.drojj.javatests.utils.analytics.Logger;
@@ -93,7 +95,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         if (savedInstanceState == null) {
             TestListFragment fragment = new TestListFragment();
             replaceFragment("test_list", fragment);
-        }else{
+        } else {
             currentNavigationItem = savedInstanceState.getInt("currentTab");
         }
     }
@@ -172,10 +174,12 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                     replaceFragment("question_list", InterviewQuestionCategories.newInstance());
                     return true;
                 case R.id.navigation_about_item:
-                    Toast.makeText(MainWindow.this, getString(R.string.navigation_menu_about), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, AboutProgram.class);
+                    startActivity(intent);
                     return false;
                 case R.id.navigation_like_item:
-                    Toast.makeText(MainWindow.this, getString(R.string.navigation_menu_like), Toast.LENGTH_SHORT).show();
+                    Intent inten = new Intent(this, FeedBack.class);
+                    startActivity(inten);
                     return false;
                 case R.id.navigation_log_out:
                     mLogger.logClickLogOut(mUser.getUid());
@@ -193,18 +197,18 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("currentTab",currentNavigationItem);
+        outState.putInt("currentTab", currentNavigationItem);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        YandexMetrica.getReporter(this,"949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onResumeSession();
+        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onResumeSession();
     }
 
     @Override
     protected void onPause() {
-        YandexMetrica.getReporter(this,"949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onPauseSession();
+        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onPauseSession();
         super.onPause();
     }
 

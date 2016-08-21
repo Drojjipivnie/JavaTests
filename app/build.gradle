@@ -36,22 +36,13 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:9.2.0'
     compile 'com.google.firebase:firebase-database:9.2.0'
     compile 'com.google.firebase:firebase-ads:9.2.0'
-
     compile 'com.yandex.android:mobmetricalib:2.42'
-
     compile 'org.greenrobot:eventbus:3.0.0'
-
     compile 'com.google.code.gson:gson:2.4'
-
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.5'
-
     compile 'com.jakewharton:butterknife:8.1.0'
-
     compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.5.0'
-
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
-
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
-
 }
 apply plugin: 'com.google.gms.google-services'

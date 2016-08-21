@@ -3,7 +3,7 @@
 
     <string name="navigation_menu_tests">Тесты</string>
     <string name="navigation_menu_questions">Вопросы</string>
-    <string name="navigation_menu_about">О программе</string>
+    <string name="navigation_menu_about">О приложении</string>
     <string name="navigation_menu_like">Оценить</string>
     <string name="navigation_menu_logout">Выйти из профиля</string>
 
@@ -67,4 +67,17 @@
     <string name="banner_ad_unit_id">ca-app-pub-8055006078061724/6343902695</string>
     <string name="CD_category_img">category_img</string>
     <string name="dialog_test_open_graphic">Статистика</string>
+
+    <string name="about">Приложение написано Науменко Федором.</string>
+    <string name="reffers"><![CDATA[
+                                    <p>Материалы вопросов были взяты с сайта <b><a href="http://www.javastudy.ru">javastudy.ru</a></b>;</p><p>Материалы тестов были частично взяты с сайта <b><a href="http://www.quizful.net">quizful.net</a></b>;</p>
+                                    ]]></string>
+
+    <string name="bad_vote">Плохо</string>
+    <string name="bad_vote_explain">Неудобное приложение, долгая загрузка, нет дополнительных функций.</string>
+    <string name="good_vote">Отлично</string>
+    <string name="good_vote_explain">Стабильная работа, приложением приятно пользоваться.</string>
+    <string name="theme">Тема:</string>
+    <string name="feedback_leave">Оставить отзыв</string>
+    <string name="feedback_text_hint">Напишите свой отзыв о работе приложения</string>
 </resources>

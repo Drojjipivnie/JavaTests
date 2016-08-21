@@ -11,4 +11,7 @@
     <color name="test_result_right_answer">#1100FF00</color>
     <color name="test_result_wrong_answer">#11FF0000</color>
 
+    <color name="color_bad_vote">#D64338</color>
+    <color name="color_good_vote">#66CC66</color>
+
 </resources>

@@ -22,16 +22,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class InterviewQuestionCategories extends BaseFragment implements QuestionCategoriesAdapter.CategoryClickListener {
-
-    private TestDatabase mDatabase;
 
     @BindView(R.id.list_of_items)
     RecyclerView listView;
 
     private List<Category> mList;
+
+    private QuestionCategoriesAdapter mAdapter;
 
     public static InterviewQuestionCategories newInstance() {
         return new InterviewQuestionCategories();
@@ -41,10 +40,11 @@ public class InterviewQuestionCategories extends BaseFragment implements Questio
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mDatabase = TestDatabase.getInstance(getActivity());
-        mList = mDatabase.getQuestionCategories();
+        mList = TestDatabase.getInstance(getActivity()).getQuestionCategories();
 
         mToolbarTitle = getActivity().getString(R.string.title_question_categories);
+
+        mAdapter = new QuestionCategoriesAdapter(mList, this);
     }
 
     @Nullable
@@ -54,7 +54,7 @@ public class InterviewQuestionCategories extends BaseFragment implements Questio
 
         mUnbinder = ButterKnife.bind(this, view);
 
-        listView.setAdapter(new QuestionCategoriesAdapter(mList, this));
+        listView.setAdapter(mAdapter);
         listView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="50dp">
+    android:background="@color/colorWhite">
 
     <ListView
         android:id="@+id/list_of_items"
@@ -12,5 +12,6 @@
         android:clipToPadding="false"
         android:divider="@null"
         android:drawSelectorOnTop="true"
-        android:scrollbarStyle="outsideOverlay" />
+        android:scrollbarStyle="outsideOverlay"
+        android:paddingBottom="50dp" />
 </LinearLayout>

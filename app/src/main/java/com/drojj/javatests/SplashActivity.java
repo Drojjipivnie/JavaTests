@@ -31,8 +31,6 @@ public class SplashActivity extends AppCompatActivity {
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-8055006078061724~4867169492");
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
         checkDataBase();
 
         new Handler().postDelayed(new Runnable() {

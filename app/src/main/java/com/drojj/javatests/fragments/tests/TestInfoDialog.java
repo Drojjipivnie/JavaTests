@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.drojj.javatests.R;
 import com.drojj.javatests.events.OpenFragmentEvent;
 import com.drojj.javatests.model.Test;
+import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -75,11 +76,13 @@ public class TestInfoDialog extends DialogFragment implements View.OnClickListen
                 getDialog().dismiss();
                 OpenFragmentEvent<Test> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_QUIZ, mTest);
                 EventBus.getDefault().post(event);
+                YandexAnalyticsLogger.getInstance().startTest(mTest);
                 break;
             case R.id.dialog_show_progress:
                 getDialog().dismiss();
                 OpenFragmentEvent<Test> event2 = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_PROGRESS, mTest);
                 EventBus.getDefault().post(event2);
+                YandexAnalyticsLogger.getInstance().showProgress(mTest);
                 break;
             default:
                 break;

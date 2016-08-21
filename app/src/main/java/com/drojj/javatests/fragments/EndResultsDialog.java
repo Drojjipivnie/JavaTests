@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import com.drojj.javatests.R;
 import com.drojj.javatests.events.OpenFragmentEvent;
 import com.drojj.javatests.model.question.Question;
+import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -72,6 +73,7 @@ public class EndResultsDialog extends DialogFragment {
                 .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        YandexAnalyticsLogger.getInstance().clickTestResults(false);
                         dialog.dismiss();
                         getFragmentManager().popBackStack();
                     }
@@ -79,6 +81,7 @@ public class EndResultsDialog extends DialogFragment {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        YandexAnalyticsLogger.getInstance().clickTestResults(true);
                         ArrayList<Question> list = getArguments().getParcelableArrayList("list");
                         dialog.dismiss();
                         getFragmentManager().popBackStack();

@@ -3,6 +3,7 @@ package com.drojj.javatests.base;
 import android.app.Application;
 
 import com.drojj.javatests.R;
+import com.google.firebase.database.FirebaseDatabase;
 import com.yandex.metrica.YandexMetrica;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -12,6 +13,8 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         YandexMetrica.activate(getApplicationContext(), "949c67d2-e7fd-4b6e-9904-70c75a5bb76a");
         YandexMetrica.enableActivityAutoTracking(this);

@@ -16,8 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drojj.javatests.R;
-import com.drojj.javatests.utils.analytics.Logger;
-import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.yandex.metrica.YandexMetrica;

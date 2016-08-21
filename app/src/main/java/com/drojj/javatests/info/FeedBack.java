@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.drojj.javatests.R;
+import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
+import com.yandex.metrica.YandexMetrica;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +33,8 @@ public class FeedBack extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
 
+        YandexAnalyticsLogger.getInstance().startActivity(this.getClass().getName());
+
         ButterKnife.bind(this);
 
         initToolbar();
@@ -50,15 +54,29 @@ public class FeedBack extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.feedback_bad_btn:
+                YandexAnalyticsLogger.getInstance().clickFeedBackButton(false);
                 SendTextDialog dialog = new SendTextDialog();
                 dialog.setCancelable(false);
                 dialog.show(getSupportFragmentManager(), null);
                 break;
             case R.id.feedback_good_btn:
+                YandexAnalyticsLogger.getInstance().clickFeedBackButton(true);
                 voteApp();
                 FeedBack.this.finish();
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onResumeSession();
+    }
+
+    @Override
+    protected void onPause() {
+        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onPauseSession();
+        super.onPause();
     }
 
     private void voteApp() {

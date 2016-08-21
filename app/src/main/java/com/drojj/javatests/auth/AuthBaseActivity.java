@@ -8,16 +8,16 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import com.drojj.javatests.MainWindow;
-import com.drojj.javatests.utils.analytics.Logger;
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.firebase.auth.FirebaseAuth;
+import com.yandex.metrica.YandexMetrica;
 
 public abstract class AuthBaseActivity extends AppCompatActivity {
 
     protected FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mDialog;
-    protected final Logger mLogger = YandexAnalyticsLogger.getInstance();
+    protected final YandexAnalyticsLogger mLogger = YandexAnalyticsLogger.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +40,18 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onResumeSession();
+    }
+
+    @Override
+    protected void onPause() {
+        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onPauseSession();
+        super.onPause();
     }
 
     protected void showProgressDialog(String message){

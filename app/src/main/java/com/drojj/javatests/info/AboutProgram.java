@@ -1,7 +1,5 @@
 package com.drojj.javatests.info;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +10,8 @@ import android.widget.TextView;
 
 import com.drojj.javatests.BuildConfig;
 import com.drojj.javatests.R;
+import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
+import com.yandex.metrica.YandexMetrica;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,12 +35,26 @@ public class AboutProgram extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        YandexAnalyticsLogger.getInstance().startActivity(this.getClass().getName());
+
         ButterKnife.bind(this);
 
         initToolbar();
         initVersion();
         initAboutText();
         initReffers();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onResumeSession();
+    }
+
+    @Override
+    protected void onPause() {
+        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onPauseSession();
+        super.onPause();
     }
 
     private void initReffers() {

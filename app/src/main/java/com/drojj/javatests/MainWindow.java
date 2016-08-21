@@ -30,8 +30,6 @@ import com.drojj.javatests.fragments.tests.TestListFragment;
 import com.drojj.javatests.info.AboutProgram;
 import com.drojj.javatests.info.FeedBack;
 import com.drojj.javatests.utils.ClearingManager;
-import com.drojj.javatests.utils.analytics.FirebaseAnalyticsLogger;
-import com.drojj.javatests.utils.analytics.Logger;
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -64,7 +62,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
 
     private final FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    private final Logger mLogger = YandexAnalyticsLogger.getInstance();
+    private final YandexAnalyticsLogger mLogger = YandexAnalyticsLogger.getInstance();
 
     private int currentNavigationItem = R.id.navigation_tests_item;
 
@@ -72,6 +70,8 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mLogger.startActivity(this.getClass().getName());
 
         //TODO:delete tests devices
         AdView view = (AdView) findViewById(R.id.adView);
@@ -182,7 +182,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                     startActivity(inten);
                     return false;
                 case R.id.navigation_log_out:
-                    mLogger.logClickLogOut(mUser.getUid());
+                    mLogger.clickLogOut(mUser.getUid());
                     startLoginActivity();
                     return false;
                 default:
@@ -254,7 +254,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                         Intent intent = new Intent(MainWindow.this, LoginActivity.class);
                         startActivity(intent);
                         FirebaseAuth.getInstance().signOut();
-                        mLogger.logLogOut(mUser.getUid());
+                        mLogger.logOut(mUser.getUid());
                         currentNavigationItem = R.id.navigation_tests_item;
                         MainWindow.this.finish();
                     }

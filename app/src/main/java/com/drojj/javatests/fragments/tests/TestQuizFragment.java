@@ -153,6 +153,7 @@ public class TestQuizFragment extends BaseFragment {
 
     private void showFinalDialog() {
         int rightAnswers = mQuestionsList.size() - mWrongAnswersNum;
+        mLogger.testEnded(mTest,rightAnswers);
         EndResultsDialog dialog = EndResultsDialog.newInstance(rightAnswers, mQuestionsList.size(), getTag(), mQuestionsList);
         dialog.show(getFragmentManager(), "dialog_end_test");
     }
@@ -213,6 +214,7 @@ public class TestQuizFragment extends BaseFragment {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 getFragmentManager().popBackStack();
+                mLogger.quitTest(mTest, mQuestionCounter);
             }
         });
         builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

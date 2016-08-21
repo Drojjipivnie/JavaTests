@@ -15,9 +15,7 @@ import com.drojj.javatests.R;
 import com.drojj.javatests.model.fireweb.FireUser;
 import com.drojj.javatests.model.fireweb.FireUserHelper;
 import com.drojj.javatests.utils.AuthDataValidator;
-import com.drojj.javatests.utils.analytics.FirebaseAnalyticsLogger;
 import com.drojj.javatests.utils.FirebaseErrorHandler;
-import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -56,6 +54,8 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        mLogger.startActivity(this.getClass().getName());
+
         ButterKnife.bind(this);
 
         mInputPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -79,7 +79,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
 
-                    mLogger.logSignUp(user.getUid());
+                    mLogger.signUp();
 
                     final String name = mInputName.getText().toString();
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -149,7 +149,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
                     if (!task.isSuccessful()) {
                         FirebaseErrorHandler handler = new FirebaseErrorHandler(SignupActivity.this, task.getException());
                         handler.showErrorToast();
-                        mLogger.logFailSignUp(handler.toString());
+                        mLogger.failSignUp(handler.toString(),email);
                         hideProgressDialog();
                     }
                 }

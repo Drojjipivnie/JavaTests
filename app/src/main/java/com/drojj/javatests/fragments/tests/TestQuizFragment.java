@@ -1,7 +1,5 @@
 package com.drojj.javatests.fragments.tests;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,8 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.drojj.javatests.database.tests.TestDatabase;
-import com.drojj.javatests.events.OpenFragmentEvent;
+import com.drojj.javatests.database.TestDatabase;
 import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.fragments.EndResultsDialog;
 import com.drojj.javatests.model.Test;
@@ -27,23 +24,14 @@ import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.CustomLinearLayoutManager;
 import com.drojj.javatests.adapters.QuestionsRecyclerAdapter;
 import com.drojj.javatests.animations.FlipAnimation;
-import com.drojj.javatests.utils.FirebaseQuizDatabaseUtils;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.greenrobot.eventbus.EventBus;
+import com.drojj.javatests.database.FirebaseDatabaseUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class TestQuizFragment extends BaseFragment {
 
@@ -140,9 +128,9 @@ public class TestQuizFragment extends BaseFragment {
 
                 showFinalDialog();
                 if (mTest.progress < rightAnswers) {
-                    FirebaseQuizDatabaseUtils.insertNewScore(mTest.id, rightAnswers);
+                    FirebaseDatabaseUtils.insertNewScore(mTest.id, rightAnswers);
                 }
-                FirebaseQuizDatabaseUtils.updateLastTimeTestPassed(mTest.id, rightAnswers);
+                FirebaseDatabaseUtils.updateLastTimeTestPassed(mTest.id, rightAnswers);
 
             }
 
@@ -153,8 +141,9 @@ public class TestQuizFragment extends BaseFragment {
 
     private void showFinalDialog() {
         int rightAnswers = mQuestionsList.size() - mWrongAnswersNum;
-        mLogger.testEnded(mTest,rightAnswers);
+        mLogger.testEnded(mTest, rightAnswers);
         EndResultsDialog dialog = EndResultsDialog.newInstance(rightAnswers, mQuestionsList.size(), getTag(), mQuestionsList);
+        dialog.setCancelable(false);
         dialog.show(getFragmentManager(), "dialog_end_test");
     }
 

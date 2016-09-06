@@ -1,7 +1,5 @@
 package com.drojj.javatests.fragments.tests;
 
-import android.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -25,7 +23,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class TestResultsFragment extends BaseFragment {
 
@@ -81,7 +78,7 @@ public class TestResultsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_questions_answers, container, false);
-        mUnbinder = ButterKnife.bind(this,view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         mRecyclerView.setLayoutManager(new CustomLinearLayoutManager(getActivity()));
 
@@ -131,23 +128,23 @@ public class TestResultsFragment extends BaseFragment {
         }
 
         if (mQuestions.get(mQuestionCounter).isRightAnswered()) {
-            mQuestionCard.setCardBackgroundColor(ContextCompat.getColor(getActivity(),R.color.test_result_right_answer));
+            mQuestionCard.setCardBackgroundColor(ContextCompat.getColor(getActivity(), R.color.test_result_right_answer));
         } else {
-            mQuestionCard.setCardBackgroundColor(ContextCompat.getColor(getActivity(),R.color.test_result_wrong_answer));
+            mQuestionCard.setCardBackgroundColor(ContextCompat.getColor(getActivity(), R.color.test_result_wrong_answer));
         }
     }
 
     private void switchImageButtonVisibility() {
         if (mQuestionCounter == 0) {
-            changeButtonVisibility(View.INVISIBLE,View.VISIBLE);
+            changeButtonVisibility(View.INVISIBLE, View.VISIBLE);
         } else if (mQuestionCounter > 0 && mQuestionCounter < mQuestions.size() - 1) {
-            changeButtonVisibility(View.VISIBLE,View.VISIBLE);
+            changeButtonVisibility(View.VISIBLE, View.VISIBLE);
         } else {
-            changeButtonVisibility(View.VISIBLE,View.INVISIBLE);
+            changeButtonVisibility(View.VISIBLE, View.INVISIBLE);
         }
     }
 
-    private void changeButtonVisibility(int leftButtonState, int rightButtonState){
+    private void changeButtonVisibility(int leftButtonState, int rightButtonState) {
         mPrevAnswerButton.setVisibility(leftButtonState);
         mNextAnswerButton.setVisibility(rightButtonState);
     }

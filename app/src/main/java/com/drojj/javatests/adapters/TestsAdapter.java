@@ -2,8 +2,6 @@ package com.drojj.javatests.adapters;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +11,9 @@ import android.widget.TextView;
 
 import com.drojj.javatests.R;
 import com.drojj.javatests.model.Test;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.drojj.javatests.database.FirebaseDatabaseUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
@@ -30,7 +25,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TestsAdapter  extends RecyclerView.Adapter<TestsAdapter.TestHolder>{
+public class TestsAdapter extends RecyclerView.Adapter<TestsAdapter.TestHolder> {
 
     private ArrayList<Test> items;
     private ItemClickListener listener;
@@ -40,12 +35,13 @@ public class TestsAdapter  extends RecyclerView.Adapter<TestsAdapter.TestHolder>
         this.items = new ArrayList<>();
     }
 
-    public interface ItemClickListener{
+    public interface ItemClickListener {
         void onClick(Test test);
     }
 
-    public interface OnStartEndLoad{
+    public interface OnStartEndLoad {
         void onStart();
+
         void onFinish();
     }
 
@@ -72,9 +68,9 @@ public class TestsAdapter  extends RecyclerView.Adapter<TestsAdapter.TestHolder>
         String progress = String.valueOf(test2.progress) + "/" + String.valueOf(test2.question_count);
         holder.testProgress.setText(progress);
 
-        if(test2.last_time_passed == 0){
+        if (test2.last_time_passed == 0) {
             holder.lastTime.setText(R.string.test_never_be_passed);
-        }else{
+        } else {
             Date date = new Date(test2.last_time_passed);
 
             Locale locale = new Locale("ru", "RU");
@@ -104,59 +100,55 @@ public class TestsAdapter  extends RecyclerView.Adapter<TestsAdapter.TestHolder>
 
     public static class TestHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.testitem_name) TextView testName;
+        @BindView(R.id.testitem_name)
+        TextView testName;
 
-        @BindView(R.id.testitem_lasttime) TextView lastTime;
+        @BindView(R.id.testitem_lasttime)
+        TextView lastTime;
 
-        @BindView(R.id.testitem_progress) TextView testProgress;
+        @BindView(R.id.testitem_progress)
+        TextView testProgress;
 
-        @BindView(R.id.testitem_progressbar) ProgressBar progressBar;
+        @BindView(R.id.testitem_progressbar)
+        ProgressBar progressBar;
 
-        @BindView(R.id.testitem_cardview) View cardView;
+        @BindView(R.id.testitem_cardview)
+        View cardView;
 
         public TestHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
-    public void setOnClick(ItemClickListener listener){
+    public void setOnClick(ItemClickListener listener) {
         this.listener = listener;
     }
 
-    public void clear(){
+    public void clear() {
         items.clear();
     }
 
-    public void addAll(List<Test> list){
+    public void addAll(List<Test> list) {
         items.addAll(list);
         list.clear();
         notifyDataSetChanged();
     }
 
-    public void setOnFinishLoadListener(OnStartEndLoad listener){
+    public void setOnFinishLoadListener(OnStartEndLoad listener) {
         mListener = listener;
     }
 
-    public void updateTestInfo(boolean isFirstTimeCalled){
+    public void updateTestInfo() {
 
-        if(isFirstTimeCalled){
-            mListener.onStart();
-        }
+        mListener.onStart();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
-
-        DatabaseReference testProgressReference = reference.child("test_progress");
-        DatabaseReference testsLastTimeReference = reference.child("tests_last_time");
-
-        for(int i = 0; i< items.size();i++){
+        for (int i = 0; i < items.size(); i++) {
 
             final Test test = items.get(i);
 
             final int finalI = i;
-
-            testProgressReference.child("test" + String.valueOf(test.id)).addListenerForSingleValueEvent(new ValueEventListener() {
+            FirebaseDatabaseUtils.getTestMaxScoreReference(test.id).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null) {
@@ -166,7 +158,7 @@ public class TestsAdapter  extends RecyclerView.Adapter<TestsAdapter.TestHolder>
                     }
                     notifyDataSetChanged();
 
-                    if(finalI ==items.size()-1){
+                    if (finalI == items.size() - 1) {
                         mListener.onFinish();
                     }
                 }
@@ -177,7 +169,7 @@ public class TestsAdapter  extends RecyclerView.Adapter<TestsAdapter.TestHolder>
                 }
             });
 
-            testsLastTimeReference.child("test"+String.valueOf(test.id)).addListenerForSingleValueEvent(new ValueEventListener() {
+            FirebaseDatabaseUtils.getTestLastTimeReference(test.id).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() == null) {
@@ -187,7 +179,7 @@ public class TestsAdapter  extends RecyclerView.Adapter<TestsAdapter.TestHolder>
                     }
                     notifyDataSetChanged();
 
-                    if(finalI ==items.size()-1){
+                    if (finalI == items.size() - 1) {
                         mListener.onFinish();
                     }
                 }

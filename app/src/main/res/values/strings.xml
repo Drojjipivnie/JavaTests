@@ -80,4 +80,5 @@
     <string name="theme">Тема:</string>
     <string name="feedback_leave">Оставить отзыв</string>
     <string name="feedback_text_hint">Напишите свой отзыв о работе приложения</string>
+    <string name="clear_statistics">Очистить статистику</string>
 </resources>

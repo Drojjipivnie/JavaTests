@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.drojj.javatests.auth.LoginActivity;
-import com.drojj.javatests.database.tests.TestDatabase;
+import com.drojj.javatests.database.TestDatabase;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

@@ -1,8 +1,5 @@
 package com.drojj.javatests.fragments.tests;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,13 +11,12 @@ import android.view.ViewGroup;
 
 import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.TestsAdapter;
-import com.drojj.javatests.database.tests.TestDatabase;
+import com.drojj.javatests.database.TestDatabase;
 import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Test;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class TestListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -60,7 +56,7 @@ public class TestListFragment extends BaseFragment implements SwipeRefreshLayout
         return view;
     }
 
-    private void initAdapter(){
+    private void initAdapter() {
         mAdapter = new TestsAdapter();
         mAdapter.setOnClick(new TestsAdapter.ItemClickListener() {
             @Override
@@ -92,7 +88,6 @@ public class TestListFragment extends BaseFragment implements SwipeRefreshLayout
         });
 
         mAdapter.addAll(mDatabase.getTests());
-        mAdapter.updateTestInfo(true);
     }
 
     private void showDialog(Test test) {
@@ -103,6 +98,12 @@ public class TestListFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     public void onRefresh() {
         mRefreshLayout.setRefreshing(true);
-        mAdapter.updateTestInfo(false);
+        mAdapter.updateTestInfo();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.updateTestInfo();
     }
 }

@@ -93,7 +93,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
                             FireUserHelper helper = new FireUserHelper(user.getUid());
 
                             FireUser.Builder builder = FireUser.newBuilder();
-                            builder.setName(name).setUid(user.getUid());
+                            builder.setName(name).setUid(user.getUid()).setEmail(user.getEmail()).setSignUpTime(System.currentTimeMillis());
 
                             helper.createFireUser(builder.build());
                             startApp();
@@ -124,7 +124,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
         if (!AuthDataValidator.validatePassword(password)) {
             isOk = false;
             if (password.isEmpty()) {
-                showError(mPasswordWrapper,  getString(R.string.password_not_entered));
+                showError(mPasswordWrapper, getString(R.string.password_not_entered));
             } else {
                 showError(mPasswordWrapper, getString(R.string.password_not_validated));
             }
@@ -149,7 +149,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
                     if (!task.isSuccessful()) {
                         FirebaseErrorHandler handler = new FirebaseErrorHandler(SignupActivity.this, task.getException());
                         handler.showErrorToast();
-                        mLogger.failSignUp(handler.toString(),email);
+                        mLogger.failSignUp(handler.toString(), email);
                         hideProgressDialog();
                     }
                 }

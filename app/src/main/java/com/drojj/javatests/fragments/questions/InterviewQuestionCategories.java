@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.QuestionCategoriesAdapter;
 import com.drojj.javatests.animations.DetailsTransition;
-import com.drojj.javatests.database.tests.TestDatabase;
+import com.drojj.javatests.database.TestDatabase;
 import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Category;
 

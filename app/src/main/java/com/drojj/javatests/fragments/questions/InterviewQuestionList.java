@@ -15,7 +15,7 @@ import android.widget.ListView;
 
 import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.InterviewQuestionListAdapter;
-import com.drojj.javatests.database.tests.TestDatabase;
+import com.drojj.javatests.database.TestDatabase;
 import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Category;
 import com.drojj.javatests.model.InterviewQuestion;
@@ -25,7 +25,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class InterviewQuestionList extends BaseFragment {
 

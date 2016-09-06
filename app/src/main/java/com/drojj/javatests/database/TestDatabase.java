@@ -1,4 +1,4 @@
-package com.drojj.javatests.database.tests;
+package com.drojj.javatests.database;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -225,7 +225,7 @@ public class TestDatabase extends SQLiteOpenHelper {
     public List<InterviewQuestion> getInterviewQuestions(int categoryId) {
         open();
 
-        String sql = "SELECT * FROM InterviewQuestions WHERE category_id = "+String.valueOf(categoryId);
+        String sql = "SELECT * FROM InterviewQuestions WHERE category_id = " + String.valueOf(categoryId);
         Cursor cursor = mDataBase.rawQuery(sql, null);
 
         if (cursor != null && cursor.getCount() > 0) {
@@ -239,7 +239,7 @@ public class TestDatabase extends SQLiteOpenHelper {
 
             String question = cursor.getString(cursor.getColumnIndex("question"));
             String answer = cursor.getString(cursor.getColumnIndex("answer"));
-            items.add(new InterviewQuestion(question,answer));
+            items.add(new InterviewQuestion(question, answer));
         } while (cursor.moveToNext());
 
         cursor.close();

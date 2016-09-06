@@ -2,10 +2,8 @@ package com.drojj.javatests.fragments;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -69,6 +67,7 @@ public class EndResultsDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.test_complited)
+                .setCancelable(false)
                 .setMessage(mText)
                 .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
@@ -88,8 +87,7 @@ public class EndResultsDialog extends DialogFragment {
                         OpenFragmentEvent<ArrayList<Question>> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_RESULTS, list);
                         EventBus.getDefault().post(event);
                     }
-                })
-                .setCancelable(false);
+                });
 
 
         return builder.create();

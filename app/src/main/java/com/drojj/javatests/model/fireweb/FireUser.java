@@ -6,6 +6,10 @@ public class FireUser {
 
     public String name;
 
+    public String email;
+
+    public long sign_up_time;
+
     public FireUser() {
     }
 
@@ -26,7 +30,17 @@ public class FireUser {
             return this;
         }
 
-        public FireUser build(){
+        public Builder setEmail(String email) {
+            FireUser.this.email = email;
+            return this;
+        }
+
+        public Builder setSignUpTime(long time) {
+            FireUser.this.sign_up_time = time;
+            return this;
+        }
+
+        public FireUser build() {
             return FireUser.this;
         }
 

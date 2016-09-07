@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.drojj.javatests.BuildConfig;
 import com.drojj.javatests.model.Category;
 import com.drojj.javatests.model.InterviewQuestion;
 import com.drojj.javatests.model.Test;
@@ -24,7 +25,7 @@ import java.util.Random;
 
 public class TestDatabase extends SQLiteOpenHelper {
 
-    private static int VERSION = 1;
+    public static final int VERSION = BuildConfig.VERSION_CODE;
 
     private static final String DATABASE_NAME = "TestsDataBase.db";
 
@@ -257,6 +258,5 @@ public class TestDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
 }

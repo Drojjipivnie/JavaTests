@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final int SPLASH_TIME_OUT = 1000;
 
     public static final String APP_PREFERENCES = "app_settings";
-    private static final String APP_PREFERENCES_DB_SETTING = "isDataBaseInstalled";
+    private static final String APP_PREFERENCES_DB_SETTING = "database_version";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +59,14 @@ public class SplashActivity extends AppCompatActivity {
 
     private void checkDataBase() {
         final SharedPreferences preferences = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
-        if (!preferences.getBoolean(APP_PREFERENCES_DB_SETTING, false)) {
+        int databaseVersion= preferences.getInt(APP_PREFERENCES_DB_SETTING, 0);
+
+        if (databaseVersion == 0 || databaseVersion != TestDatabase.VERSION) {
             TestDatabase.copyDataBase(this, new TestDatabase.DataBaseInitCallback() {
                 @Override
                 public void onSuccess() {
                     Log.d("SplashLog", "DataBase is installed");
-                    preferences.edit().putBoolean(APP_PREFERENCES_DB_SETTING, true).apply();
+                    preferences.edit().putInt(APP_PREFERENCES_DB_SETTING, TestDatabase.VERSION).apply();
                 }
 
                 @Override

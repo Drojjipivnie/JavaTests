@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.drojj.javatests.BuildConfig;
 import com.drojj.javatests.R;
-import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.yandex.metrica.YandexMetrica;
 
 import butterknife.BindView;
@@ -34,8 +33,6 @@ public class AboutProgram extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-
-        YandexAnalyticsLogger.getInstance().startActivity(this.getClass().getName());
 
         ButterKnife.bind(this);
 

@@ -16,12 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drojj.javatests.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.yandex.metrica.YandexMetrica;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.drojj.javatests.database.FirebaseDatabaseUtils;
 
 import butterknife.ButterKnife;
 
@@ -94,13 +89,7 @@ public class SendTextDialog extends DialogFragment {
     private void sendFeedback() {
 
         if (!checkInput()) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            Map<String, Object> event = new HashMap<>();
-            event.put("userId", user.getUid());
-            event.put("userEmail", user.getEmail());
-            event.put("theme", mTheme.getText().toString());
-            event.put("text", mText.getText().toString());
-            YandexMetrica.reportEvent("bad_feedback", event);
+            FirebaseDatabaseUtils.sendFeedback(mTheme.getText().toString(), mText.getText().toString());
             this.dismiss();
             getActivity().finish();
             Toast.makeText(getActivity(), "Спасибо за отзыв!", Toast.LENGTH_SHORT).show();

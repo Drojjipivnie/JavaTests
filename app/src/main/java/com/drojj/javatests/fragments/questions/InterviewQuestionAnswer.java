@@ -1,6 +1,5 @@
 package com.drojj.javatests.fragments.questions;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import com.drojj.javatests.utils.elementshelper.QuestionElementsAsyncHandler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class InterviewQuestionAnswer extends BaseFragment {
 
@@ -41,8 +39,6 @@ public class InterviewQuestionAnswer extends BaseFragment {
         super.onCreate(savedInstanceState);
 
         mQuestion = (InterviewQuestion) getArguments().getSerializable("question");
-
-        mToolbarTitle = mQuestion.getQuestion();
     }
 
     @Nullable
@@ -71,5 +67,10 @@ public class InterviewQuestionAnswer extends BaseFragment {
     public void onResume() {
         super.onResume();
         mainView.requestFocus();
+    }
+
+    @Override
+    protected String setTitle() {
+        return mQuestion.getQuestion();
     }
 }

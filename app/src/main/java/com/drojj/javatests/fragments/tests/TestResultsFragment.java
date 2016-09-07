@@ -70,8 +70,11 @@ public class TestResultsFragment extends BaseFragment {
             mQuestions = savedInstanceState.getParcelableArrayList("questions");
             mQuestionCounter = savedInstanceState.getInt("currentQuestion");
         }
+    }
 
-        mToolbarTitle = getActivity().getString(R.string.title_test_results);
+    @Override
+    protected String setTitle() {
+        return getActivity().getString(R.string.title_test_results);
     }
 
     @Nullable

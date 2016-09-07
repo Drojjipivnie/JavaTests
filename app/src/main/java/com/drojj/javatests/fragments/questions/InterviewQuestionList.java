@@ -56,8 +56,11 @@ public class InterviewQuestionList extends BaseFragment {
         mDatabase = TestDatabase.getInstance(getActivity());
         mList = mDatabase.getInterviewQuestions(mCategory.getId());
         mAdapter = new InterviewQuestionListAdapter(getActivity(), mList);
+    }
 
-        mToolbarTitle = mCategory.getTitle();
+    @Override
+    protected String setTitle() {
+        return mCategory.getTitle();
     }
 
     @Nullable

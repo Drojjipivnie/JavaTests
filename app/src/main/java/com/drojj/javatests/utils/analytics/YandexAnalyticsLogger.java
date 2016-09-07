@@ -97,12 +97,6 @@ public class YandexAnalyticsLogger {
         YandexMetrica.reportEvent(isShow ? "user_show_test_results" : "user_do_not_show_test_results", map);
     }
 
-    public void startActivity(String activityName) {
-        Map<String, Object> map = getStandardMap();
-        map.put("activity_name", activityName);
-        YandexMetrica.reportEvent("user_start_activity", map);
-    }
-
     public void clickFeedBackButton(boolean isGood) {
         Map<String, Object> map = getStandardMap();
         YandexMetrica.reportEvent(isGood ? "user_clicked_good_feed" : "user_clicked_bad_feed", map);

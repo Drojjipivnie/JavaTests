@@ -52,8 +52,6 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mLogger.startActivity(this.getClass().getName());
-
         ButterKnife.bind(this);
 
         //TODO:Transitions between Activities
@@ -113,7 +111,8 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
             case R.id.link_forgot_password:
                 showReminderWindow();
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 
@@ -128,7 +127,7 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
         boolean isOk = true;
 
         if (!AuthDataValidator.validateEmail(email)) {
-            showError(mEmailWrapper, getString(R.string.email_not_validated) );
+            showError(mEmailWrapper, getString(R.string.email_not_validated));
             isOk = false;
         }
 
@@ -172,7 +171,7 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
         fragment.show(this.getSupportFragmentManager(), null);
     }
 
-    private void clear(){
+    private void clear() {
         hideError(mEmailWrapper);
         hideError(mPasswordWrapper);
 

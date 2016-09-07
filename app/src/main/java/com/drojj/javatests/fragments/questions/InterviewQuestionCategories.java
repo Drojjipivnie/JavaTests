@@ -42,9 +42,12 @@ public class InterviewQuestionCategories extends BaseFragment implements Questio
 
         mList = TestDatabase.getInstance(getActivity()).getQuestionCategories();
 
-        mToolbarTitle = getActivity().getString(R.string.title_question_categories);
-
         mAdapter = new QuestionCategoriesAdapter(mList, this);
+    }
+
+    @Override
+    protected String setTitle() {
+        return getActivity().getString(R.string.title_question_categories);
     }
 
     @Nullable

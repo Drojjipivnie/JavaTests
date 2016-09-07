@@ -47,6 +47,12 @@ public class MyChart extends LineChart {
         super.invalidate();
     }
 
+    @Override
+    public void clear() {
+        clearData();
+        super.clear();
+    }
+
     public void updateData(List<TestEntryModel> entries) {
         clearData();
         mEntries.addAll(entries);

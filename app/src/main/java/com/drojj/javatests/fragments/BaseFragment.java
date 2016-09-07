@@ -1,22 +1,25 @@
 package com.drojj.javatests.fragments;
 
 import android.app.Fragment;
+import android.os.Bundle;
 
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.Unbinder;
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     protected final YandexAnalyticsLogger mLogger = YandexAnalyticsLogger.getInstance();
 
     protected Unbinder mUnbinder;
 
-    protected String mToolbarTitle;
+    private String mToolbarTitle;
 
-    protected FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+    @Override
+    public void onStart() {
+        super.onStart();
+        mToolbarTitle = setTitle();
+    }
 
     @Override
     public void onResume() {
@@ -31,4 +34,6 @@ public class BaseFragment extends Fragment {
             mUnbinder.unbind();
         }
     }
+
+    protected abstract String setTitle();
 }

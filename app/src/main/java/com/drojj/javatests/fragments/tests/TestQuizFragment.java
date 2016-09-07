@@ -90,8 +90,6 @@ public class TestQuizFragment extends BaseFragment {
             mTestId = savedInstanceState.getInt("testId");
             mQuestionCounter = savedInstanceState.getInt("currentQuestion");
         }
-
-        mToolbarTitle = mTest.name;
     }
 
     @Nullable
@@ -192,6 +190,11 @@ public class TestQuizFragment extends BaseFragment {
                 return false;
             }
         });
+    }
+
+    @Override
+    protected String setTitle() {
+        return mTest.name;
     }
 
     private void showDialog() {

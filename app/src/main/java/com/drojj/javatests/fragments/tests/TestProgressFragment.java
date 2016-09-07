@@ -16,17 +16,14 @@ import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Test;
 import com.drojj.javatests.model.TestEntryModel;
 import com.drojj.javatests.database.FirebaseDatabaseUtils;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,6 +31,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class TestProgressFragment extends BaseFragment {
+
+    private static final int MIN_ENTRIES_TO_SHOW_CHART = 3;
 
     private Test mTest;
 
@@ -76,8 +75,6 @@ public class TestProgressFragment extends BaseFragment {
         mTest = getArguments().getParcelable("test");
 
         mReference = FirebaseDatabaseUtils.getTestEntriesReference(mTest.id);
-
-        mToolbarTitle = "Статистика: " + mTest.name;
     }
 
     @Nullable
@@ -99,6 +96,11 @@ public class TestProgressFragment extends BaseFragment {
     }
 
     @Override
+    protected String setTitle() {
+        return "Статистика: " + mTest.name;
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         mReference.removeEventListener(mListener);
@@ -113,13 +115,7 @@ public class TestProgressFragment extends BaseFragment {
 
         //TODO:Tsk completion of clearing
 
-        FirebaseDatabaseUtils.clearUserTestHistory(mTest.id, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                mChart.updateData(Collections.<TestEntryModel>emptyList());
-                mChart.invalidate();
-            }
-        }, new OnFailureListener() {
+        FirebaseDatabaseUtils.clearUserTestHistory(mTest.id, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getActivity(), "Статистика не удалена. Что - то пошло не так.", Toast.LENGTH_SHORT).show();
@@ -127,6 +123,7 @@ public class TestProgressFragment extends BaseFragment {
         }, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                mChart.clear();
                 Toast.makeText(getActivity(), "Статистика удалена", Toast.LENGTH_SHORT).show();
             }
         });
@@ -139,7 +136,7 @@ public class TestProgressFragment extends BaseFragment {
             entries.add(entry);
         }
 
-        if (entries.size() < 3) {
+        if (entries.size() < MIN_ENTRIES_TO_SHOW_CHART) {
             mAverageScore.setText("Пройдите тест минимум 3 раза");
             mClearButton.setEnabled(false);
         } else {

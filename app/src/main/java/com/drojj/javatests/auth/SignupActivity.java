@@ -54,8 +54,6 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        mLogger.startActivity(this.getClass().getName());
-
         ButterKnife.bind(this);
 
         mInputPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {

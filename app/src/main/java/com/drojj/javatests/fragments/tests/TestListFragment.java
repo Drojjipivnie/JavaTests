@@ -36,8 +36,6 @@ public class TestListFragment extends BaseFragment implements SwipeRefreshLayout
 
         mDatabase = TestDatabase.getInstance(getActivity());
         initAdapter();
-
-        mToolbarTitle = getActivity().getString(R.string.title_tests_list);
     }
 
     @Nullable
@@ -105,5 +103,10 @@ public class TestListFragment extends BaseFragment implements SwipeRefreshLayout
     public void onResume() {
         super.onResume();
         mAdapter.updateTestInfo();
+    }
+
+    @Override
+    protected String setTitle() {
+        return getActivity().getString(R.string.title_tests_list);
     }
 }

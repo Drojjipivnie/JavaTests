@@ -71,8 +71,6 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mLogger.startActivity(this.getClass().getName());
-
         //TODO:delete tests devices
         AdView view = (AdView) findViewById(R.id.adView);
 
@@ -218,10 +216,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     }
 
     private void clearFragmentsBackStack() {
-        FragmentManager fm = getFragmentManager();
-        for (int i = 0; i < fm.getBackStackEntryCount() - 1; ++i) {
-            fm.popBackStack();
-        }
+        getFragmentManager().popBackStackImmediate("test_list",0);
     }
 
     private void replaceFragment(String name, Fragment fragment) {

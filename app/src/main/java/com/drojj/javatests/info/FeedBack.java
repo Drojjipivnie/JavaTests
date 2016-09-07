@@ -33,8 +33,6 @@ public class FeedBack extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
 
-        YandexAnalyticsLogger.getInstance().startActivity(this.getClass().getName());
-
         ButterKnife.bind(this);
 
         initToolbar();
@@ -86,7 +84,7 @@ public class FeedBack extends AppCompatActivity implements View.OnClickListener 
             goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
                     Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
                     Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        }else{
+        } else {
             goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
                     Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         }

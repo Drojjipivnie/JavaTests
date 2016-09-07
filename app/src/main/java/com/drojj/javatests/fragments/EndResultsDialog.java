@@ -83,7 +83,7 @@ public class EndResultsDialog extends DialogFragment {
                         YandexAnalyticsLogger.getInstance().clickTestResults(true);
                         ArrayList<Question> list = getArguments().getParcelableArrayList("list");
                         dialog.dismiss();
-                        getFragmentManager().popBackStack();
+                        getFragmentManager().popBackStackImmediate("test_list", 0);
                         OpenFragmentEvent<ArrayList<Question>> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_RESULTS, list);
                         EventBus.getDefault().post(event);
                     }

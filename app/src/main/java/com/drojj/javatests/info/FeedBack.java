@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.drojj.javatests.R;
+import com.drojj.javatests.base.MainApplication;
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.yandex.metrica.YandexMetrica;
 
@@ -68,12 +69,12 @@ public class FeedBack extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
-        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onResumeSession();
+        YandexMetrica.getReporter(this, MainApplication.YANDEX_API_KEY).onResumeSession();
     }
 
     @Override
     protected void onPause() {
-        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onPauseSession();
+        YandexMetrica.getReporter(this, MainApplication.YANDEX_API_KEY).onPauseSession();
         super.onPause();
     }
 

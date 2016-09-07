@@ -10,11 +10,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class MainApplication extends Application {
 
+    public static final String YANDEX_API_KEY = "dc89ca5b-4d02-4ce5-80c4-e0df1e9286e3";
+
     @Override
     public void onCreate() {
         super.onCreate();
 
-        YandexMetrica.activate(getApplicationContext(), "949c67d2-e7fd-4b6e-9904-70c75a5bb76a");
+        YandexMetrica.activate(getApplicationContext(), YANDEX_API_KEY);
         YandexMetrica.enableActivityAutoTracking(this);
 
 

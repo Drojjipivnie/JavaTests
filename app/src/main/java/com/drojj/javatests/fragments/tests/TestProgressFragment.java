@@ -115,6 +115,8 @@ public class TestProgressFragment extends BaseFragment {
 
         //TODO:Tsk completion of clearing
 
+        mLogger.clickClearStatistics(mTest.name,mTest.progress,mChart.getAverageScore("%.1f"));
+
         FirebaseDatabaseUtils.clearUserTestHistory(mTest.id, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -142,7 +144,7 @@ public class TestProgressFragment extends BaseFragment {
         } else {
             mChart.updateData(entries);
             mChart.invalidate();
-            mAverageScore.setText(mChart.getAverageScore("%.2f"));
+            mAverageScore.setText(mChart.getAverageScore("%.1f"));
             mClearButton.setEnabled(true);
         }
     }

@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.drojj.javatests.base.MainApplication;
 import com.drojj.javatests.events.OpenFragmentEvent;
 import com.drojj.javatests.fragments.questions.InterviewQuestionCategories;
 import com.drojj.javatests.auth.LoginActivity;
@@ -201,12 +202,12 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     @Override
     protected void onResume() {
         super.onResume();
-        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onResumeSession();
+        YandexMetrica.getReporter(this, MainApplication.YANDEX_API_KEY).onResumeSession();
     }
 
     @Override
     protected void onPause() {
-        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onPauseSession();
+        YandexMetrica.getReporter(this, MainApplication.YANDEX_API_KEY).onPauseSession();
         super.onPause();
     }
 

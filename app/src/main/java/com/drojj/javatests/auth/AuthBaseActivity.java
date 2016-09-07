@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import com.drojj.javatests.MainWindow;
+import com.drojj.javatests.base.MainApplication;
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.firebase.auth.FirebaseAuth;
 import com.yandex.metrica.YandexMetrica;
@@ -45,12 +46,12 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onResumeSession();
+        YandexMetrica.getReporter(this, MainApplication.YANDEX_API_KEY).onResumeSession();
     }
 
     @Override
     protected void onPause() {
-        YandexMetrica.getReporter(this, "949c67d2-e7fd-4b6e-9904-70c75a5bb76a").onPauseSession();
+        YandexMetrica.getReporter(this, MainApplication.YANDEX_API_KEY).onPauseSession();
         super.onPause();
     }
 

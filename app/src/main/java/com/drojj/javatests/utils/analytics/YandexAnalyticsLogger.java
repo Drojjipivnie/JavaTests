@@ -34,12 +34,12 @@ public class YandexAnalyticsLogger {
         eventAttributes.put("model", Build.MODEL);
         eventAttributes.put("product", Build.PRODUCT);
         eventAttributes.put("time", Build.TIME);
-        YandexMetrica.reportEvent("User_sign_up", eventAttributes);
+        YandexMetrica.reportEvent("user_sign_up", eventAttributes);
     }
 
     public void logIn() {
         Map<String, Object> map = getStandardMap();
-        YandexMetrica.reportEvent("User_log_in", map);
+        YandexMetrica.reportEvent("user_log_in", map);
     }
 
     public void logOut(String userId) {
@@ -75,7 +75,7 @@ public class YandexAnalyticsLogger {
     public void quitTest(Test mTest, int mQuestionCounter) {
         Map<String, Object> map = getStandardMap();
         map.put("test", mTest.name);
-        map.put("questionCount_when_user_quit", mQuestionCounter);
+        map.put("question_count_when_user_quit", mQuestionCounter);
         YandexMetrica.reportEvent("user_quit_test", map);
     }
 
@@ -102,11 +102,18 @@ public class YandexAnalyticsLogger {
         YandexMetrica.reportEvent(isGood ? "user_clicked_good_feed" : "user_clicked_bad_feed", map);
     }
 
+    public void clickClearStatistics(String testName, int maxScore, String averageInt) {
+        Map<String, Object> map = getStandardMap();
+        map.put("max_score", maxScore);
+        map.put("average", averageInt);
+        map.put("test", testName);
+        YandexMetrica.reportEvent("user_clicked_clear_statistics", map);
+    }
+
     private Map<String, Object> getStandardMap() {
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         if (mUser != null) {
             Map<String, Object> eventAttributes = new HashMap<>();
-            eventAttributes.put("user_id", mUser.getUid());
             eventAttributes.put("user_email", mUser.getEmail());
             return eventAttributes;
         } else {

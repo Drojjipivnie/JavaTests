@@ -10,12 +10,12 @@ android {
         applicationId "com.drojj.javatests"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 6
-        versionName "1.0.5"
+        versionCode 8
+        versionName "1.0.9"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -38,7 +38,6 @@ dependencies {
     compile 'com.google.firebase:firebase-ads:9.2.0'
     compile 'com.yandex.android:mobmetricalib:2.42'
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.google.code.gson:gson:2.4'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.5'
     compile 'com.jakewharton:butterknife:8.1.0'
     compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.5.0'

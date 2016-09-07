@@ -12,4 +12,9 @@
         <item name="colorPrimaryDark">#4D000000</item>
     </style>
 
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/color_bad_vote</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

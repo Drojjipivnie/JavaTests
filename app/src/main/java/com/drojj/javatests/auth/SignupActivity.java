@@ -31,6 +31,8 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
 
     private static final String TAG = "SignUp";
 
+    private boolean isLogged = false;
+
     @BindView(R.id.input_name_wrapper)
     TextInputLayout mNameWrapper;
 
@@ -76,28 +78,32 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+                    if (!isLogged) {
 
-                    mLogger.signUp();
+                        isLogged = true;
 
-                    final String name = mInputName.getText().toString();
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(name).build();
+                        mLogger.signUp();
 
-                    user.updateProfile(profileUpdates).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            hideProgressDialog();
-                            FireUserHelper helper = new FireUserHelper(user.getUid());
+                        final String name = mInputName.getText().toString();
+                        Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(name).build();
 
-                            FireUser.Builder builder = FireUser.newBuilder();
-                            builder.setName(name).setUid(user.getUid()).setEmail(user.getEmail()).setSignUpTime(System.currentTimeMillis());
+                        user.updateProfile(profileUpdates).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                hideProgressDialog();
+                                FireUserHelper helper = new FireUserHelper(user.getUid());
 
-                            helper.createFireUser(builder.build());
-                            startApp();
-                            finish();
-                        }
-                    });
+                                FireUser.Builder builder = FireUser.newBuilder();
+                                builder.setName(name).setUid(user.getUid()).setEmail(user.getEmail()).setSignUpTime(System.currentTimeMillis());
+
+                                helper.createFireUser(builder.build());
+                                startApp();
+                                finish();
+                            }
+                        });
+                    }
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }

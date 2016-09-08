@@ -42,3 +42,5 @@
 -keepclassmembernames class com.drojj.javatests.model.fireweb.FireUser{
     public <fields>;
 }
+
+-keepattributes Signature

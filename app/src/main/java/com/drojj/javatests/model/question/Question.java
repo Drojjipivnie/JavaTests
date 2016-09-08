@@ -4,18 +4,23 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Question implements Parcelable {
-    private String mQuestionText;
-    private ArrayList<Answer> mAnswers;
+
+    private final int mId;
+    private final String mQuestionText;
+    private final ArrayList<Answer> mAnswers;
     private String mCode;
     private String mExplanation;
     private int mChosenAnswer = -1;
+    private int mChosenRealIndex = -1;
 
     private boolean wasRightAnswered = true;
 
-    public Question(String questionText, ArrayList<Answer> answers, String code, String explanation) {
+    public Question(int id, String questionText, ArrayList<Answer> answers, String code, String explanation) {
         this.mQuestionText = questionText;
+        this.mId = id;
         this.mAnswers = answers;
 
         if (code != null) {
@@ -28,6 +33,7 @@ public class Question implements Parcelable {
 
 
     protected Question(Parcel in) {
+        mId = in.readInt();
         mQuestionText = in.readString();
         mAnswers = in.createTypedArrayList(Answer.CREATOR);
         mCode = in.readString();
@@ -47,11 +53,15 @@ public class Question implements Parcelable {
         }
     };
 
+    public int getId() {
+        return mId;
+    }
+
     public String getQuestionText() {
         return mQuestionText;
     }
 
-    public ArrayList<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return mAnswers;
     }
 
@@ -67,7 +77,7 @@ public class Question implements Parcelable {
         wasRightAnswered = flag;
     }
 
-    public boolean isRightAnswered(){
+    public boolean isRightAnswered() {
         return wasRightAnswered;
     }
 
@@ -78,8 +88,9 @@ public class Question implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
         dest.writeString(mQuestionText);
-        dest.writeParcelableArray(mAnswers.toArray(new Answer[mAnswers.size()]),0);
+        dest.writeParcelableArray(mAnswers.toArray(new Answer[mAnswers.size()]), 0);
         dest.writeString(mCode);
         dest.writeString(mExplanation);
         dest.writeInt(mChosenAnswer);
@@ -87,9 +98,14 @@ public class Question implements Parcelable {
 
     public void setChosenAnswer(int chosenAnswer) {
         this.mChosenAnswer = chosenAnswer;
+        this.mChosenRealIndex = mAnswers.get(chosenAnswer).getOrderCount();
     }
 
-    public int getChosenAnswer(){
+    public int getChosenAnswer() {
         return mChosenAnswer;
+    }
+
+    public int getChosenRealIndex() {
+        return mChosenRealIndex;
     }
 }

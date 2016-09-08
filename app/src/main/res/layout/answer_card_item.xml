@@ -22,12 +22,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:id="@+id/answer_radio" />
+                android:id="@+id/answer_radio"
+                android:padding="5dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:id="@+id/answer_txt" />
+                android:id="@+id/answer_txt"
+                android:padding="5dp" />
 
         </LinearLayout>
 

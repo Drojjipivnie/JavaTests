@@ -139,20 +139,15 @@ public class TestDatabase extends SQLiteOpenHelper {
     }
 
     private Question addQuestion(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndex("_id"));
         int answer_right = cursor.getInt(cursor.getColumnIndex("answer_right"));
         ArrayList<Answer> answers = new ArrayList<>();
-        String answer1 = cursor.getString(cursor.getColumnIndex("answer_1"));
-        String answer2 = cursor.getString(cursor.getColumnIndex("answer_2"));
-        String answer3 = cursor.getString(cursor.getColumnIndex("answer_3"));
-        String answer4 = cursor.getString(cursor.getColumnIndex("answer_4"));
 
-        answers.add(new Answer(answer1));
-        answers.add(new Answer(answer2));
-        if (answer3 != null) {
-            answers.add(new Answer(answer3));
-        }
-        if (answer4 != null) {
-            answers.add(new Answer(answer4));
+        for (int i = 1; i <= 4; i++) {
+            String answer = cursor.getString(cursor.getColumnIndex("answer_" + i));
+            if (answer != null) {
+                answers.add(new Answer(i, answer));
+            }
         }
 
         answers.get(answer_right - 1).setThisAnswerRight();
@@ -162,7 +157,7 @@ public class TestDatabase extends SQLiteOpenHelper {
         String explanation = cursor.getString(cursor.getColumnIndex("explanation"));
         String code = cursor.getString(cursor.getColumnIndex("code"));
 
-        return new Question(question_text, answers, code, explanation);
+        return new Question(id, question_text, answers, code, explanation);
     }
 
     public List<Test> getTests() {

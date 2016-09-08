@@ -125,6 +125,7 @@ public class TestQuizFragment extends BaseFragment {
                 int rightAnswers = mQuestionsList.size() - mWrongAnswersNum;
 
                 showFinalDialog();
+                FirebaseDatabaseUtils.updateQuestionAnswersStatistics(mTestId, mQuestionsList);
                 if (mTest.progress < rightAnswers) {
                     FirebaseDatabaseUtils.insertNewScore(mTest.id, rightAnswers);
                 }

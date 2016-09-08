@@ -3,16 +3,19 @@ package com.drojj.javatests.model.question;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Answer implements Parcelable{
+public class Answer implements Parcelable {
 
-    private String mAnswerText;
+    private final int mOrderCount;
+    private final String mAnswerText;
     private boolean mIsAnswerRight = false;
 
-    public Answer(String text) {
+    public Answer(int order, String text) {
         this.mAnswerText = text;
+        this.mOrderCount = order;
     }
 
     protected Answer(Parcel in) {
+        mOrderCount = in.readInt();
         mAnswerText = in.readString();
         mIsAnswerRight = in.readByte() != 0;
     }
@@ -28,6 +31,10 @@ public class Answer implements Parcelable{
             return new Answer[size];
         }
     };
+
+    public int getOrderCount() {
+        return mOrderCount;
+    }
 
     public String getAnswerText() {
         return mAnswerText;
@@ -48,6 +55,7 @@ public class Answer implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mOrderCount);
         dest.writeString(mAnswerText);
         dest.writeByte((byte) (mIsAnswerRight ? 1 : 0));
     }

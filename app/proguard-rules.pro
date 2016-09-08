@@ -38,3 +38,7 @@
 
 -keep class com.github.mikephil.charting.** { *; }
 -dontwarn io.realm.**
+
+-keepclassmembernames class com.drojj.javatests.model.fireweb.FireUser{
+    public <fields>;
+}

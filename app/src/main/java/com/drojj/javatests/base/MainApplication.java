@@ -10,7 +10,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class MainApplication extends Application {
 
-    public static final String YANDEX_API_KEY = "dc89ca5b-4d02-4ce5-80c4-e0df1e9286e3";
+    public static final String YANDEX_API_KEY = "bc3b1318-1421-4151-a0b4-1f03bf8a3660";
 
     @Override
     public void onCreate() {

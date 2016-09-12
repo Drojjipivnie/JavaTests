@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.drojj.javatests.MainWindow;
 import com.drojj.javatests.base.MainApplication;
+import com.drojj.javatests.utils.ServicesChecker;
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.firebase.auth.FirebaseAuth;
 import com.yandex.metrica.YandexMetrica;
@@ -18,6 +19,7 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
     protected FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mDialog;
+    protected boolean isGoogleAPIAvailable = true;
     protected final YandexAnalyticsLogger mLogger = YandexAnalyticsLogger.getInstance();
 
     @Override
@@ -32,7 +34,11 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+        if (ServicesChecker.isGooglePlayServicesAvailable(this)) {
+            mAuth.addAuthStateListener(mAuthListener);
+        }else{
+            isGoogleAPIAvailable = false;
+        }
     }
 
     @Override
@@ -55,8 +61,8 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    protected void showProgressDialog(String message){
-        if(mDialog==null){
+    protected void showProgressDialog(String message) {
+        if (mDialog == null) {
             mDialog = new ProgressDialog(this);
             mDialog.setCancelable(false);
         }
@@ -64,8 +70,8 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
         mDialog.show();
     }
 
-    protected void hideProgressDialog(){
-        if(mDialog!=null && mDialog.isShowing()){
+    protected void hideProgressDialog() {
+        if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
     }
@@ -75,8 +81,8 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    protected void showError(TextInputLayout layout, String error){
-        if(layout!=null){
+    protected void showError(TextInputLayout layout, String error) {
+        if (layout != null) {
             layout.setErrorEnabled(true);
             layout.setError(error);
         }

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.drojj.javatests.MainWindow;
+import com.drojj.javatests.NonGoogleApiActivity;
 import com.drojj.javatests.R;
 import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.InterviewQuestion;
@@ -54,7 +55,12 @@ public class InterviewQuestionAnswer extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mProgressBar = ((MainWindow) getActivity()).getProgressBar();
+        /*Different cast for NonGoogleApiActivity and MainWindow*/
+        if(getActivity() instanceof MainWindow){
+            mProgressBar = ((MainWindow) getActivity()).getProgressBar();
+        }else{
+            mProgressBar = ((NonGoogleApiActivity) getActivity()).getProgressBar();
+        }
     }
 
     @Override

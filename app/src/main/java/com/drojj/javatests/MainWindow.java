@@ -72,15 +72,8 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TODO:delete tests devices
         AdView view = (AdView) findViewById(R.id.adView);
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("87A500DBD7033088C057D8E40FEFEB61")
-                .addTestDevice("57908671905FF7CFF624E55C46A1017A")
-                .addTestDevice("155F616AA9FC9AC73CB732352E163F54")
-                .build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         view.loadAd(adRequest);
 
         ButterKnife.bind(this);
@@ -217,7 +210,7 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
     }
 
     private void clearFragmentsBackStack() {
-        getFragmentManager().popBackStackImmediate("test_list",0);
+        getFragmentManager().popBackStackImmediate("test_list", 0);
     }
 
     private void replaceFragment(String name, Fragment fragment) {

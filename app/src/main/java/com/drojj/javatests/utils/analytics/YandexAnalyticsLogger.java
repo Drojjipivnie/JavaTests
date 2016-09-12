@@ -136,6 +136,11 @@ public class YandexAnalyticsLogger {
         YandexMetrica.reportEvent(USER_CLEAR_STATISTICS, map);
     }
 
+    public void nonGoogleApi() {
+        YandexMetrica.reportEvent("Запуск без Google API");
+    }
+
+
     private Map<String, Object> getStandardMap() {
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         if (mUser != null) {
@@ -147,6 +152,4 @@ public class YandexAnalyticsLogger {
 
         }
     }
-
-
 }

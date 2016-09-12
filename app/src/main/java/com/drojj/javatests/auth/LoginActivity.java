@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.drojj.javatests.NonGoogleApiActivity;
 import com.drojj.javatests.R;
 import com.drojj.javatests.fragments.PasswordReminder;
 import com.drojj.javatests.utils.FirebaseErrorHandler;
@@ -99,20 +101,32 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
         };
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!isGoogleAPIAvailable) {
+            showSnackBar();
+        }
+    }
+
     @OnClick({R.id.button_login, R.id.link_signup, R.id.link_forgot_password})
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_login:
-                logIn();
-                break;
-            case R.id.link_signup:
-                startSignUpActivity();
-                break;
-            case R.id.link_forgot_password:
-                showReminderWindow();
-                break;
-            default:
-                break;
+        if (isGoogleAPIAvailable) {
+            switch (v.getId()) {
+                case R.id.button_login:
+                    logIn();
+                    break;
+                case R.id.link_signup:
+                    startSignUpActivity();
+                    break;
+                case R.id.link_forgot_password:
+                    showReminderWindow();
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            Toast.makeText(LoginActivity.this, "Невозможное дествие!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -179,5 +193,18 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
         mPasswordField.setText("");
 
         mView.requestFocus();
+    }
+
+    private void showSnackBar() {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "На вашем устройстве отсутствует Google Play Services!", Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("Только вопросы", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLogger.nonGoogleApi();
+                startActivity(new Intent(LoginActivity.this, NonGoogleApiActivity.class));
+                LoginActivity.this.finish();
+            }
+        });
+        snackbar.show();
     }
 }

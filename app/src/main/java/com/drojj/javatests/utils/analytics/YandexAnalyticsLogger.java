@@ -24,7 +24,7 @@ public class YandexAnalyticsLogger {
     private static final String USER_START_TEST = "Пользователь начал тест";
     private static final String USER_QUIT_TEST = "Пользователь вышел из теста";
     private static final String USER_SHOW_TEST_STATISTICS = "Показать статистику теста";
-    private static final String USER_TEST_ENDED = "Тест закончен";
+    private static final String USER_TEST_ENDED = "Тест  закончен";
     private static final String USER_SHOW_TEST_RESULTS = "Показать результаты теста";
     private static final String USER_NO_SHOW_TEST_RESULTS = "Не показывать результаты теста";
     private static final String USER_GOOD_FEEDBACK = "Пользователь решил оставить хороший отзыв";
@@ -78,18 +78,12 @@ public class YandexAnalyticsLogger {
         YandexMetrica.reportEvent(USER_TRY_LOG_OUT, map);
     }
 
-    public void failLogIn(String cause, String email) {
-        Map<String, Object> map = getStandardMap();
-        map.put(CAUSE, cause);
-        map.put(USER_EMAIL, email);
-        YandexMetrica.reportEvent(USER_FAIL_LOG_IN, map);
+    public void failLogIn(Throwable e, String email) {
+        YandexMetrica.reportError(email, e);
     }
 
-    public void failSignUp(String cause, String email) {
-        Map<String, Object> map = getStandardMap();
-        map.put(CAUSE, cause);
-        map.put(USER_EMAIL, email);
-        YandexMetrica.reportEvent(USER_FAIL_SIGN_UP, map);
+    public void failSignUp(Throwable e, String email) {
+        YandexMetrica.reportError(email, e);
     }
 
     public void startTest(Test test) {

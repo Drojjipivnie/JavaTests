@@ -32,8 +32,6 @@ import com.drojj.javatests.info.AboutProgram;
 import com.drojj.javatests.info.FeedBack;
 import com.drojj.javatests.utils.ClearingManager;
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.yandex.metrica.YandexMetrica;
@@ -72,9 +70,9 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AdView view = (AdView) findViewById(R.id.adView);
+       /* AdView view = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        view.loadAd(adRequest);
+        view.loadAd(adRequest);*/
 
         ButterKnife.bind(this);
 

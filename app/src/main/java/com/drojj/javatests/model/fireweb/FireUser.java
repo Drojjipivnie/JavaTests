@@ -47,4 +47,13 @@ public class FireUser {
 
     }
 
+    public static FireUser createUser(String name, String email, String uid){
+        return FireUser.newBuilder()
+                .setName(name)
+                .setEmail(email)
+                .setSignUpTime(System.currentTimeMillis())
+                .setUid(uid)
+                .build();
+    }
+
 }

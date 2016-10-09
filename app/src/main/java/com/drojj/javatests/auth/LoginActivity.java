@@ -125,7 +125,7 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
                 default:
                     break;
             }
-        }else{
+        } else {
             Toast.makeText(LoginActivity.this, "Невозможное дествие!", Toast.LENGTH_SHORT).show();
         }
     }
@@ -163,7 +163,7 @@ public class LoginActivity extends AuthBaseActivity implements View.OnClickListe
                                 } else {
                                     showError(mEmailWrapper, handler.toString());
                                 }
-                                mLogger.failLogIn(handler.toString(), email);
+                                mLogger.failLogIn(task.getException(), "LogIn" + email);
                             } else {
                                 String username = task.getResult().getUser().getDisplayName();
                                 Toast.makeText(LoginActivity.this, getString(R.string.welcome_user) + username + "!", Toast.LENGTH_SHORT).show();

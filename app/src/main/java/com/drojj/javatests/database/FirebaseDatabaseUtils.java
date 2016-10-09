@@ -1,10 +1,17 @@
 package com.drojj.javatests.database;
 
+import android.support.annotation.NonNull;
+
+import com.drojj.javatests.model.fireweb.FireUser;
 import com.drojj.javatests.model.question.Question;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -133,5 +140,51 @@ public class FirebaseDatabaseUtils {
             });
         }
 
+    }
+
+    public static void createFireUser(final FireUser user) {
+        FirebaseDatabase.getInstance().getReference()
+                .child(USERS)
+                .child(user.uid)
+                .setValue(user);
+                /*.addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            updateUserInfo(user, callback);
+                        } else {
+                            callback.onCreationFailed(task.getException());
+                        }
+                    }
+                });*/
+    }
+
+    public static void updateUserInfo(FireUser user) {
+        UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder()
+                .setDisplayName(user.name)
+                .build();
+
+        FirebaseAuth.getInstance()
+                .getCurrentUser()
+                .updateProfile(changeRequest);
+                /*.addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            callback.onCreationFinished();
+                        } else {
+                            callback.onCreationFailed(task.getException());
+                        }
+                    }
+                });*/
+    }
+
+    public static Task<Void> deleteUser() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser.delete();
+        return FirebaseDatabase.getInstance().getReference()
+                .child(USERS)
+                .child(currentUser.getUid())
+                .removeValue();
     }
 }

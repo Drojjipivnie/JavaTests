@@ -10,24 +10,33 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.drojj.javatests.R;
+import com.drojj.javatests.database.FirebaseDatabaseUtils;
 import com.drojj.javatests.model.fireweb.FireUser;
-import com.drojj.javatests.model.fireweb.FireUserHelper;
 import com.drojj.javatests.utils.AuthDataValidator;
 import com.drojj.javatests.utils.FirebaseErrorHandler;
+import com.drojj.javatests.utils.ServicesChecker;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.auth.api.model.StringList;
+import com.yandex.metrica.YandexMetrica;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SignupActivity extends AuthBaseActivity implements View.OnClickListener {
+public class SignupActivity extends AuthBaseActivity implements View.OnClickListener, OnSuccessListener<AuthResult>, OnFailureListener {
 
     private static final String TAG = "SignUp";
 
@@ -76,7 +85,10 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
         return new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                final FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(firebaseAuth.getCurrentUser()!=null){
+                    Log.d("SignUp: ", firebaseAuth.getCurrentUser().getDisplayName() + " logged");
+                }
+                /*final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     if (!isLogged) {
 
@@ -106,7 +118,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
                     }
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
+                }*/
             }
         };
     }
@@ -121,7 +133,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
 
         final String email = mInputEmail.getText().toString().trim();
         final String password = mInputPassword.getText().toString().trim();
-        String name = mInputName.getText().toString().trim();
+        final String name = mInputName.getText().toString().trim();
 
         boolean isOk = true;
 
@@ -145,19 +157,14 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
         }
 
         if (isOk) {
-            showProgressDialog(getString(R.string.loading));
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                    if (!task.isSuccessful()) {
-                        FirebaseErrorHandler handler = new FirebaseErrorHandler(SignupActivity.this, task.getException());
-                        handler.showErrorToast();
-                        mLogger.failSignUp(handler.toString(), email);
-                        hideProgressDialog();
-                    }
-                }
-            });
+            if (ServicesChecker.isInternetAvailable(this)) {
+                showProgressDialog(getString(R.string.loading));
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnSuccessListener(this, this)
+                        .addOnFailureListener(this, this);
+            } else {
+                Toast.makeText(this, "Нет подключения к сети Интернет", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -166,4 +173,70 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
         hideError(mEmailWrapper);
         hideError(mPasswordWrapper);
     }
+
+    /*public void onCreationFinished() {
+        hideProgressDialog();
+        startApp();
+        finish();
+    }
+
+    public void onCreationFailed(Exception e) {
+        hideProgressDialog();
+        FirebaseDatabaseUtils.deleteUser();
+        FirebaseErrorHandler handler = new FirebaseErrorHandler(SignupActivity.this, e);
+        showError(mEmailWrapper, handler.toString());
+    }*/
+
+    @Override
+    public void onSuccess(AuthResult authResult) {
+        FireUser user = FireUser.createUser(mInputName.getText().toString(),
+                mInputEmail.getText().toString(),
+                authResult.getUser().getUid());
+        FirebaseDatabaseUtils.createFireUser(user);
+        FirebaseDatabaseUtils.updateUserInfo(user);
+
+        hideProgressDialog();
+        startApp();
+        finish();
+    }
+
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        hideProgressDialog();
+        mLogger.failSignUp(e, "SignUp: " + mInputEmail.getText().toString());
+
+        FirebaseErrorHandler handler = new FirebaseErrorHandler(SignupActivity.this, e);
+        showError(mEmailWrapper, handler.toString());
+    }
+
+    /*@Override
+    public void onFailure(@NonNull Exception e) {
+        hideProgressDialog();
+        mLogger.failSignUp(e, "SignUp: " + mInputEmail.getText().toString());
+
+        FirebaseErrorHandler handler = new FirebaseErrorHandler(SignupActivity.this, e);
+        showError(mEmailWrapper, handler.toString());
+    }
+
+    @Override
+    public void onSuccess(AuthResult authResult) {
+        final FireUser user = FireUser.newBuilder()
+                .setName(mInputName.getText().toString())
+                .setEmail(mInputEmail.getText().toString())
+                .setSignUpTime(System.currentTimeMillis())
+                .setUid(authResult.getUser().getUid())
+                .build();
+
+
+        FirebaseDatabaseUtils.createFireUser(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    FirebaseDatabaseUtils.updateUserInfo(user);
+                } else {
+                    onCreationFailed(task.getException());
+                }
+            }
+        })
+    }*/
 }

@@ -9,16 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/question_item_circle_selector">
+            android:background="@drawable/question_item_circle_selector"
+            android:elevation="5dp">
 
             <TextView
                 android:id="@+id/question_number"
@@ -26,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:contextClickable="true" />
 
         </LinearLayout>
 

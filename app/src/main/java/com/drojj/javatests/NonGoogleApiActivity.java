@@ -16,8 +16,6 @@ import android.widget.Toast;
 import com.drojj.javatests.base.MainApplication;
 import com.drojj.javatests.events.OpenFragmentEvent;
 import com.drojj.javatests.fragments.questions.InterviewQuestionCategories;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.yandex.metrica.YandexMetrica;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,9 +41,9 @@ public class NonGoogleApiActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        AdView view = (AdView) findViewById(R.id.adView);
+        /*AdView view = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        view.loadAd(adRequest);
+        view.loadAd(adRequest);*/
 
         EventBus.getDefault().register(this);
 

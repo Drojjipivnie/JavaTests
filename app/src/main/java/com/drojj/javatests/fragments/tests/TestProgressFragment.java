@@ -12,10 +12,10 @@ import android.widget.Toast;
 
 import com.drojj.javatests.R;
 import com.drojj.javatests.customviews.MyChart;
+import com.drojj.javatests.database.FirebaseDatabaseUtils;
 import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Test;
 import com.drojj.javatests.model.TestEntryModel;
-import com.drojj.javatests.database.FirebaseDatabaseUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -115,7 +115,7 @@ public class TestProgressFragment extends BaseFragment {
 
         //TODO:Tsk completion of clearing
 
-        mLogger.clickClearStatistics(mTest.name,mTest.progress,mChart.getAverageScore("%.1f"));
+        mLogger.clickClearStatistics(mTest.name, mTest.progress, mChart.getAverageScore("%.1f"));
 
         FirebaseDatabaseUtils.clearUserTestHistory(mTest.id, new OnFailureListener() {
             @Override

@@ -83,7 +83,7 @@ public class FirebaseErrorHandler {
         return mMessage;
     }
 
-    public int getErrorCode(){
+    public int getErrorCode() {
         return mErrorCode;
     }
 }

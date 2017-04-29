@@ -18,19 +18,10 @@ import com.drojj.javatests.model.fireweb.FireUser;
 import com.drojj.javatests.utils.AuthDataValidator;
 import com.drojj.javatests.utils.FirebaseErrorHandler;
 import com.drojj.javatests.utils.ServicesChecker;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.api.model.StringList;
-import com.yandex.metrica.YandexMetrica;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +76,7 @@ public class SignupActivity extends AuthBaseActivity implements View.OnClickList
         return new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser()!=null){
+                if (firebaseAuth.getCurrentUser() != null) {
                     Log.d("SignUp: ", firebaseAuth.getCurrentUser().getDisplayName() + " logged");
                 }
                 /*final FirebaseUser user = firebaseAuth.getCurrentUser();

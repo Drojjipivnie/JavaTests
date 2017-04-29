@@ -3,7 +3,6 @@ package com.drojj.javatests.base;
 import android.app.Application;
 
 import com.drojj.javatests.R;
-import com.google.firebase.database.FirebaseDatabase;
 import com.yandex.metrica.YandexMetrica;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;

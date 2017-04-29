@@ -56,16 +56,11 @@ public class InterviewQuestionAnswer extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         /*Different cast for NonGoogleApiActivity and MainWindow*/
-        if(getActivity() instanceof MainWindow){
+        if (getActivity() instanceof MainWindow) {
             mProgressBar = ((MainWindow) getActivity()).getProgressBar();
-        }else{
+        } else {
             mProgressBar = ((NonGoogleApiActivity) getActivity()).getProgressBar();
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         new QuestionElementsAsyncHandler(mainView, mProgressBar).execute(mQuestion.getAnswer());
     }
 

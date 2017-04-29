@@ -39,7 +39,7 @@ public class InterviewQuestionListAdapter extends ArrayAdapter<InterviewQuestion
         }
 
         viewHolderItem.question.setText(question.getQuestion());
-        viewHolderItem.number.setText(String.valueOf(position+1));
+        viewHolderItem.number.setText(String.valueOf(position + 1));
 
         return view;
     }

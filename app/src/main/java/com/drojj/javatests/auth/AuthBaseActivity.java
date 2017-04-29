@@ -36,7 +36,7 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
         super.onStart();
         if (ServicesChecker.isGooglePlayServicesAvailable(this)) {
             mAuth.addAuthStateListener(mAuthListener);
-        }else{
+        } else {
             isGoogleAPIAvailable = false;
         }
     }

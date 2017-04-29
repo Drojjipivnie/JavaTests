@@ -13,7 +13,8 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 
-import static android.view.ViewGroup.LayoutParams.*;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 
 public class QuestionElement {

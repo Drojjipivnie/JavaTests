@@ -1,7 +1,6 @@
 package com.drojj.javatests.fragments;
 
 import android.app.Fragment;
-import android.os.Bundle;
 
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 

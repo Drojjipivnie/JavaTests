@@ -9,11 +9,11 @@ public class FireUserHelper {
 
     private String mCurrentUid;
 
-    public FireUserHelper(String uid){
+    public FireUserHelper(String uid) {
         mCurrentUid = uid;
     }
 
-    public void createFireUser(FireUser user){
+    public void createFireUser(FireUser user) {
         mDatabase.child("users").child(mCurrentUid).setValue(user);
     }
 }

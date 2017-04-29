@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.drojj.javatests.model.question.Answer;
 import com.drojj.javatests.R;
 import com.drojj.javatests.animations.FlipAnimation;
+import com.drojj.javatests.model.question.Answer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,16 +57,18 @@ public class QuestionsRecyclerAdapter extends RecyclerView.Adapter<QuestionsRecy
 
     public class QuestionHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.answer_txt) TextView answer_text;
+        @BindView(R.id.answer_txt)
+        TextView answer_text;
 
-        @BindView(R.id.answer_radio) RadioButton radioButton;
+        @BindView(R.id.answer_radio)
+        RadioButton radioButton;
 
         private View view;
 
         public QuestionHolder(View itemView) {
             super(itemView);
 
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
 
             view = itemView;
             View.OnClickListener clickListener = new View.OnClickListener() {

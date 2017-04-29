@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.drojj.javatests.fragments.BaseFragment;
-import com.drojj.javatests.model.question.Question;
 import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.CustomLinearLayoutManager;
 import com.drojj.javatests.adapters.QuestionsAnswersRecyclerAdapter;
+import com.drojj.javatests.fragments.BaseFragment;
+import com.drojj.javatests.model.question.Question;
 
 import java.util.ArrayList;
 

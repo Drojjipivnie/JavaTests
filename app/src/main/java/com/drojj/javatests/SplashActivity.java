@@ -2,9 +2,9 @@ package com.drojj.javatests;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -58,7 +58,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void checkDataBase() {
         final SharedPreferences preferences = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
-        int databaseVersion= preferences.getInt(APP_PREFERENCES_DB_SETTING, 0);
+        int databaseVersion = preferences.getInt(APP_PREFERENCES_DB_SETTING, 0);
 
         if (databaseVersion == 0 || databaseVersion != TestDatabase.VERSION) {
             TestDatabase.copyDataBase(this, new TestDatabase.DataBaseInitCallback() {

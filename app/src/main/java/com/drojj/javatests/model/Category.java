@@ -6,7 +6,7 @@ import com.drojj.javatests.utils.ResourcesGetter;
 
 import java.io.Serializable;
 
-public class Category implements Serializable{
+public class Category implements Serializable {
 
     private int mId;
 

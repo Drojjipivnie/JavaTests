@@ -4,10 +4,10 @@ import android.app.Fragment;
 
 import com.drojj.javatests.fragments.questions.InterviewQuestionCategories;
 import com.drojj.javatests.fragments.questions.InterviewQuestionList;
-import com.drojj.javatests.fragments.tests.TestQuizFragment;
-import com.drojj.javatests.fragments.tests.TestProgressFragment;
-import com.drojj.javatests.fragments.tests.TestResultsFragment;
 import com.drojj.javatests.fragments.tests.TestListFragment;
+import com.drojj.javatests.fragments.tests.TestProgressFragment;
+import com.drojj.javatests.fragments.tests.TestQuizFragment;
+import com.drojj.javatests.fragments.tests.TestResultsFragment;
 import com.drojj.javatests.model.Category;
 import com.drojj.javatests.model.Test;
 import com.drojj.javatests.model.question.Question;
@@ -30,11 +30,11 @@ public class OpenFragmentEvent<T> {
 
         private String mTag;
 
-        FragmentType(String tag){
+        FragmentType(String tag) {
             mTag = tag;
         }
 
-        public String getTag(){
+        public String getTag() {
             return mTag;
         }
     }
@@ -66,7 +66,8 @@ public class OpenFragmentEvent<T> {
                 return InterviewQuestionCategories.newInstance();
             case QUESTION_LIST:
                 return InterviewQuestionList.newInstance((Category) mData);
-            default: return null;
+            default:
+                return null;
         }
     }
 }

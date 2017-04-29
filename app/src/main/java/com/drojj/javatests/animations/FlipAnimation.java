@@ -27,7 +27,7 @@ public class FlipAnimation {
         animator.start();
     }
 
-    public static void startCardAnimation(View view){
+    public static void startCardAnimation(View view) {
         float from = view.getPivotX() - 1000f;
         float to = view.getX();
 
@@ -70,7 +70,6 @@ public class FlipAnimation {
                 ObjectAnimator.ofFloat(question_counter, View.SCALE_X, 1.2f, 1f),
                 ObjectAnimator.ofFloat(question_counter, View.SCALE_Y, 1.2f, 1f)
         );
-
 
 
         AnimatorSet set = new AnimatorSet();

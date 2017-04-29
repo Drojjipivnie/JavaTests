@@ -3,7 +3,7 @@ package com.drojj.javatests.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Test implements Parcelable{
+public class Test implements Parcelable {
 
     public int id;
 

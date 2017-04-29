@@ -15,16 +15,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.drojj.javatests.database.TestDatabase;
-import com.drojj.javatests.fragments.BaseFragment;
-import com.drojj.javatests.fragments.EndResultsDialog;
-import com.drojj.javatests.model.Test;
-import com.drojj.javatests.model.question.Question;
 import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.CustomLinearLayoutManager;
 import com.drojj.javatests.adapters.QuestionsRecyclerAdapter;
 import com.drojj.javatests.animations.FlipAnimation;
 import com.drojj.javatests.database.FirebaseDatabaseUtils;
+import com.drojj.javatests.database.TestDatabase;
+import com.drojj.javatests.fragments.BaseFragment;
+import com.drojj.javatests.fragments.EndResultsDialog;
+import com.drojj.javatests.model.Test;
+import com.drojj.javatests.model.question.Question;
 
 import java.util.ArrayList;
 import java.util.List;

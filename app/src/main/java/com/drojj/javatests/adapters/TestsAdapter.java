@@ -10,8 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.drojj.javatests.R;
-import com.drojj.javatests.model.Test;
 import com.drojj.javatests.database.FirebaseDatabaseUtils;
+import com.drojj.javatests.model.Test;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;

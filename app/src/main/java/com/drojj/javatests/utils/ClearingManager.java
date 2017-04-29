@@ -12,7 +12,7 @@ public class ClearingManager {
         mCtx = context;
     }
 
-    public void clear(){
+    public void clear() {
         clearAppCache();
     }
 
@@ -22,7 +22,8 @@ public class ClearingManager {
             if (dir != null && dir.isDirectory()) {
                 deleteDir(dir);
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     private boolean deleteDir(File dir) {

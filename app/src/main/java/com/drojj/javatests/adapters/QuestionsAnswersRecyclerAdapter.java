@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.drojj.javatests.model.question.Answer;
 import com.drojj.javatests.R;
+import com.drojj.javatests.model.question.Answer;
 
 import java.util.List;
 
@@ -52,15 +52,18 @@ public class QuestionsAnswersRecyclerAdapter extends RecyclerView.Adapter<Questi
 
     public class AnswerHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.result_answer_txt) TextView answer_text;
+        @BindView(R.id.result_answer_txt)
+        TextView answer_text;
 
-        @BindView(R.id.result_answer_radio) RadioButton radioButton;
+        @BindView(R.id.result_answer_radio)
+        RadioButton radioButton;
 
-        @BindView(R.id.result_image_right) ImageView imageView;
+        @BindView(R.id.result_image_right)
+        ImageView imageView;
 
         public AnswerHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

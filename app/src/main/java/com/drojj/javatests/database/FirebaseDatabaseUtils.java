@@ -1,11 +1,7 @@
 package com.drojj.javatests.database;
 
-import android.support.annotation.NonNull;
-
 import com.drojj.javatests.model.fireweb.FireUser;
 import com.drojj.javatests.model.question.Question;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

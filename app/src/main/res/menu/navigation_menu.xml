@@ -30,6 +30,10 @@
             android:checked="false"
             android:icon="@drawable/ic_star_white_24dp"
             android:title="@string/navigation_menu_like" />
+        <!--<item
+            android:id="@+id/navigation_creator_item"
+            android:checked="false"
+            android:title="@string/navigation_menu_help_me" />-->
         <item
             android:id="@+id/navigation_log_out"
             android:checked="false"

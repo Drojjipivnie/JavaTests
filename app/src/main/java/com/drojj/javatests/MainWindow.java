@@ -30,6 +30,7 @@ import com.drojj.javatests.fragments.questions.InterviewQuestionCategories;
 import com.drojj.javatests.fragments.tests.TestListFragment;
 import com.drojj.javatests.info.AboutProgram;
 import com.drojj.javatests.info.FeedBack;
+import com.drojj.javatests.testeditor.TestCreatorActivity;
 import com.drojj.javatests.utils.ClearingManager;
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
 import com.google.firebase.auth.FirebaseAuth;
@@ -171,6 +172,9 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                     Intent inten = new Intent(this, FeedBack.class);
                     startActivity(inten);
                     return false;
+                /*case R.id.navigation_creator_item:
+                    startActivity(new Intent(this, TestCreatorActivity.class));
+                    return false;*/
                 case R.id.navigation_log_out:
                     mLogger.clickLogOut(mUser.getUid());
                     startLoginActivity();

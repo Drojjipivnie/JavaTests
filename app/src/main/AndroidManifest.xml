@@ -55,7 +55,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainWindow" />
         </activity>
-        <activity android:name=".NonGoogleApiActivity"></activity>
+        <activity android:name=".NonGoogleApiActivity" />
+        <activity
+            android:name=".testeditor.TestCreatorActivity"
+            android:parentActivityName=".MainWindow">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainWindow" />
+        </activity>
     </application>
 
 </manifest>

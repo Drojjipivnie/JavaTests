@@ -44,3 +44,5 @@
 }
 
 -keepattributes Signature
+
+-keep public class * extends java.lang.Exception

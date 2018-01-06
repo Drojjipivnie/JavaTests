@@ -161,7 +161,7 @@ public class TestQuizFragment extends BaseFragment {
             mQuestionCodeView.setVisibility(View.GONE);
         }
 
-        mQuestionsAdapter = new QuestionsRecyclerAdapter(mQuestionsList.get(mQuestionCounter).getAnswers());
+        mQuestionsAdapter = new QuestionsRecyclerAdapter(mQuestionsList.get(mQuestionCounter).getAnswers(), true);
         mRecyclerView.setAdapter(mQuestionsAdapter);
 
         if (showAnimation) {

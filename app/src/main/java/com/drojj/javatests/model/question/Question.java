@@ -3,14 +3,13 @@ package com.drojj.javatests.model.question;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Question implements Parcelable {
 
     private final int mId;
     private final String mQuestionText;
-    private final ArrayList<Answer> mAnswers;
+    private final List<Answer> mAnswers;
     private String mCode;
     private String mExplanation;
     private int mChosenAnswer = -1;
@@ -18,7 +17,7 @@ public class Question implements Parcelable {
 
     private boolean wasRightAnswered = true;
 
-    public Question(int id, String questionText, ArrayList<Answer> answers, String code, String explanation) {
+    public Question(int id, String questionText, List<Answer> answers, String code, String explanation) {
         this.mQuestionText = questionText;
         this.mId = id;
         this.mAnswers = answers;

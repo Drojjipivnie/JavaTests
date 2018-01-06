@@ -41,6 +41,7 @@ public class FirebaseDatabaseUtils {
     public static final String USER_EMAIL = "user_email";
 
     public static final String QUESTION_STATISTICS = "question_statistics";
+    public static final String NEQ_QUESTIONS = "new_questions";
 
     public static void insertNewScore(int testId, int score) {
         getTestMaxScoreReference(testId).setValue(score);
@@ -107,6 +108,20 @@ public class FirebaseDatabaseUtils {
         childUpdates.put(USER_ID, user.getUid());
         childUpdates.put(USER_EMAIL, user.getEmail());
         childUpdates.put(TIME, System.currentTimeMillis());
+
+        reference.child(key).updateChildren(childUpdates);
+    }
+
+    public static void sendNewQuestion(Question question, String comment) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(NEQ_QUESTIONS);
+
+        String key = reference.push().getKey();
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("test_id", question.getId());
+        childUpdates.put("question_text", question.getQuestionText());
+        childUpdates.put("code", question.getCode());
+        childUpdates.put("answers", question.getAnswers());
+        childUpdates.put("comment", comment);
 
         reference.child(key).updateChildren(childUpdates);
     }

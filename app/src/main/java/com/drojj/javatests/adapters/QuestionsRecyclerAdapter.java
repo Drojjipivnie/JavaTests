@@ -22,10 +22,12 @@ public class QuestionsRecyclerAdapter extends RecyclerView.Adapter<QuestionsRecy
     private int mSelectedAnswer = -1;
     private List<Answer> mAnswers;
     private ArrayList<RadioButton> mButtons;
+    private boolean isAnimated = true;
 
-    public QuestionsRecyclerAdapter(List<Answer> answers) {
+    public QuestionsRecyclerAdapter(List<Answer> answers, boolean isAnimated) {
         this.mAnswers = answers;
         mButtons = new ArrayList<>();
+        this.isAnimated = isAnimated;
     }
 
     @Override
@@ -38,10 +40,12 @@ public class QuestionsRecyclerAdapter extends RecyclerView.Adapter<QuestionsRecy
     public void onBindViewHolder(QuestionHolder holder, int position) {
         mButtons.add(holder.radioButton);
         holder.answer_text.setText(mAnswers.get(position).getAnswerText());
-        if (position % 2 == 0) {
-            holder.startAnimation(FlipAnimation.FROM_RIGHT);
-        } else {
-            holder.startAnimation(FlipAnimation.FROM_LEFT);
+        if (isAnimated) {
+            if (position % 2 == 0) {
+                holder.startAnimation(FlipAnimation.FROM_RIGHT);
+            } else {
+                holder.startAnimation(FlipAnimation.FROM_LEFT);
+            }
         }
     }
 

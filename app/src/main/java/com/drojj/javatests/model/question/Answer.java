@@ -59,4 +59,9 @@ public class Answer implements Parcelable {
         dest.writeString(mAnswerText);
         dest.writeByte((byte) (mIsAnswerRight ? 1 : 0));
     }
+
+    @Override
+    public String toString() {
+        return mAnswerText;
+    }
 }

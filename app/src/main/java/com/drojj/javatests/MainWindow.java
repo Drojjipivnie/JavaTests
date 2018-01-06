@@ -172,9 +172,9 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
                     Intent inten = new Intent(this, FeedBack.class);
                     startActivity(inten);
                     return false;
-                /*case R.id.navigation_creator_item:
+                case R.id.navigation_creator_item:
                     startActivity(new Intent(this, TestCreatorActivity.class));
-                    return false;*/
+                    return false;
                 case R.id.navigation_log_out:
                     mLogger.clickLogOut(mUser.getUid());
                     startLoginActivity();

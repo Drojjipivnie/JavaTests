@@ -58,7 +58,8 @@
         <activity android:name=".NonGoogleApiActivity" />
         <activity
             android:name=".testeditor.TestCreatorActivity"
-            android:parentActivityName=".MainWindow">
+            android:parentActivityName=".MainWindow"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainWindow" />

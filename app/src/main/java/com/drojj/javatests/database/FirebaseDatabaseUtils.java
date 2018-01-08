@@ -126,6 +126,13 @@ public class FirebaseDatabaseUtils {
         reference.child(key).updateChildren(childUpdates);
     }
 
+    public static DatabaseReference getQuestionStatisticsReference(int testId, int questionId) {
+        return FirebaseDatabase.getInstance().getReference()
+                .child(QUESTION_STATISTICS)
+                .child(TEST + String.valueOf(testId))
+                .child(String.valueOf(questionId));
+    }
+
     public static void updateQuestionAnswersStatistics(int testId, List<Question> list) {
         DatabaseReference referenceStatistics = FirebaseDatabase.getInstance().getReference()
                 .child(QUESTION_STATISTICS)

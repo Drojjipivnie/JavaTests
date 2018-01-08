@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.drojj.javatests.R;
 import com.drojj.javatests.model.question.Answer;
+import com.drojj.javatests.utils.FormatUtils;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class QuestionsAnswersRecyclerAdapter extends RecyclerView.Adapter<Questi
 
     private List<Answer> mAnswers;
     private int mChosenAnswerPosition;
+    private int[] statistics;
 
     public QuestionsAnswersRecyclerAdapter(List<Answer> answers, int chosenAnswer) {
         this.mAnswers = answers;
@@ -43,11 +45,20 @@ public class QuestionsAnswersRecyclerAdapter extends RecyclerView.Adapter<Questi
         } else {
             holder.imageView.setVisibility(View.INVISIBLE);
         }
+        if (statistics != null) {
+            StringBuilder builder = new StringBuilder().append(statistics[mAnswers.get(position).getOrderCount() - 1]).append("/").append(FormatUtils.arrSum(statistics));
+            holder.stats.setText(builder.toString());
+        }
     }
 
     @Override
     public int getItemCount() {
         return mAnswers.size();
+    }
+
+    public void showStatistics(int[] statistics) {
+        this.statistics = statistics;
+        notifyDataSetChanged();
     }
 
     public class AnswerHolder extends RecyclerView.ViewHolder {
@@ -60,6 +71,9 @@ public class QuestionsAnswersRecyclerAdapter extends RecyclerView.Adapter<Questi
 
         @BindView(R.id.result_image_right)
         ImageView imageView;
+
+        @BindView(R.id.result_stats)
+        TextView stats;
 
         public AnswerHolder(View itemView) {
             super(itemView);

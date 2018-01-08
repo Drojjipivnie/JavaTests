@@ -129,7 +129,7 @@ public class TestDatabase extends SQLiteOpenHelper {
 
         List<Question> items = new ArrayList<>();
         do {
-            items.add(addQuestion(cursor));
+            items.add(addQuestion(cursor, testId));
         } while (cursor.moveToNext());
 
         cursor.close();
@@ -138,7 +138,7 @@ public class TestDatabase extends SQLiteOpenHelper {
         return items;
     }
 
-    private Question addQuestion(Cursor cursor) {
+    private Question addQuestion(Cursor cursor, int testId) {
         int id = cursor.getInt(cursor.getColumnIndex("_id"));
         int answer_right = cursor.getInt(cursor.getColumnIndex("answer_right"));
         ArrayList<Answer> answers = new ArrayList<>();
@@ -157,7 +157,7 @@ public class TestDatabase extends SQLiteOpenHelper {
         String explanation = cursor.getString(cursor.getColumnIndex("explanation"));
         String code = cursor.getString(cursor.getColumnIndex("code"));
 
-        return new Question(id, question_text, answers, code, explanation);
+        return new Question(id, question_text, answers, code, explanation, testId);
     }
 
     public List<Test> getTests() {

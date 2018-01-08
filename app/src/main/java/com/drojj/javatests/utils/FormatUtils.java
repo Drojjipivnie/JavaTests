@@ -13,4 +13,12 @@ public class FormatUtils {
 
         return df.format(date);
     }
+
+    public static int arrSum(int[] array) {
+        int sum = 0;
+        for (int i : array)
+            sum += i;
+
+        return sum;
+    }
 }

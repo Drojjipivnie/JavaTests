@@ -15,8 +15,13 @@ import android.widget.TextView;
 import com.drojj.javatests.R;
 import com.drojj.javatests.adapters.CustomLinearLayoutManager;
 import com.drojj.javatests.adapters.QuestionsAnswersRecyclerAdapter;
+import com.drojj.javatests.database.FirebaseDatabaseUtils;
 import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.question.Question;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -120,7 +125,32 @@ public class TestResultsFragment extends BaseFragment {
             mQuestionCodeView.setVisibility(View.GONE);
         }
 
-        mRecyclerView.setAdapter(new QuestionsAnswersRecyclerAdapter(mQuestions.get(mQuestionCounter).getAnswers(), mQuestions.get(mQuestionCounter).getChosenAnswer()));
+        final Question currQuestion = mQuestions.get(mQuestionCounter);
+        final QuestionsAnswersRecyclerAdapter questionsAnswersRecyclerAdapter = new QuestionsAnswersRecyclerAdapter(currQuestion.getAnswers(), currQuestion.getChosenAnswer());
+
+        final DatabaseReference questionStatisticsReference = FirebaseDatabaseUtils.getQuestionStatisticsReference(currQuestion.getTestId(), currQuestion.getId());
+        questionStatisticsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    int[] stats = new int[currQuestion.getAnswers().size()];
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        int answerOrder = Integer.parseInt(snapshot.getKey());
+                        Long value = (Long) snapshot.getValue();
+                        int answerCount = value.intValue();
+                        stats[answerOrder - 1] = answerCount;
+                    }
+                    questionsAnswersRecyclerAdapter.showStatistics(stats);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mRecyclerView.setAdapter(questionsAnswersRecyclerAdapter);
 
         String exp = mQuestions.get(mQuestionCounter).getExplanation();
         if (exp != null) {

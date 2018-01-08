@@ -202,7 +202,7 @@ public class QuestionCreator extends Fragment implements View.OnClickListener {
             answers.add(new Answer(i, editTexts[i].getText().toString()));
         }
 
-        Question question = new Question(spinner.getSelectedItemPosition() + 1, questionInput.getText().toString(), answers, codeInput.getText().toString(), "");
+        Question question = new Question(spinner.getSelectedItemPosition() + 1, questionInput.getText().toString(), answers, codeInput.getText().toString(), "", 0);
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container_creator, QuestionPreview.newInstance(question))

@@ -8,6 +8,7 @@ import java.util.List;
 public class Question implements Parcelable {
 
     private final int mId;
+    private final int testId;
     private final String mQuestionText;
     private final List<Answer> mAnswers;
     private String mCode;
@@ -17,7 +18,7 @@ public class Question implements Parcelable {
 
     private boolean wasRightAnswered = true;
 
-    public Question(int id, String questionText, List<Answer> answers, String code, String explanation) {
+    public Question(int id, String questionText, List<Answer> answers, String code, String explanation, int testId) {
         this.mQuestionText = questionText;
         this.mId = id;
         this.mAnswers = answers;
@@ -28,11 +29,13 @@ public class Question implements Parcelable {
         if (explanation != null) {
             this.mExplanation = explanation;
         }
+        this.testId = testId;
     }
 
 
     protected Question(Parcel in) {
         mId = in.readInt();
+        testId = in.readInt();
         mQuestionText = in.readString();
         mAnswers = in.createTypedArrayList(Answer.CREATOR);
         mCode = in.readString();
@@ -88,6 +91,7 @@ public class Question implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(mId);
+        dest.writeInt(testId);
         dest.writeString(mQuestionText);
         dest.writeParcelableArray(mAnswers.toArray(new Answer[mAnswers.size()]), 0);
         dest.writeString(mCode);
@@ -106,5 +110,9 @@ public class Question implements Parcelable {
 
     public int getChosenRealIndex() {
         return mChosenRealIndex;
+    }
+
+    public int getTestId() {
+        return testId;
     }
 }

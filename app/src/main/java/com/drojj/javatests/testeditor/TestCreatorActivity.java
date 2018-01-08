@@ -6,11 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.drojj.javatests.R;
 import com.drojj.javatests.fragments.creator.QuestionCreator;
@@ -33,6 +36,8 @@ public class TestCreatorActivity extends AppCompatActivity implements AdapterVie
     Spinner mSpinner;
     @BindView(R.id.fragment_container_creator)
     FrameLayout mFragmentContainer;
+    @BindView(R.id.textView_link)
+    TextView mLink;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +52,9 @@ public class TestCreatorActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void initViews() {
+        mLink.setText(Html.fromHtml(getString(R.string.link)));
+        mLink.setMovementMethod(LinkMovementMethod.getInstance());
+
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

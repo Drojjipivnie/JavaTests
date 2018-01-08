@@ -82,4 +82,6 @@
     <string name="feedback_text_hint">Напишите свой отзыв о работе приложения</string>
     <string name="clear_statistics">Очистить статистику</string>
     <string name="navigation_menu_help_me">Помощь приложению</string>
+
+    <string name="link"><![CDATA[...или попробовать на <a href="http://www.java-tests.tk">java-tests.tk</a>]]></string>
 </resources>

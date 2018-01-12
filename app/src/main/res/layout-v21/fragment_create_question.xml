@@ -15,8 +15,6 @@
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
             android:paddingEnd="16dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="16dp"
             android:paddingStart="8dp"
             android:paddingTop="8dp"
             android:text="Выберите тест"
@@ -31,8 +29,6 @@
             android:layout_marginBottom="8dp"
             android:paddingBottom="16dp"
             android:paddingEnd="16dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="16dp"
             android:paddingStart="8dp"
             android:paddingTop="8dp"
             app:layout_constraintBottom_toTopOf="@+id/edit_text_question_input"
@@ -62,8 +58,6 @@
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
             android:paddingEnd="16dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="16dp"
             android:paddingStart="8dp"
             android:paddingTop="16dp"
             android:text="Добавить код?"
@@ -94,8 +88,6 @@
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
             android:paddingEnd="16dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="16dp"
             android:paddingStart="8dp"
             android:paddingTop="16dp"
             android:text="Ответы:"
@@ -124,20 +116,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2dp"
-                    android:layout_marginRight="2dp"
                     android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:text="Добавить" />
+                    android:background="@drawable/ripple_drawable"
+                    android:elevation="3dp"
+                    android:text="Добавить"
+                    android:textColor="@color/colorWhite" />
 
                 <Button
                     android:id="@+id/button_remove_answer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
                     android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:text="Удалить" />
+                    android:background="@drawable/ripple_drawable"
+                    android:elevation="3dp"
+                    android:text="Удалить"
+                    android:textColor="@color/colorWhite" />
             </LinearLayout>
 
             <android.support.design.widget.TextInputLayout

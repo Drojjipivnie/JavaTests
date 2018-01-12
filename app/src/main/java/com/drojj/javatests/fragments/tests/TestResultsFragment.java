@@ -1,5 +1,7 @@
 package com.drojj.javatests.fragments.tests;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -187,5 +189,16 @@ public class TestResultsFragment extends BaseFragment {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("questions", mQuestions);
         outState.putInt("currentQuestion", mQuestionCounter);
+    }
+
+    @OnClick(R.id.notice_error)
+    public void onErrorFieldClick() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setType("plain/text");
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"javatestsandquestions@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Ошибка в вопросе [id:" + mQuestions.get(mQuestionCounter).getId() + "]");
+        intent.putExtra(Intent.EXTRA_TEXT, "Расскажите, пожалуйста, о замеченной ошибке:\n");
+        startActivity(intent);
     }
 }

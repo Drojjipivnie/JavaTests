@@ -20,6 +20,8 @@ import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Category;
 import com.drojj.javatests.model.InterviewQuestion;
 import com.drojj.javatests.utils.DisplayUtils;
+import com.drojj.javatests.utils.analytics.FirebaseAnalyticsLogger;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -83,6 +85,7 @@ public class InterviewQuestionList extends BaseFragment {
                 listView.setItemChecked(i, true);
 
                 Fragment fragment = InterviewQuestionAnswer.newInstance(mList.get(realPosition));
+                FirebaseAnalyticsLogger.chooseQuestionFromCategory(FirebaseAuth.getInstance().getUid(), mCategory.getTitle(), mList.get(realPosition).getQuestion());
                 getFragmentManager().beginTransaction()
                         .setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_in, R.animator.fade_out)
                         .replace(R.id.fragment_container_main, fragment)

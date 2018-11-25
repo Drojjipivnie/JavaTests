@@ -76,7 +76,7 @@ public class QuestionPreview extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mQuestionTextView.setText(question.getQuestionText());
 
-        if (question.getCode() != null) {
+        if (question.getCode() != null && !question.getCode().isEmpty()) {
             mQuestionCodeView.setText(Html.fromHtml(question.getCode()));
             mQuestionCodeView.setVisibility(View.VISIBLE);
         } else {
@@ -100,11 +100,11 @@ public class QuestionPreview extends Fragment {
     @OnClick(R.id.button_send)
     public void sendQuestion() {
 
-        if(questionsRecyclerAdapter.getChosenAnswer() == -1){
+        if (questionsRecyclerAdapter.getChosenAnswer() == -1) {
             Toast.makeText(getActivity(), "Выберите правильный ответ!", Toast.LENGTH_SHORT).show();
             return;
         }
-        
+
         question.getAnswers().get(questionsRecyclerAdapter.getChosenAnswer()).setThisAnswerRight();
         FirebaseDatabaseUtils.sendNewQuestion(question, editText.getText().toString());
         Toast.makeText(getActivity(), "Сообщение отправлено. Спасибо за помощь!", Toast.LENGTH_SHORT).show();

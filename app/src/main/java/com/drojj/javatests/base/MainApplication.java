@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.drojj.javatests.R;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.FirebaseDatabase;
 import com.yandex.metrica.YandexMetrica;
 
@@ -12,6 +13,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class MainApplication extends Application {
 
     public static final String YANDEX_API_KEY = "bc3b1318-1421-4151-a0b4-1f03bf8a3660";
+
+    private static FirebaseAnalytics mAnalytics;
+
+    public static FirebaseAnalytics getAnalytics() {
+        return mAnalytics;
+    }
 
     @Override
     public void onCreate() {
@@ -28,5 +35,7 @@ public class MainApplication extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+
+        mAnalytics = FirebaseAnalytics.getInstance(this);
     }
 }

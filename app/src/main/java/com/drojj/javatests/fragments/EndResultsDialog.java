@@ -11,7 +11,9 @@ import android.support.v7.app.AlertDialog;
 import com.drojj.javatests.R;
 import com.drojj.javatests.events.OpenFragmentEvent;
 import com.drojj.javatests.model.question.Question;
+import com.drojj.javatests.utils.analytics.FirebaseAnalyticsLogger;
 import com.drojj.javatests.utils.analytics.YandexAnalyticsLogger;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -86,6 +88,7 @@ public class EndResultsDialog extends DialogFragment {
                         getFragmentManager().popBackStackImmediate("test_list", 0);
                         OpenFragmentEvent<ArrayList<Question>> event = new OpenFragmentEvent<>(OpenFragmentEvent.FragmentType.TEST_RESULTS, list);
                         EventBus.getDefault().post(event);
+                        FirebaseAnalyticsLogger.showResults(FirebaseAuth.getInstance().getUid(), list.get(0).getTestId());
                     }
                 });
 

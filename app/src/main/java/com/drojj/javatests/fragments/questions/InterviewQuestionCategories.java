@@ -17,6 +17,8 @@ import com.drojj.javatests.animations.DetailsTransition;
 import com.drojj.javatests.database.TestDatabase;
 import com.drojj.javatests.fragments.BaseFragment;
 import com.drojj.javatests.model.Category;
+import com.drojj.javatests.utils.analytics.FirebaseAnalyticsLogger;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -67,6 +69,8 @@ public class InterviewQuestionCategories extends BaseFragment implements Questio
     public void onCategoryClicked(QuestionCategoriesAdapter.CategoryViewHolder holder, int position) {
 
         Fragment fragment = InterviewQuestionList.newInstance(mList.get(position));
+
+        FirebaseAnalyticsLogger.chooseCategory(FirebaseAuth.getInstance().getUid(), mList.get(position).getTitle());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             fragment.setSharedElementEnterTransition(new DetailsTransition());

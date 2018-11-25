@@ -11,8 +11,8 @@ public class Question implements Parcelable {
     private final int testId;
     private final String mQuestionText;
     private final List<Answer> mAnswers;
-    private String mCode;
-    private String mExplanation;
+    private String mCode = "";
+    private String mExplanation = "";
     private int mChosenAnswer = -1;
     private int mChosenRealIndex = -1;
 

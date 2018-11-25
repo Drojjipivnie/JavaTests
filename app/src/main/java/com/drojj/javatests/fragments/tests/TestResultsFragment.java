@@ -120,7 +120,7 @@ public class TestResultsFragment extends BaseFragment {
         mQuestionTextView.setText(mQuestions.get(mQuestionCounter).getQuestionText());
 
         String code = mQuestions.get(mQuestionCounter).getCode();
-        if (code != null) {
+        if (code != null && !code.isEmpty()) {
             mQuestionCodeView.setText(Html.fromHtml(code));
             mQuestionCodeView.setVisibility(View.VISIBLE);
         } else {
@@ -154,9 +154,9 @@ public class TestResultsFragment extends BaseFragment {
 
         mRecyclerView.setAdapter(questionsAnswersRecyclerAdapter);
 
-        String exp = mQuestions.get(mQuestionCounter).getExplanation();
-        if (exp != null) {
-            mQuestionExplanationView.setText(exp);
+        String questionExplanation = mQuestions.get(mQuestionCounter).getExplanation();
+        if (questionExplanation != null && !questionExplanation.isEmpty()) {
+            mQuestionExplanationView.setText(questionExplanation);
             mQuestionExplanationView.setVisibility(View.VISIBLE);
         } else {
             mQuestionExplanationView.setVisibility(View.GONE);

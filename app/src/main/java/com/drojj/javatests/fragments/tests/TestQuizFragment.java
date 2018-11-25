@@ -154,8 +154,9 @@ public class TestQuizFragment extends BaseFragment {
 
         mQuestionTextView.setText(mQuestionsList.get(mQuestionCounter).getQuestionText());
 
-        if (mQuestionsList.get(mQuestionCounter).getCode() != null) {
-            mQuestionCodeView.setText(Html.fromHtml(mQuestionsList.get(mQuestionCounter).getCode()));
+        String questionCode = mQuestionsList.get(mQuestionCounter).getCode();
+        if (questionCode != null && !questionCode.isEmpty()) {
+            mQuestionCodeView.setText(Html.fromHtml(questionCode));
             mQuestionCodeView.setVisibility(View.VISIBLE);
         } else {
             mQuestionCodeView.setVisibility(View.GONE);

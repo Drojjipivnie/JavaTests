@@ -71,10 +71,6 @@ public class MainWindow extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       /* AdView view = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        view.loadAd(adRequest);*/
-
         ButterKnife.bind(this);
 
         EventBus.getDefault().register(this);

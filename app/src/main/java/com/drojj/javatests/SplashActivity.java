@@ -20,15 +20,13 @@ public class SplashActivity extends AppCompatActivity {
 
     private static final int SPLASH_TIME_OUT = 1000;
 
-    public static final String APP_PREFERENCES = "app_settings";
+    private static final String APP_PREFERENCES = "app_settings";
     private static final String APP_PREFERENCES_DB_SETTING = "database_version";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        //MobileAds.initialize(getApplicationContext(), "ca-app-pub-8055006078061724~4867169492");
 
         checkDataBase();
 
